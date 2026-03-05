@@ -8,6 +8,31 @@ import { HiOutlineDocumentDownload as ResumeIcon } from 'react-icons/hi';
 import FloatingCircle, { getContainerVariants } from "./floating_cirlce";
 import { FaReact } from "react-icons/fa";
 
+// Typewriter hook
+function useTypewriter(text: string, speed = 40, delay = 0) {
+    const [displayed, setDisplayed] = useState("");
+    const [done, setDone] = useState(false);
+
+    useEffect(() => {
+        let i = 0;
+        setDisplayed("");
+        setDone(false);
+        const timeout = setTimeout(() => {
+            const interval = setInterval(() => {
+                setDisplayed(text.slice(0, i + 1));
+                i++;
+                if (i >= text.length) {
+                    clearInterval(interval);
+                    setDone(true);
+                }
+            }, speed);
+            return () => clearInterval(interval);
+        }, delay);
+        return () => clearTimeout(timeout);
+    }, [text, speed, delay]);
+
+    return { displayed, done };
+}
 
 const Hero = () => {
     const [windowOffset, setWindowOffset] = useState({ innerWidth: 0, innerHeight: 0 });
@@ -17,7 +42,6 @@ const Hero = () => {
     const y = useMotionValue(0);
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setWindowOffset({ innerWidth: window.innerWidth, innerHeight: window.innerHeight });
     }, []);
 
@@ -31,8 +55,10 @@ const Hero = () => {
     const rotateY = useTransform(xSpring, [0, windowOffset.innerWidth], [-10, 10]);
     const rotateX = useTransform(ySpring, [0, windowOffset.innerHeight], [10, -10]);
 
-    return (
+    const { displayed: nameText, done: nameDone } = useTypewriter("John Carl Santos", 60, 300);
+    const { displayed: taglineText } = useTypewriter("I'm trying to turn coding into a hobby.", 40, nameDone ? 0 : 99999);
 
+    return (
         <section
             className="relative min-h-screen w-full flex items-center overflow-x-hidden pt-40 pb-16"
             onMouseMove={handleMouseMove}
@@ -42,6 +68,23 @@ const Hero = () => {
             <ParticlesBackground />
 
             <div className="relative z-10 w-full max-w-6xl mx-auto px-6 lg:px-8">
+                <div className="px-8">
+                    <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-4">
+                        My name is{" "}
+                        <span className="text-blue-500">
+                            {nameText}
+                            {!nameDone && (
+                                <span className="animate-pulse">|</span>
+                            )}
+                        </span>
+                    </h1>
+                    <p className="text-xl md:text-2xl text-gray-600 mb-10 min-h-[2rem]">
+                        {taglineText}
+                        {nameDone && taglineText.length < "I'm trying to turn coding into a hobby.".length && (
+                            <span className="animate-pulse">|</span>
+                        )}
+                    </p>
+                </div>
 
                 {/* Main Vertical Stack */}
                 <div className="flex flex-col items-start gap-12 md:pl-6">
@@ -55,7 +98,6 @@ const Hero = () => {
                             perspective: 1000
                         }}
                     >
-                        {/* Profile Photo — full width on sm, fixed on md+ */}
                         <div className="w-full sm:w-full md:w-[370px] md:flex-shrink-0 shadow-2xl rounded-2xl overflow-hidden">
                             <Image
                                 src='/personal.jpg'
@@ -68,7 +110,6 @@ const Hero = () => {
                             />
                         </div>
 
-                        {/* DEVS100 Card — full width on sm, fixed on md+ */}
                         <div className="w-full sm:w-full md:w-[300px] md:flex-shrink-0 h-[470px] shadow-2xl rounded-2xl overflow-hidden bg-white">
                             <iframe
                                 src="https://www.devs100.com/access-card/embed?name=John%20Carl%20Santos"
@@ -78,56 +119,57 @@ const Hero = () => {
                         </div>
                     </motion.div>
 
+                    {/* FLOATING CIRCLES */}
                     <motion.div
                         variants={getContainerVariants(0.2, 1)}
                         initial="hidden"
                         animate="visible"
                         className="hidden md:block"
                     >
-                        <FloatingCircle
-                            style={{ right: '50rem', top: '5rem' }}
-                            orbitSize="45rem"
-                            orbitClass="border-gray-300"
-                            toastMessage={
-                                <span>
-                                    Yes, I&apos;m good at <b className="text-[#60a5fa]">React</b>!
-                                </span>
-                            }
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 1.8, duration: 0.6, type: "spring", bounce: 0.4 }}
                         >
-                            <FaReact className="text-blue-400" size="2rem" />
-                        </FloatingCircle>
-                        <FloatingCircle
-                            style={{ right: '30rem', bottom: '10rem' }}
-                            orbitSize="25rem"
-                            orbitClass="border-gray-300"
-                            nucleusClass="bg-[#ffe58e]"
-                            toastMessage={
-                                <span>
-                                    I also do <b>ML</b> with{' '}
-                                    <b className="text-[#ffca1d]">Python</b>!
-                                </span>
-                            }
+                            <FloatingCircle
+                                style={{ right: '50rem', top: '5rem' }}
+                                orbitSize="45rem"
+                                orbitClass="border-gray-300"
+                                toastMessage={
+                                    <span>Yes, I&apos;m good at <b className="text-[#60a5fa]">React</b>!</span>
+                                }
+                            >
+                                <FaReact className="text-blue-400" size="2rem" />
+                            </FloatingCircle>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 2.2, duration: 0.6, type: "spring", bounce: 0.4 }}
                         >
-                            <div
-                                className="h-12 w-12"
-                                style={{
-                                    backgroundImage: `url('/img/python-logo.svg')`,
-                                    backgroundPosition: 'center',
-                                    backgroundSize: 'contain',
-                                }}
-                            />
-                        </FloatingCircle>
+                            <FloatingCircle
+                                style={{ right: '30rem', bottom: '10rem' }}
+                                orbitSize="25rem"
+                                orbitClass="border-gray-300"
+                                nucleusClass="bg-[#ffe58e]"
+                                toastMessage={
+                                    <span>I also do <b>ML</b> with{' '}<b className="text-[#ffca1d]">Python</b>!</span>
+                                }
+                            >
+                                <div
+                                    className="h-12 w-12"
+                                    style={{
+                                        backgroundImage: `url('/img/python-logo.svg')`,
+                                        backgroundPosition: 'center',
+                                        backgroundSize: 'contain',
+                                    }}
+                                />
+                            </FloatingCircle>
+                        </motion.div>
                     </motion.div>
 
-                    {/* Text + Buttons */}
                     <div className="w-full">
-                        <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-4">
-                            My name is <span className="text-blue-500">John Carl Santos</span>
-                        </h1>
-                        <p className="text-xl md:text-2xl text-gray-600 mb-10">
-                            I&apos;m trying to turn coding into a hobby.
-                        </p>
-
                         {/* BUTTONS */}
                         <div className="flex flex-wrap gap-6">
                             <Link href='/JohnCarl_Resume.pdf' target='_blank' className="group relative">
