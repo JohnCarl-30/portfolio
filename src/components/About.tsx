@@ -5,7 +5,7 @@ import { aboutText } from '@/app/data/HeroIcons'
 
 const About = () => {
     return (
-        <section id="about" className="min-h-screen flex flex-col justify-center py-12 sm:py-16 md:py-20">
+        <section id='about' className="min-h-screen flex flex-col justify-center py-12 sm:py-16 md:py-20">
 
             {/* Header Section */}
             <div className="w-full max-w-6xl mx-auto px-6 lg:px-8 mb-8 sm:mb-12 md:mb-16">
@@ -39,7 +39,7 @@ const About = () => {
                         </div>
 
                         <a
-                            href="#"
+                            href="/about"
                             className="relative z-10 inline-flex items-center justify-center sm:justify-start gap-2 w-full sm:w-max rounded-lg border-2 border-blue-400 px-4 sm:px-6 py-2.5 sm:py-3 font-medium text-sm sm:text-base text-blue-600 hover:bg-blue-500 hover:text-white transition-all duration-300"
                         >
                             More About Me
