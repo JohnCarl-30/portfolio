@@ -30,7 +30,7 @@ const Skills = () => {
     }
 
     return (
-        <div className="min-h-screen flex flex-col items-center max-w-6xl mx-auto gap-y-20 px-6 lg:px-8">
+        <div className="flex flex-col items-center max-w-6xl mx-auto gap-y-20 px-6 lg:px-8 py-24">
             <div className="md:pl-6 w-full">
                 <Heading text={"Skills"} />
             </div>

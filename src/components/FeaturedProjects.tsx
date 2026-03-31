@@ -34,7 +34,7 @@ const FeaturedProjects = () => {
   const featured = projectsData.slice(0, 3);
 
   return (
-    <div className="min-h-screen flex flex-col items-center max-w-6xl mx-auto gap-y-10 px-6 lg:px-8 py-20" id="featured-projects">
+    <div className="flex flex-col items-center max-w-6xl mx-auto gap-y-10 px-6 lg:px-8 py-24" id="featured-projects">
         <div className="md:pl-6 w-full flex items-center justify-between">
             <Heading text={"Featured Projects"} />
             <Link 
