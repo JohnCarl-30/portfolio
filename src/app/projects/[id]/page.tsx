@@ -159,10 +159,6 @@ export default function ProjectDetail({ params }: { params: { id: string } }) {
         </div>
       </main>
       
-      {/* Footer text based on screenshot 2 */}
-      <footer className="mt-20 text-center text-xs text-gray-400">
-        Copyright © 2024. All rights reserved.
-      </footer>
     </div>
   );
 }
