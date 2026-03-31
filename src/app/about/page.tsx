@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
-import SideNavbar from '../section/side-navbar';
 
 export default function AboutPage() {
   return (
@@ -91,8 +90,6 @@ export default function AboutPage() {
         </div>
 
       </div>
-
-      <SideNavbar />
     </div>
   );
 }
