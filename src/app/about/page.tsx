@@ -88,8 +88,9 @@ const AboutPage = () => {
               <strong className="text-gray-900 font-semibold">
                 Aspiring Software Engineer and AI enthusiast
               </strong>{" "}
-              based in the Philippines.Currently exploring tech stack(Python,
-              Typescript, and learning Rust).
+              based in the Philippines. Currently exploring{" "}
+              <span className="whitespace-nowrap">tech stack</span> (Python,
+              TypeScript, and learning Rust).
             </p>
           </motion.div>
 
