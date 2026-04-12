@@ -12,8 +12,13 @@ export function generateStaticParams() {
   }));
 }
 
-export default function ProjectDetail({ params }: { params: { id: string } }) {
-  const project = projectsData.find((p) => p.id === params.id);
+export default async function ProjectDetail({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const project = projectsData.find((p) => p.id === id);
 
   if (!project) {
     notFound();
@@ -25,7 +30,7 @@ export default function ProjectDetail({ params }: { params: { id: string } }) {
         <Navbar />
       </div>
 
-      <main className="max-w-6xl mx-auto px-6 lg:px-8 w-full mt-4">
+      <main className="max-w-6xl mx-auto px-6 lg:px-8 w-full mt-4 flex-grow">
         
         {/* Back navigation */}
         <Link 
@@ -158,7 +163,6 @@ export default function ProjectDetail({ params }: { params: { id: string } }) {
             
         </div>
       </main>
-      
     </div>
   );
 }

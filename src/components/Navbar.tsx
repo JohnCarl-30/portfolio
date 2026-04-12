@@ -1,12 +1,6 @@
 'use client'
 import Link from 'next/link'
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group"
 import { Kbd } from "@/components/ui/kbd"
-import { SearchIcon } from "lucide-react"
 
 const Navbar = () => {
     return (
@@ -22,8 +16,9 @@ const Navbar = () => {
                     {/* Nav Links */}
                     <div className="flex items-center gap-8">
                         <Link href="/about" className="text-sm text-gray-500 hover:text-blue-500 transition-colors">About</Link>
-                        <Link href="/#skills" className="text-sm text-gray-500 hover:text-blue-500 transition-colors">Skills</Link>
+                        <Link href="/skills" className="text-sm text-gray-500 hover:text-blue-500 transition-colors">Skills</Link>
                         <Link href="/projects" className="text-sm text-gray-500 hover:text-blue-500 transition-colors">Projects</Link>
+                        <Link href="/contact" className="text-sm text-gray-500 hover:text-blue-500 transition-colors">Contact</Link>
                        <button className="border border-blue-400 bg-blue-100 cursor-pointer flex items-center gap-2  rounded-lg px-3 py-2">
                         <span className="text-blue-300 text-sm">Search...</span>
                         <div className="flex items-center gap-1 ml-auto">
