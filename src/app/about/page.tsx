@@ -43,7 +43,6 @@ const AboutPage = () => {
       key: 'availability',
       val: 'Open to remote opportunities globally',
       accent: true,
-      mono: true
     },
   ];
 
@@ -97,7 +96,7 @@ const AboutPage = () => {
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="w-7 h-[1px] bg-blue-500" />
-              <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-blue-500 font-semibold">about me</p>
+              <p className="text-[10px] uppercase tracking-[0.2em] text-blue-500 font-bold">about me</p>
             </div>
             <h1 className="text-6xl md:text-8xl font-bold tracking-tighter leading-[0.9] mb-8">
               John Carl<br />
@@ -116,9 +115,9 @@ const AboutPage = () => {
           >
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-100 bg-gray-50/50">
               <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse" />
-              <span className="text-[10px] font-mono text-gray-500 uppercase tracking-wider">open to remote roles</span>
+              <span className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">open to remote roles</span>
             </div>
-            <div className="text-[10px] font-mono text-gray-400 border border-gray-100 px-3 py-1 rounded-full uppercase tracking-wider">
+            <div className="text-[10px] text-gray-400 border border-gray-100 px-3 py-1 rounded-full uppercase tracking-wider font-semibold">
               📍 Philippines
             </div>
           </motion.div>
@@ -134,11 +133,11 @@ const AboutPage = () => {
                 fill
                 className="object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-500"
               />
-              <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md px-3 py-2 rounded-lg border border-gray-100 text-[10px] font-mono text-gray-500 text-center">
+              <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md px-3 py-2 rounded-lg border border-gray-100 text-[10px] text-gray-500 text-center font-semibold">
                 John Carl Santos · 2024
               </div>
             </div>
-            <p className="text-center text-[10px] font-mono text-gray-400 uppercase tracking-widest pt-2">
+            <p className="text-center text-[10px] text-gray-400 uppercase tracking-widest pt-2 font-semibold">
               CJ · dyeyc · @johncarlsantos
             </p>
           </div>
@@ -146,16 +145,16 @@ const AboutPage = () => {
           <div className="flex flex-col justify-center divide-y divide-gray-100">
             {facts.map((fact, i) => (
               <div key={i} className="grid grid-cols-[120px_1fr] gap-6 py-4 items-start first:pt-0 last:pb-0">
-                <span className="text-[10px] font-mono text-gray-400 uppercase tracking-wider pt-1">{fact.key}</span>
+                <span className="text-[10px] text-gray-400 uppercase tracking-wider pt-1 font-semibold">{fact.key}</span>
                 <div>
-                  <p className={`text-sm ${fact.accent ? 'text-blue-600 font-semibold' : 'text-gray-900'} ${fact.mono ? 'font-mono' : ''}`}>
+                  <p className={`text-sm ${fact.accent ? 'text-blue-600 font-semibold' : 'text-gray-900'}`}>
                     {fact.val}
                   </p>
                   {fact.sub && <p className="text-xs text-gray-400 mt-1">{fact.sub}</p>}
                   {fact.tags && (
                     <div className="flex flex-wrap gap-2 mt-2">
                       {fact.tags.map(tag => (
-                        <span key={tag} className="text-[10px] font-mono px-2 py-0.5 rounded-full border border-gray-100 text-gray-500 bg-gray-50">
+                        <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full border border-gray-100 text-gray-500 bg-gray-50 font-semibold">
                           {tag}
                         </span>
                       ))}
@@ -171,10 +170,10 @@ const AboutPage = () => {
         <section className="grid grid-cols-2 lg:grid-cols-4 gap-0 py-12 border-b border-gray-100">
           {stats.map((stat, i) => (
             <div key={i} className="px-6 lg:border-r border-gray-100 last:border-0 first:pl-0 flex flex-col gap-1">
-              <div className="text-4xl font-bold tracking-tighter">
+              <div className="text-4xl font-bold tracking-tighter text-gray-900">
                 {stat.num}<span className="text-blue-500 ml-0.5">{stat.suffix}</span>
               </div>
-              <p className="text-[10px] font-mono text-gray-400 uppercase tracking-[0.15em]">{stat.label}</p>
+              <p className="text-[10px] text-gray-400 uppercase tracking-[0.15em] font-bold">{stat.label}</p>
             </div>
           ))}
         </section>
@@ -183,13 +182,13 @@ const AboutPage = () => {
         <section className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-16 py-20 border-b border-gray-100 relative">
           <aside className="hidden lg:block sticky top-24 self-start space-y-8 pt-2">
             <div>
-              <p className="text-[10px] font-mono text-gray-300 uppercase tracking-widest mb-4">{/* // sections */}</p>
+              <p className="text-[10px] text-gray-300 uppercase tracking-widest mb-4 font-bold">{/* // sections */}</p>
               <nav className="flex flex-col gap-3">
                 {['Origin', 'Approach', 'Journey', 'Outside Code'].map((link) => (
                   <a
                     key={link}
                     href={`#${link.toLowerCase().replace(' ', '-')}`}
-                    className="text-[11px] font-mono text-gray-400 hover:text-blue-500 border-l-2 border-transparent hover:border-blue-500 pl-4 transition-all"
+                    className="text-[11px] text-gray-400 hover:text-blue-500 border-l-2 border-transparent hover:border-blue-500 pl-4 transition-all font-semibold"
                   >
                     {link}
                   </a>
@@ -234,14 +233,14 @@ const AboutPage = () => {
             {/* Journey (Timeline) */}
             <div id="journey" className="max-w-2xl">
               <div className="flex items-center gap-3 mb-8">
-                <span className="text-[10px] font-mono text-blue-500 border border-blue-100 px-2 py-0.5 rounded">03</span>
+                <span className="text-[10px] text-blue-500 border border-blue-100 px-2 py-0.5 rounded font-bold">03</span>
                 <h2 className="text-2xl font-bold tracking-tight">How I got here</h2>
               </div>
               <div className="relative pl-8 border-l border-gray-100 space-y-12">
                 {timeline.map((item, i) => (
                   <div key={i} className="relative">
                     <div className="absolute -left-[37px] top-1 w-[11px] h-[11px] rounded-full bg-white border-2 border-blue-500" />
-                    <p className="text-[10px] font-mono text-blue-500 uppercase tracking-wider mb-2">{item.date}</p>
+                    <p className="text-[10px] text-blue-500 uppercase tracking-wider mb-2 font-bold">{item.date}</p>
                     <h3 className="text-base font-bold text-gray-900 mb-2 tracking-tight">{item.title}</h3>
                     <p className="text-xs text-gray-500 leading-relaxed max-w-lg">{item.desc}</p>
                   </div>
@@ -262,7 +261,7 @@ const AboutPage = () => {
                 {hobbies.map((hobby, i) => (
                   <div key={i} className="bg-gray-50 border border-gray-100 p-6 rounded-xl text-center group hover:border-blue-200 transition-all cursor-default">
                     <span className="text-3xl block mb-3 group-hover:scale-110 transition-transform">{hobby.icon}</span>
-                    <span className="text-[10px] font-mono text-gray-400 uppercase tracking-wider">{hobby.name}</span>
+                    <span className="text-[10px] text-gray-400 uppercase tracking-wider font-bold">{hobby.name}</span>
                   </div>
                 ))}
               </div>
@@ -277,24 +276,24 @@ const AboutPage = () => {
               Want to work<br />
               together<span className="text-blue-500 group-hover:italic transition-all">?</span>
             </h2>
-            <p className="text-[11px] font-mono text-gray-400 uppercase tracking-widest">{/* // open to remote AI & full-stack roles */}</p>
+            <p className="text-[11px] text-gray-400 uppercase tracking-widest font-bold">{/* // open to remote AI & full-stack roles */}</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
               href="/contact"
-              className="bg-gray-900 text-white px-8 py-4 rounded-lg font-mono text-[12px] uppercase tracking-wider hover:bg-gray-800 hover:translate-y-[-2px] transition-all text-center"
+              className="bg-gray-900 text-white px-8 py-4 rounded-lg text-[12px] uppercase tracking-wider hover:bg-gray-800 hover:translate-y-[-2px] transition-all text-center font-bold"
             >
               Get in touch →
             </Link>
             <Link
               href="/JohnCarl_Resume.pdf"
-              className="px-8 py-4 rounded-lg border border-gray-100 font-mono text-[12px] uppercase tracking-wider text-gray-500 hover:border-blue-500 hover:text-blue-500 hover:translate-y-[-2px] transition-all text-center"
+              className="px-8 py-4 rounded-lg border border-gray-100 text-[12px] uppercase tracking-wider text-gray-500 hover:border-blue-500 hover:text-blue-500 hover:translate-y-[-2px] transition-all text-center font-bold"
             >
               ↓ Resume
             </Link>
             <Link
               href="/projects"
-              className="px-8 py-4 rounded-lg border border-gray-100 font-mono text-[12px] uppercase tracking-wider text-gray-500 hover:border-blue-500 hover:text-blue-500 hover:translate-y-[-2px] transition-all text-center"
+              className="px-8 py-4 rounded-lg border border-gray-100 text-[12px] uppercase tracking-wider text-gray-500 hover:border-blue-500 hover:text-blue-500 hover:translate-y-[-2px] transition-all text-center font-bold"
             >
               View Projects
             </Link>
