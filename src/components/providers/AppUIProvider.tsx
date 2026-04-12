@@ -11,13 +11,16 @@ import {
 } from "react";
 
 export type ThemeMode = "light" | "dark";
+export type ThemePreference = ThemeMode | "system" | "midnight";
 
 type AppUIContextValue = {
+  resolvedTheme: ThemeMode;
   theme: ThemeMode;
+  themePreference: ThemePreference;
   isSearchOpen: boolean;
   closeSearch: () => void;
   openSearch: () => void;
-  setTheme: (theme: ThemeMode) => void;
+  setTheme: (theme: ThemePreference) => void;
   toggleSearch: () => void;
   toggleTheme: () => void;
 };
@@ -26,26 +29,15 @@ const THEME_STORAGE_KEY = "portfolio-theme";
 
 const AppUIContext = createContext<AppUIContextValue | null>(null);
 
-const isThemeMode = (value: string | null): value is ThemeMode =>
-  value === "light" || value === "dark";
+const isThemePreference = (value: string | null): value is ThemePreference =>
+  value === "light" ||
+  value === "dark" ||
+  value === "system" ||
+  value === "midnight";
 
-const getThemeFromDocument = (): ThemeMode => {
-  if (typeof document === "undefined") {
-    return "light";
-  }
-
-  const theme = document.documentElement.dataset.theme;
-  return isThemeMode(theme) ? theme : "light";
-};
-
-const getPreferredTheme = (): ThemeMode => {
+const getSystemTheme = (): ThemeMode => {
   if (typeof window === "undefined") {
     return "light";
-  }
-
-  const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
-  if (isThemeMode(storedTheme)) {
-    return storedTheme;
   }
 
   return window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -53,26 +45,93 @@ const getPreferredTheme = (): ThemeMode => {
     : "light";
 };
 
-const applyTheme = (theme: ThemeMode) => {
+const resolveTheme = (
+  preference: ThemePreference,
+  systemTheme: ThemeMode,
+): ThemeMode => {
+  if (preference === "system") {
+    return systemTheme;
+  }
+
+  if (preference === "midnight") {
+    return "dark";
+  }
+
+  return preference;
+};
+
+const getThemeFromDocument = (): ThemePreference => {
+  if (typeof document === "undefined") {
+    return "system";
+  }
+
+  const theme = document.documentElement.dataset.themeSelection;
+  return isThemePreference(theme) ? theme : "system";
+};
+
+const getPreferredTheme = (): ThemePreference => {
+  if (typeof window === "undefined") {
+    return "system";
+  }
+
+  const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+  if (isThemePreference(storedTheme)) {
+    return storedTheme;
+  }
+
+  return "system";
+};
+
+const applyTheme = (
+  preference: ThemePreference,
+  resolvedTheme: ThemeMode,
+) => {
   const root = document.documentElement;
-  root.classList.toggle("dark", theme === "dark");
-  root.dataset.theme = theme;
-  window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+  root.classList.toggle("dark", resolvedTheme === "dark");
+  root.dataset.theme = resolvedTheme;
+  root.dataset.themeSelection = preference;
+  root.dataset.themeVariant = preference === "midnight" ? "midnight" : "default";
+  root.style.colorScheme = resolvedTheme;
+  window.localStorage.setItem(THEME_STORAGE_KEY, preference);
 };
 
 export function AppUIProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeMode] = useState<ThemeMode>(getThemeFromDocument);
+  const [themePreference, setThemePreference] =
+    useState<ThemePreference>(getThemeFromDocument);
+  const [systemTheme, setSystemTheme] = useState<ThemeMode>(getSystemTheme);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
+  const resolvedTheme = useMemo(
+    () => resolveTheme(themePreference, systemTheme),
+    [systemTheme, themePreference],
+  );
+
   useEffect(() => {
-    const preferredTheme = getPreferredTheme();
-    setThemeMode(preferredTheme);
-    applyTheme(preferredTheme);
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const syncSystemTheme = (matchesDark: boolean) => {
+      setSystemTheme(matchesDark ? "dark" : "light");
+    };
+
+    syncSystemTheme(mediaQuery.matches);
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      syncSystemTheme(event.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
   }, []);
 
   useEffect(() => {
-    applyTheme(theme);
-  }, [theme]);
+    setThemePreference(getPreferredTheme());
+  }, []);
+
+  useEffect(() => {
+    applyTheme(themePreference, resolvedTheme);
+  }, [resolvedTheme, themePreference]);
 
   const openSearch = useCallback(() => {
     setIsSearchOpen(true);
@@ -86,17 +145,23 @@ export function AppUIProvider({ children }: { children: ReactNode }) {
     setIsSearchOpen((current) => !current);
   }, []);
 
-  const setTheme = useCallback((nextTheme: ThemeMode) => {
-    setThemeMode(nextTheme);
+  const setTheme = useCallback((nextTheme: ThemePreference) => {
+    setThemePreference(nextTheme);
   }, []);
 
   const toggleTheme = useCallback(() => {
-    setThemeMode((current) => (current === "dark" ? "light" : "dark"));
-  }, []);
+    setThemePreference((current) => {
+      const nextResolvedTheme =
+        resolveTheme(current, systemTheme) === "dark" ? "light" : "dark";
+      return nextResolvedTheme;
+    });
+  }, [systemTheme]);
 
   const value = useMemo(
     () => ({
-      theme,
+      resolvedTheme,
+      theme: resolvedTheme,
+      themePreference,
       isSearchOpen,
       closeSearch,
       openSearch,
@@ -104,7 +169,16 @@ export function AppUIProvider({ children }: { children: ReactNode }) {
       toggleSearch,
       toggleTheme,
     }),
-    [closeSearch, isSearchOpen, openSearch, setTheme, theme, toggleSearch, toggleTheme],
+    [
+      closeSearch,
+      isSearchOpen,
+      openSearch,
+      resolvedTheme,
+      setTheme,
+      themePreference,
+      toggleSearch,
+      toggleTheme,
+    ],
   );
 
   return (
