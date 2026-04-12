@@ -36,7 +36,7 @@ Certifications & Awards:
 - Generative AI Fundamentals (DataBricks)
 - 3rd Place Hackathon — Java Problem Solving Competition
 
--Relationship
+-Relationship / Status
 - I have a girlfriend named Bea Vicente and I lover her so much.
 
 About John:
