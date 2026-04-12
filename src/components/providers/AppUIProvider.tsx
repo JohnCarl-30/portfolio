@@ -29,7 +29,9 @@ const THEME_STORAGE_KEY = "portfolio-theme";
 
 const AppUIContext = createContext<AppUIContextValue | null>(null);
 
-const isThemePreference = (value: string | null): value is ThemePreference =>
+const isThemePreference = (
+  value: string | null | undefined,
+): value is ThemePreference =>
   value === "light" ||
   value === "dark" ||
   value === "system" ||
