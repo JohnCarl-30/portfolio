@@ -1,14 +1,32 @@
 'use client'
+import type { ReactNode } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 
+type WindowWithWebkitAudioContext = Window &
+  typeof globalThis & {
+    webkitAudioContext?: typeof AudioContext;
+  };
+
+type KeycapProps = {
+  children: ReactNode;
+  colorClass: string;
+  shadowClass: string;
+  href?: string;
+  isEnter?: boolean;
+  isExternal?: boolean;
+  className?: string;
+};
+
 // Web Audio API synth for mechanical keyboard click
 const playClickSound = () => {
     try {
-        const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
-        if (!AudioContext) return;
-        const ctx = new AudioContext();
+        const browserWindow = window as WindowWithWebkitAudioContext;
+        const AudioContextConstructor =
+          browserWindow.AudioContext || browserWindow.webkitAudioContext;
+        if (!AudioContextConstructor) return;
+        const ctx = new AudioContextConstructor();
         
         // Oscillator for the deep 'thock'
         const osc = ctx.createOscillator();
@@ -48,13 +66,21 @@ const playClickSound = () => {
         noise.start();
         osc.stop(ctx.currentTime + 0.05);
         noise.stop(ctx.currentTime + 0.05);
-    } catch (e) {
+    } catch {
         // Ignore if AudioContext fails (e.g. browser policy strictly requires interaction)
     }
 };
 
 // Realistic Keyboard Key component
-const Keycap = ({ children, colorClass, shadowClass, href, isEnter = false, isExternal = false, className = '' }: any) => {
+const Keycap = ({
+  children,
+  colorClass,
+  shadowClass,
+  href,
+  isEnter = false,
+  isExternal = false,
+  className = '',
+}: KeycapProps) => {
     const clickHandler = () => { playClickSound(); };
 
     const content = (
@@ -90,11 +116,11 @@ const Keycap = ({ children, colorClass, shadowClass, href, isEnter = false, isEx
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col">
       <Navbar />
       
       {/* Hero Banner */}
-      <div className="relative w-full h-64 bg-gradient-to-r from-blue-500 to-blue-700 overflow-hidden">
+      <div className="relative w-full h-64 bg-gradient-to-r from-blue-500 to-blue-700 overflow-hidden flex-shrink-0">
         <div className="absolute inset-0 opacity-20">
           <Image
             src="/img/pic.jpg"
@@ -106,7 +132,7 @@ export default function AboutPage() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-6 -mt-32 relative z-10 pb-20">
+      <div className="max-w-6xl mx-auto px-6 -mt-32 relative z-10 pb-20 flex-grow">
         
         <div className="flex flex-col lg:flex-row gap-8 items-start">
             {/* Profile Card */}
@@ -158,7 +184,7 @@ export default function AboutPage() {
 
                 {/* 5. Enter button */}
                 <Keycap 
-                    href="#contact"
+                    href="/#contact"
                     isEnter
                     colorClass="bg-[#3b82f6]" 
                     shadowClass="shadow-[0_6px_0_0_#1e3a8a,0_10px_10px_rgba(0,0,0,0.3)]"

@@ -1,8 +1,6 @@
 import { ReactElement } from 'react'
 import InstagramLineIcon from 'remixicon-react/InstagramLineIcon'
 import FacebookCircleLineIcon from 'remixicon-react/FacebookCircleLineIcon'
-import DribbbleLineIcon from 'remixicon-react/DribbbleLineIcon'
-import YoutubeLineIcon from 'remixicon-react/YoutubeLineIcon'
 import GithubLineIcon from 'remixicon-react/GithubLineIcon'
 
 // 1. Rename the interface to follow standard naming conventions (PascalCase)
