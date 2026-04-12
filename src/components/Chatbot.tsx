@@ -6,6 +6,32 @@ import { MessageCircle, X, Send, User, Bot, Loader2 } from 'lucide-react';
 type ChatApiResponse = {
   reply?: string | null;
   error?: string;
+  source?: "openai" | "fallback";
+};
+
+const parseApiResponse = async (response: Response): Promise<ChatApiResponse> => {
+  const rawBody = await response.text();
+  const contentType = response.headers.get('content-type') ?? '';
+
+  if (contentType.includes('application/json')) {
+    return JSON.parse(rawBody) as ChatApiResponse;
+  }
+
+  try {
+    return JSON.parse(rawBody) as ChatApiResponse;
+  } catch {
+    const cleanedBody = rawBody
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, 160);
+
+    throw new Error(
+      cleanedBody
+        ? `Server returned an invalid response: ${cleanedBody}`
+        : 'Server returned an invalid response.',
+    );
+  }
 };
 
 const Chatbot = () => {
@@ -38,7 +64,7 @@ const Chatbot = () => {
         body: JSON.stringify({ message: userMessage }),
       });
 
-      const data: ChatApiResponse = await response.json();
+      const data = await parseApiResponse(response);
       if (!response.ok || data.error) {
         throw new Error(data.error || "I'm having trouble connecting.");
       }
@@ -118,7 +144,12 @@ const Chatbot = () => {
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      void handleSend();
+                    }
+                  }}
                   placeholder="Ask me anything..."
                   className="flex-1 p-2 bg-zinc-100 dark:bg-zinc-800 border-none rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none text-gray-800 dark:text-gray-200"
                 />
