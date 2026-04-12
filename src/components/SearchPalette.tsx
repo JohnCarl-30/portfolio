@@ -425,29 +425,29 @@ export default function SearchPalette() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 18, scale: 0.98 }}
             transition={{ duration: 0.18, ease: "easeOut" }}
-            className="mx-auto w-full max-w-3xl overflow-hidden rounded-[1.4rem] border border-blue-500/60 bg-[#141110]/95 text-white shadow-[0_24px_90px_rgba(15,23,42,0.55)]"
+            className="mx-auto w-full max-w-2xl overflow-hidden rounded-[1.2rem] border border-blue-500/60 bg-[#141110]/95 text-white shadow-[0_24px_90px_rgba(15,23,42,0.55)]"
           >
             {view === "search" ? (
               <>
-                <div className="flex items-center gap-3 border-b border-blue-500/70 px-5 py-4">
+                <div className="flex items-center gap-3 border-b border-blue-500/70 px-4 py-3">
                   <Search className="h-4 w-4 text-blue-400" />
                   <input
                     ref={inputRef}
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
                     placeholder="Search pages or theme..."
-                    className="h-10 flex-1 bg-transparent text-base text-white outline-none placeholder:text-zinc-500"
+                    className="h-9 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-zinc-500"
                   />
                   <div className="hidden items-center gap-2 md:flex">
                     <Kbd className="bg-white/10 text-white/80">Esc</Kbd>
                   </div>
                 </div>
 
-                <div className="max-h-[65vh] overflow-y-auto px-3 py-3">
+                <div className="max-h-[54vh] overflow-y-auto px-2.5 py-2.5">
                   {groupedEntries.length ? (
                     groupedEntries.map((section) => (
-                      <div key={section.group} className="mb-3 last:mb-0">
-                        <p className="px-3 pb-2 text-xs font-semibold tracking-wide text-zinc-400">
+                      <div key={section.group} className="mb-2.5 last:mb-0">
+                        <p className="px-3 pb-1.5 text-[11px] font-semibold tracking-wide text-zinc-400">
                           {section.group}
                         </p>
                         <div className="space-y-1">
@@ -464,7 +464,7 @@ export default function SearchPalette() {
                                 type="button"
                                 onMouseEnter={() => setSearchIndex(itemIndex)}
                                 onClick={() => runEntry(entry)}
-                                className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left transition ${
+                                className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition ${
                                   isActive
                                     ? "bg-white/10 text-white"
                                     : "text-zinc-100 hover:bg-white/6"
@@ -480,10 +480,10 @@ export default function SearchPalette() {
                                   <Icon className="h-4 w-4" />
                                 </div>
                                 <div className="min-w-0 flex-1">
-                                  <p className="truncate text-base font-medium">
+                                  <p className="truncate text-sm font-medium">
                                     {entry.title}
                                   </p>
-                                  <p className="truncate text-sm text-zinc-400">
+                                  <p className="truncate text-xs text-zinc-400">
                                     {entry.description}
                                   </p>
                                 </div>
@@ -506,7 +506,7 @@ export default function SearchPalette() {
                   )}
                 </div>
 
-                <div className="flex items-center justify-between border-t border-white/10 px-5 py-3 text-xs text-zinc-400">
+                <div className="flex items-center justify-between border-t border-white/10 px-4 py-2.5 text-[11px] text-zinc-400">
                   <span>Global search and appearance controls.</span>
                   <div className="hidden items-center gap-2 md:flex">
                     <Kbd className="bg-white/10 text-white/80">↑</Kbd>
@@ -517,27 +517,27 @@ export default function SearchPalette() {
               </>
             ) : (
               <>
-                <div className="flex items-center gap-4 px-6 pt-8 pb-4">
+                <div className="flex items-center gap-3 px-5 pt-6 pb-3">
                   <button
                     type="button"
                     onClick={() => setView("search")}
                     aria-label="Back to search"
-                    className="flex h-11 w-11 items-center justify-center rounded-xl text-zinc-300 transition hover:bg-white/6 hover:text-white"
+                    className="flex h-10 w-10 items-center justify-center rounded-xl text-zinc-300 transition hover:bg-white/6 hover:text-white"
                   >
-                    <ChevronLeft className="h-6 w-6" />
+                    <ChevronLeft className="h-5 w-5" />
                   </button>
-                  <div className="flex items-center gap-4">
-                    <h2 className="text-[2rem] font-semibold tracking-tight text-white">
+                  <div className="flex items-center gap-3">
+                    <h2 className="text-[1.55rem] font-semibold tracking-tight text-white">
                       Choose a Theme
                     </h2>
-                    <span className="rounded-xl bg-white/8 px-3 py-1 text-sm font-semibold lowercase text-zinc-200">
+                    <span className="rounded-xl bg-white/8 px-2.5 py-1 text-xs font-semibold lowercase text-zinc-200">
                       {getThemeLabel(themePreference)}
                     </span>
                   </div>
                 </div>
 
-                <div className="px-7 pb-8">
-                  <div className="flex flex-wrap gap-4">
+                <div className="px-5 pb-6">
+                  <div className="flex flex-wrap gap-3">
                     {THEME_OPTIONS.map((option, index) => {
                       const Icon = option.icon;
                       const isSelected = themePreference === option.id;
@@ -551,7 +551,7 @@ export default function SearchPalette() {
                           title={option.label}
                           onMouseEnter={() => setThemeIndex(index)}
                           onClick={() => chooseTheme(option.id)}
-                          className={`flex h-14 w-16 items-center justify-center rounded-2xl transition ${
+                          className={`flex h-12 w-14 items-center justify-center rounded-2xl transition ${
                             option.swatchClassName
                           } ${
                             isSelected || isKeyboardTarget
@@ -559,13 +559,13 @@ export default function SearchPalette() {
                               : "ring-1 ring-white/8 hover:ring-white/20"
                           }`}
                         >
-                          <Icon className="h-6 w-6" />
+                          <Icon className="h-5 w-5" />
                         </button>
                       );
                     })}
                   </div>
 
-                  <p className="mt-5 text-sm text-zinc-400">
+                  <p className="mt-4 text-xs text-zinc-400">
                     Pick a theme and the preference will be saved globally for
                     your portfolio.
                   </p>
