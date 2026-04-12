@@ -114,11 +114,35 @@
     --sidebar-ring: oklch(0.556 0 0);
 }
 
+html[data-theme-selection="midnight"] {
+    --background: oklch(0.16 0.02 260);
+    --foreground: oklch(0.97 0.01 260);
+    --card: oklch(0.2 0.02 260);
+    --card-foreground: oklch(0.97 0.01 260);
+    --popover: oklch(0.2 0.02 260);
+    --popover-foreground: oklch(0.97 0.01 260);
+    --secondary: oklch(0.24 0.015 260);
+    --secondary-foreground: oklch(0.97 0.01 260);
+    --muted: oklch(0.22 0.015 260);
+    --muted-foreground: oklch(0.76 0.02 260);
+    --accent: oklch(0.28 0.02 260);
+    --accent-foreground: oklch(0.97 0.01 260);
+    --border: oklch(1 0 0 / 12%);
+    --input: oklch(1 0 0 / 18%);
+    --ring: oklch(0.77 0.16 88);
+}
+
+html[data-theme-selection="midnight"] body {
+    background-image:
+        radial-gradient(circle at top, rgba(250, 204, 21, 0.08), transparent 32%),
+        radial-gradient(circle at 80% 20%, rgba(96, 165, 250, 0.12), transparent 22%);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
     }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors duration-200;
     }
 }

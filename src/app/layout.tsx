@@ -26,15 +26,28 @@ const themeScript = `
     const storageKey = "portfolio-theme";
     const storedTheme = window.localStorage.getItem(storageKey);
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const theme =
-      storedTheme === "dark" || storedTheme === "light"
+    const preference =
+      storedTheme === "light" ||
+      storedTheme === "dark" ||
+      storedTheme === "system" ||
+      storedTheme === "midnight"
         ? storedTheme
-        : prefersDark
+        : "system";
+    const resolvedTheme =
+      preference === "system"
+        ? prefersDark
           ? "dark"
-          : "light";
+          : "light"
+        : preference === "midnight"
+          ? "dark"
+          : preference;
 
-    document.documentElement.classList.toggle("dark", theme === "dark");
-    document.documentElement.dataset.theme = theme;
+    document.documentElement.classList.toggle("dark", resolvedTheme === "dark");
+    document.documentElement.dataset.theme = resolvedTheme;
+    document.documentElement.dataset.themeSelection = preference;
+    document.documentElement.dataset.themeVariant =
+      preference === "midnight" ? "midnight" : "default";
+    document.documentElement.style.colorScheme = resolvedTheme;
   } catch (error) {
     console.error("Theme bootstrap failed", error);
   }
@@ -49,7 +62,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${outfit.variable} font-sans bg-white text-gray-900 dark:bg-gray-900 dark:text-white min-h-screen flex flex-col`}
+        className={`${outfit.variable} min-h-screen flex flex-col font-sans bg-background text-foreground`}
       >
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <AppUIProvider>
