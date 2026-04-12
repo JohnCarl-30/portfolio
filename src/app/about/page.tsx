@@ -88,7 +88,7 @@ const AboutPage = () => {
               <strong className="text-gray-900 font-semibold">
                 Aspiring Software Engineer and AI enthusiast
               </strong>{" "}
-              based in the Philippines. Currently exploring tech stack(Python,
+              based in the Philippines.Currently exploring tech stack(Python,
               Typescript, and learning Rust).
             </p>
           </motion.div>
