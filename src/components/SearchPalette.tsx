@@ -27,10 +27,11 @@ import {
   type ThemePreference,
   useAppUI,
 } from "@/components/providers/AppUIProvider";
+import { projectsData } from "@/app/data/Projects";
 import { Kbd } from "@/components/ui/kbd";
 
 type SearchView = "search" | "theme";
-type SearchGroup = "Site" | "Main Pages";
+type SearchGroup = "Site" | "Main Pages" | "Projects";
 
 type ThemeOption = {
   icon: LucideIcon;
@@ -91,6 +92,17 @@ const PAGE_ITEMS: SearchEntry[] = [
   },
 ];
 
+const PROJECT_ITEMS: SearchEntry[] = projectsData.map((project) => ({
+  id: project.id,
+  title: project.name,
+  description: project.desc,
+  href: `/projects/${project.id}`,
+  group: "Projects",
+  icon: FolderKanban,
+  keywords: [project.category, project.role, ...project.tech],
+  kind: "route",
+}));
+
 const THEME_OPTIONS: ThemeOption[] = [
   {
     id: "light",
@@ -119,7 +131,7 @@ const THEME_OPTIONS: ThemeOption[] = [
   },
 ];
 
-const GROUP_ORDER: SearchGroup[] = ["Site", "Main Pages"];
+const GROUP_ORDER: SearchGroup[] = ["Site", "Main Pages", "Projects"];
 
 const getThemeLabel = (theme: ThemePreference) => {
   switch (theme) {
@@ -192,7 +204,11 @@ export default function SearchPalette() {
   const deferredQuery = useDeferredValue(query.trim().toLowerCase());
 
   const entries = useMemo(
-    () => [createThemeEntry(themePreference, resolvedTheme), ...PAGE_ITEMS],
+    () => [
+      createThemeEntry(themePreference, resolvedTheme),
+      ...PAGE_ITEMS,
+      ...PROJECT_ITEMS,
+    ],
     [resolvedTheme, themePreference],
   );
 
