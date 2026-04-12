@@ -91,14 +91,14 @@ const Hero = () => {
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 lg:px-8">
         <div className="px-8">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-4">
+          <h1 className="mb-4 text-4xl font-bold text-gray-800 dark:text-gray-100 md:text-6xl">
             My name is{" "}
             <span className="text-blue-500">
               {nameText}
               {!nameDone && <span className="animate-pulse">|</span>}
             </span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-600 mb-10 min-h-[2rem]">
+          <p className="mb-10 min-h-[2rem] text-xl text-gray-600 dark:text-gray-300 md:text-2xl">
             {taglineText}
             {nameDone &&
               taglineText.length <
@@ -213,7 +213,7 @@ const Hero = () => {
               </Link>
 
               <Link href="/contact" className="group relative">
-                <span className="relative z-10 block px-8 py-3 bg-white border border-blue-500 text-blue-500 transition-all group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:bg-blue-500 group-hover:text-white font-medium">
+                <span className="relative z-10 block border border-blue-500 bg-white px-8 py-3 font-medium text-blue-500 transition-all group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:bg-blue-500 group-hover:text-white dark:bg-slate-950 dark:text-blue-300">
                   Get in Touch
                 </span>
                 <span className="absolute inset-0 bg-blue-500/10"></span>
