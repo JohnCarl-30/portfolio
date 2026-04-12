@@ -84,7 +84,7 @@ const AboutPage = () => {
               <br />
               <span className="text-gray-400 italic font-light">Santos.</span>
             </h1>
-            <p className="max-w-md text-gray-500 leading-relaxed text-lg">
+            <p className="max-w-lg text-gray-500 leading-relaxed text-lg">
               <strong className="text-gray-900 font-semibold">
                 Aspiring Software Engineer and AI enthusiast
               </strong>{" "}
@@ -113,7 +113,13 @@ const AboutPage = () => {
         </section>
 
         {/* PHOTO + QUICK FACTS */}
-        <section className="grid grid-cols-1 md:grid-cols-[320px_1fr] gap-12 py-16 border-b border-gray-100">
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="grid grid-cols-1 md:grid-cols-[320px_1fr] gap-12 py-16 border-b border-gray-100"
+        >
           <div className="space-y-4">
             <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-gray-100 group">
               <Image
@@ -165,10 +171,16 @@ const AboutPage = () => {
               </div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
         {/* STATS BAR */}
-        <section className="grid grid-cols-2 lg:grid-cols-4 gap-0 py-12 border-b border-gray-100">
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6 }}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-0 py-12 border-b border-gray-100"
+        >
           {stats.map((stat, i) => (
             <div
               key={i}
@@ -183,7 +195,7 @@ const AboutPage = () => {
               </p>
             </div>
           ))}
-        </section>
+        </motion.section>
 
         {/* STORY SECTION */}
         <section className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-16 py-20 border-b border-gray-100 relative">
@@ -210,7 +222,14 @@ const AboutPage = () => {
 
           <div className="space-y-24">
             {/* Origin */}
-            <div id="origin" className="max-w-2xl group">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6 }}
+              id="origin"
+              className="max-w-2xl group"
+            >
               <div className="flex items-center gap-3 mb-6">
                 <span className="text-[10px] font-mono text-blue-500 border border-blue-100 px-2 py-0.5 rounded">
                   01
@@ -239,10 +258,17 @@ const AboutPage = () => {
                   want to change that — one shipped product at a time.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Approach */}
-            <div id="approach" className="max-w-2xl">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6 }}
+              id="approach"
+              className="max-w-2xl"
+            >
               <div className="flex items-center gap-3 mb-6">
                 <span className="text-[10px] font-mono text-blue-500 border border-blue-100 px-2 py-0.5 rounded">
                   02
@@ -271,10 +297,17 @@ const AboutPage = () => {
                   system behaves the way it does, not just make it work.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Journey (Timeline) */}
-            <div id="journey" className="max-w-2xl">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6 }}
+              id="journey"
+              className="max-w-2xl"
+            >
               <div className="flex items-center gap-3 mb-8">
                 <span className="text-[10px] text-blue-500 border border-blue-100 px-2 py-0.5 rounded font-bold">
                   03
@@ -299,10 +332,17 @@ const AboutPage = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
             {/* Outside Code */}
-            <div id="outside-code" className="max-w-2xl">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6 }}
+              id="outside-code"
+              className="max-w-2xl"
+            >
               <div className="flex items-center gap-3 mb-6">
                 <span className="text-[10px] font-mono text-blue-500 border border-blue-100 px-2 py-0.5 rounded">
                   04
@@ -331,12 +371,18 @@ const AboutPage = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
         {/* CTA STRIP */}
-        <section className="py-24 flex flex-col md:flex-row items-center justify-between gap-12 group">
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="py-24 flex flex-col md:flex-row items-center justify-between gap-12 group"
+        >
           <div className="text-center md:text-left">
             <h2 className="text-4xl md:text-6xl font-bold tracking-tighter leading-tight mb-4">
               Want to work
@@ -370,7 +416,7 @@ const AboutPage = () => {
               View Projects
             </Link>
           </div>
-        </section>
+        </motion.section>
       </main>
     </div>
   );
