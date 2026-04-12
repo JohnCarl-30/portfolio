@@ -31,7 +31,7 @@ const AboutPage = () => {
     },
     {
       key: "specialization",
-      val: "RAG · Multi-agent · Full Stack AI",
+      val: "RAG · Full Stack AI",
       accent: true,
     },
     {
@@ -43,24 +43,14 @@ const AboutPage = () => {
 
   const timeline = [
     {
-      date: "2024",
-      title: "Oracle GenAI & AWS Certified",
-      desc: "Validated cloud and AI knowledge formally alongside hands-on project work.",
-    },
-    {
-      date: "2024",
+      date: "2026",
       title: "Software Engineering Internship",
       desc: "Express.js backend development in a production environment.",
     },
     {
       date: "2023",
-      title: "First full-stack AI projects",
-      desc: "StudyAI (originally Pinecone, migrated to pgvector), ApplyAI, early PraktikAI. LangChain, LlamaIndex, FastAPI foundations.",
-    },
-    {
-      date: "2022",
       title: "BS CS starts · Philippine Christian University",
-      desc: "PHP/Laravel, Android Java, MySQL",
+      desc: "First line of code using Java",
     },
   ];
 
@@ -323,12 +313,7 @@ const AboutPage = () => {
               <p className="text-sm text-gray-500 leading-relaxed mb-8">
                 I play Mobile Legends and COD when I need to turn my brain off.
                 Billiards and basketball when I need to move. I go to the gym
-                and run — both keep me sharp. I also write music; I have an
-                original song called{" "}
-                <strong className="text-blue-600 font-semibold">
-                  Superposition
-                </strong>
-                .
+                and run.
               </p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {hobbies.map((hobby, i) => (
