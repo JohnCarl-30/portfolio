@@ -7,13 +7,6 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 
 const AboutPage = () => {
-  const stats = [
-    { num: "3", label: "Projects Shipped", suffix: "+" },
-    { num: "3", label: "Years Building", suffix: "+" },
-    { num: "2", label: "Cloud Certifications", suffix: "" },
-    { num: "15", label: "Technologies Used", suffix: "+" },
-  ];
-
   const facts = [
     {
       key: "education",
@@ -171,30 +164,6 @@ const AboutPage = () => {
               </div>
             ))}
           </div>
-        </motion.section>
-
-        {/* STATS BAR */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6 }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-0 py-12 border-b border-gray-100"
-        >
-          {stats.map((stat, i) => (
-            <div
-              key={i}
-              className="px-6 lg:border-r border-gray-100 last:border-0 first:pl-0 flex flex-col gap-1"
-            >
-              <div className="text-4xl font-bold tracking-tighter text-gray-900">
-                {stat.num}
-                <span className="text-blue-500 ml-0.5">{stat.suffix}</span>
-              </div>
-              <p className="text-[10px] text-gray-400 uppercase tracking-[0.15em] font-bold">
-                {stat.label}
-              </p>
-            </div>
-          ))}
         </motion.section>
 
         {/* STORY SECTION */}
