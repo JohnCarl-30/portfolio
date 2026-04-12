@@ -36,6 +36,9 @@ Certifications & Awards:
 - Generative AI Fundamentals (DataBricks)
 - 3rd Place Hackathon — Java Problem Solving Competition
 
+-Relationship
+- I have a girlfriend named Bea Vicente and I lover her so much.
+
 About John:
 ${aboutText}
 
@@ -83,9 +86,9 @@ export async function POST(req: Request) {
       error instanceof Error ? error.message : "Failed to process chat request.";
 
     console.error("Chat API error:", errorMessage);
-    return Response.json({ 
+    return Response.json({
       error: errorMessage,
-      details: getErrorDetails(error), 
+      details: getErrorDetails(error),
     }, { status: 500 });
   }
 }
