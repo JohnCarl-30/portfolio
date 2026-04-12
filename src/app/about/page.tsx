@@ -15,33 +15,33 @@ const AboutPage = () => {
   ];
 
   const facts = [
-    { 
-      key: 'education', 
-      val: 'BS Computer Science — AI Specialization', 
-      sub: 'Philippine Christian University · Bulacan · Year 3' 
+    {
+      key: 'education',
+      val: 'BS Computer Science — AI Specialization',
+      sub: 'Philippine Christian University · Bulacan · Year 3'
     },
-    { 
-      key: 'current role', 
-      val: 'Software Engineering Intern', 
-      sub: 'Express.js · actively targeting AI Engineer roles' 
+    {
+      key: 'current role',
+      val: 'Software Engineering Intern',
+      sub: 'Express.js · actively targeting AI Engineer roles'
     },
-    { 
-      key: 'certifications', 
-      tags: ['☁️ Oracle GenAI', '🟠 AWS', '🤖 Claude Code'] 
+    {
+      key: 'certifications',
+      tags: ['☁️ Oracle GenAI', '🟠 AWS', '🤖 Claude Code']
     },
-    { 
-      key: 'specialization', 
-      val: 'RAG · Multi-agent · Full Stack AI', 
-      accent: true 
+    {
+      key: 'specialization',
+      val: 'RAG · Multi-agent · Full Stack AI',
+      accent: true
     },
-    { 
-      key: 'building now', 
-      val: 'PraktikAI — AI OJT journal for Filipino CS/IT students', 
-      accent: true 
+    {
+      key: 'building now',
+      val: 'PraktikAI — AI OJT journal for Filipino CS/IT students',
+      accent: true
     },
-    { 
-      key: 'availability', 
-      val: 'Open to remote opportunities globally', 
+    {
+      key: 'availability',
+      val: 'Open to remote opportunities globally',
       accent: true,
       mono: true
     },
@@ -87,10 +87,10 @@ const AboutPage = () => {
       <Navbar />
 
       <main className="max-w-5xl mx-auto px-6 lg:px-8">
-        
+
         {/* HERO STRIP */}
         <section className="pt-24 pb-12 border-b border-gray-100 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 items-end">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -104,11 +104,11 @@ const AboutPage = () => {
               <span className="text-gray-400 italic font-light">Santos.</span>
             </h1>
             <p className="max-w-md text-gray-500 leading-relaxed text-lg">
-              <strong className="text-gray-900 font-semibold">AI Engineer & Full Stack Developer</strong> based in the Philippines. I build RAG systems, multi-agent pipelines, and full-stack products — mostly for people who don't have enough tools yet.
+              <strong className="text-gray-900 font-semibold">Aspiring AI Engineer & Full Stack Developer</strong> based in the Philippines. I build RAG systems, multi-agent pipelines, and full-stack products — mostly for people who don&apos;t have enough tools yet.
             </p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -128,10 +128,10 @@ const AboutPage = () => {
         <section className="grid grid-cols-1 md:grid-cols-[320px_1fr] gap-12 py-16 border-b border-gray-100">
           <div className="space-y-4">
             <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-gray-100 group">
-              <Image 
-                src="/personal.jpg" 
-                alt="John Carl Santos" 
-                fill 
+              <Image
+                src="/personal.jpg"
+                alt="John Carl Santos"
+                fill
                 className="object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-500"
               />
               <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md px-3 py-2 rounded-lg border border-gray-100 text-[10px] font-mono text-gray-500 text-center">
@@ -183,11 +183,11 @@ const AboutPage = () => {
         <section className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-16 py-20 border-b border-gray-100 relative">
           <aside className="hidden lg:block sticky top-24 self-start space-y-8 pt-2">
             <div>
-              <p className="text-[10px] font-mono text-gray-300 uppercase tracking-widest mb-4">// sections</p>
+              <p className="text-[10px] font-mono text-gray-300 uppercase tracking-widest mb-4">{/* // sections */}</p>
               <nav className="flex flex-col gap-3">
                 {['Origin', 'Approach', 'Journey', 'Outside Code'].map((link) => (
-                  <a 
-                    key={link} 
+                  <a
+                    key={link}
                     href={`#${link.toLowerCase().replace(' ', '-')}`}
                     className="text-[11px] font-mono text-gray-400 hover:text-blue-500 border-l-2 border-transparent hover:border-blue-500 pl-4 transition-all"
                   >
@@ -207,10 +207,10 @@ const AboutPage = () => {
               </div>
               <div className="space-y-6 text-gray-500 leading-relaxed text-sm">
                 <p>
-                  I started coding because I wanted to fix problems I saw around me. Filipino CS/IT students spending hours formatting OJT journals by hand. Students cramming with no good digital study tools. <strong className="text-gray-900 font-semibold italic">That's where PraktikAI and StudyAI came from — not tutorials, not trends.</strong>
+                  I started coding because I wanted to fix problems I saw around me. Filipino CS/IT students spending hours formatting OJT journals by hand. Students cramming with no good digital study tools. <strong className="text-gray-900 font-semibold italic">That&apos;s where PraktikAI and StudyAI came from — not tutorials, not trends.</strong>
                 </p>
                 <p>
-                  There's something that drives me about building for people who don't have enough resources. The Philippines has brilliant developers, but the tooling built <em className="text-blue-600">for</em> us, <em className="text-blue-600">by</em> us, is still limited. I want to change that — one shipped product at a time.
+                  There&apos;s something that drives me about building for people who don&apos;t have enough resources. The Philippines has brilliant developers, but the tooling built <em className="text-blue-600">for</em> us, <em className="text-blue-600">by</em> us, is still limited. I want to change that — one shipped product at a time.
                 </p>
               </div>
             </div>
@@ -277,23 +277,23 @@ const AboutPage = () => {
               Want to work<br />
               together<span className="text-blue-500 group-hover:italic transition-all">?</span>
             </h2>
-            <p className="text-[11px] font-mono text-gray-400 uppercase tracking-widest">// open to remote AI & full-stack roles</p>
+            <p className="text-[11px] font-mono text-gray-400 uppercase tracking-widest">{/* // open to remote AI & full-stack roles */}</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link 
-              href="/contact" 
+            <Link
+              href="/contact"
               className="bg-gray-900 text-white px-8 py-4 rounded-lg font-mono text-[12px] uppercase tracking-wider hover:bg-gray-800 hover:translate-y-[-2px] transition-all text-center"
             >
               Get in touch →
             </Link>
-            <Link 
-              href="/JohnCarl_Resume.pdf" 
+            <Link
+              href="/JohnCarl_Resume.pdf"
               className="px-8 py-4 rounded-lg border border-gray-100 font-mono text-[12px] uppercase tracking-wider text-gray-500 hover:border-blue-500 hover:text-blue-500 hover:translate-y-[-2px] transition-all text-center"
             >
               ↓ Resume
             </Link>
-            <Link 
-              href="/projects" 
+            <Link
+              href="/projects"
               className="px-8 py-4 rounded-lg border border-gray-100 font-mono text-[12px] uppercase tracking-wider text-gray-500 hover:border-blue-500 hover:text-blue-500 hover:translate-y-[-2px] transition-all text-center"
             >
               View Projects

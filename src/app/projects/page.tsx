@@ -140,7 +140,7 @@ export default function ProjectsPage() {
             
             {filteredProjects.length === 0 && (
                 <div className="col-span-full py-20 text-center text-gray-500">
-                    No projects found for "{searchQuery}" in {activeTab}.
+                    No projects found for &quot;{searchQuery}&quot; in {activeTab}.
                 </div>
             )}
         </motion.div>
