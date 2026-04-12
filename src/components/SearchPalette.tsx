@@ -202,6 +202,7 @@ export default function SearchPalette() {
   const [themeIndex, setThemeIndex] = useState(getThemeOptionIndex(themePreference));
   const [view, setView] = useState<SearchView>("search");
   const deferredQuery = useDeferredValue(query.trim().toLowerCase());
+  const hasActiveQuery = deferredQuery.length > 0;
 
   const entries = useMemo(
     () => [
@@ -213,8 +214,15 @@ export default function SearchPalette() {
   );
 
   const filteredEntries = useMemo(
-    () => entries.filter((entry) => matchesEntry(entry, deferredQuery)),
-    [deferredQuery, entries],
+    () =>
+      entries.filter((entry) => {
+        if (!hasActiveQuery && entry.group === "Projects") {
+          return false;
+        }
+
+        return matchesEntry(entry, deferredQuery);
+      }),
+    [deferredQuery, entries, hasActiveQuery],
   );
 
   const groupedEntries = useMemo(() => {
