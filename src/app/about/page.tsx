@@ -69,7 +69,7 @@ const AboutPage = () => {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-7 h-[1px] bg-blue-500" />
               <p className="text-[10px] uppercase tracking-[0.2em] text-blue-500 font-bold">
-                about me
+                More about me
               </p>
             </div>
             <h1 className="text-6xl md:text-8xl font-bold tracking-tighter leading-[0.9] mb-8">
@@ -343,49 +343,6 @@ const AboutPage = () => {
             </motion.div>
           </div>
         </section>
-
-        {/* CTA STRIP */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="py-24 flex flex-col md:flex-row items-center justify-between gap-12 group"
-        >
-          <div className="text-center md:text-left">
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tighter leading-tight mb-4">
-              Want to work
-              <br />
-              together
-              <span className="text-blue-500 group-hover:italic transition-all">
-                ?
-              </span>
-            </h2>
-            <p className="text-[11px] text-gray-400 uppercase tracking-widest font-bold">
-              {/* // open to remote AI & full-stack roles */}
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link
-              href="/contact"
-              className="bg-gray-900 text-white px-8 py-4 rounded-lg text-[12px] uppercase tracking-wider hover:bg-gray-800 hover:translate-y-[-2px] transition-all text-center font-bold"
-            >
-              Get in touch →
-            </Link>
-            <Link
-              href="/JohnCarl_Resume.pdf"
-              className="px-8 py-4 rounded-lg border border-gray-100 text-[12px] uppercase tracking-wider text-gray-500 hover:border-blue-500 hover:text-blue-500 hover:translate-y-[-2px] transition-all text-center font-bold"
-            >
-              ↓ Resume
-            </Link>
-            <Link
-              href="/projects"
-              className="px-8 py-4 rounded-lg border border-gray-100 text-[12px] uppercase tracking-wider text-gray-500 hover:border-blue-500 hover:text-blue-500 hover:translate-y-[-2px] transition-all text-center font-bold"
-            >
-              View Projects
-            </Link>
-          </div>
-        </motion.section>
       </main>
     </div>
   );
