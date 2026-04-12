@@ -35,7 +35,7 @@ export default function ProjectsPage() {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
             <div>
-                <Link href="/" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 transition-colors mb-4">
+                <Link href="/#featured-projects" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 transition-colors mb-4">
                     <ArrowLeft className="w-4 h-4" /> Back to Home
                 </Link>
                 <h1 className="text-4xl font-bold tracking-tight text-gray-900 mb-6">Portfolio Projects</h1>
@@ -140,7 +140,7 @@ export default function ProjectsPage() {
             
             {filteredProjects.length === 0 && (
                 <div className="col-span-full py-20 text-center text-gray-500">
-                    No projects found for &quot;{searchQuery}&quot; in {activeTab}.
+                    No projects found for "{searchQuery}" in {activeTab}.
                 </div>
             )}
         </motion.div>

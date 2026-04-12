@@ -39,7 +39,7 @@ Certifications & Awards:
 -Relationship / Status
 - I have a girlfriend named Bea Vicente and I lover her so much.
 
-About John:
+About John
 ${aboutText}
 
 Other Projects:
