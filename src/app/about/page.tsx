@@ -2,7 +2,6 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 
@@ -55,12 +54,12 @@ const AboutPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100 selection:text-blue-900 dark:bg-zinc-950 dark:text-white">
       <Navbar />
 
       <main className="max-w-5xl mx-auto px-6 lg:px-8">
         {/* HERO STRIP */}
-        <section className="pt-24 pb-12 border-b border-gray-100 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 items-end">
+        <section className="grid grid-cols-1 items-end gap-8 border-b border-gray-100 pt-24 pb-12 dark:border-white/10 md:grid-cols-[1fr_auto]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -75,10 +74,10 @@ const AboutPage = () => {
             <h1 className="text-6xl md:text-8xl font-bold tracking-tighter leading-[0.9] mb-8">
               John Carl
               <br />
-              <span className="text-gray-400 italic font-light">Santos.</span>
+              <span className="italic font-light text-gray-400 dark:text-gray-500">Santos.</span>
             </h1>
-            <p className="max-w-lg text-gray-500 leading-relaxed text-lg">
-              <strong className="text-gray-900 font-semibold">
+            <p className="max-w-lg text-lg leading-relaxed text-gray-500 dark:text-gray-300">
+              <strong className="font-semibold text-gray-900 dark:text-white">
                 Aspiring Software Engineer and AI enthusiast
               </strong>{" "}
               based in the Philippines. Currently exploring{" "}
@@ -91,15 +90,15 @@ const AboutPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex flex-col items-start md:items-end gap-3 pb-2"
+            className="flex flex-col items-start gap-3 pb-2 md:items-end"
           >
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-100 bg-gray-50/50">
+            <div className="flex items-center gap-2 rounded-full border border-gray-100 bg-gray-50/50 px-3 py-1.5 dark:border-white/10 dark:bg-white/5">
               <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse" />
-              <span className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-300">
                 open to remote roles
               </span>
             </div>
-            <div className="text-[10px] text-gray-400 border border-gray-100 px-3 py-1 rounded-full uppercase tracking-wider font-semibold">
+            <div className="rounded-full border border-gray-100 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-gray-400 dark:border-white/10 dark:text-gray-400">
               📍 Philippines
             </div>
           </motion.div>
@@ -111,7 +110,7 @@ const AboutPage = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="grid grid-cols-1 md:grid-cols-[320px_1fr] gap-12 py-16 border-b border-gray-100"
+          className="grid grid-cols-1 gap-12 border-b border-gray-100 py-16 dark:border-white/10 md:grid-cols-[320px_1fr]"
         >
           <div className="space-y-4">
             <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-gray-100 group">
@@ -125,35 +124,35 @@ const AboutPage = () => {
                 John Carl Santos · 2024
               </div>
             </div>
-            <p className="text-center text-[10px] text-gray-400 uppercase tracking-widest pt-2 font-semibold">
+            <p className="pt-2 text-center text-[10px] font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500">
               CJ · dyeyc · @johncarlsantos
             </p>
           </div>
 
-          <div className="flex flex-col justify-center divide-y divide-gray-100">
+          <div className="flex flex-col justify-center divide-y divide-gray-100 dark:divide-white/10">
             {facts.map((fact, i) => (
               <div
                 key={i}
                 className="grid grid-cols-[120px_1fr] gap-6 py-4 items-start first:pt-0 last:pb-0"
               >
-                <span className="text-[10px] text-gray-400 uppercase tracking-wider pt-1 font-semibold">
+                <span className="pt-1 text-[10px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
                   {fact.key}
                 </span>
                 <div>
                   <p
-                    className={`text-sm ${fact.accent ? "text-blue-600 font-semibold" : "text-gray-900"}`}
+                    className={`text-sm ${fact.accent ? "font-semibold text-blue-600 dark:text-blue-400" : "text-gray-900 dark:text-white"}`}
                   >
                     {fact.val}
                   </p>
                   {fact.sub && (
-                    <p className="text-xs text-gray-400 mt-1">{fact.sub}</p>
+                    <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">{fact.sub}</p>
                   )}
                   {fact.tags && (
                     <div className="flex flex-wrap gap-2 mt-2">
                       {fact.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="text-[10px] px-2 py-0.5 rounded-full border border-gray-100 text-gray-500 bg-gray-50 font-semibold"
+                          className="rounded-full border border-gray-100 bg-gray-50 px-2 py-0.5 text-[10px] font-semibold text-gray-500 dark:border-white/10 dark:bg-white/5 dark:text-gray-300"
                         >
                           {tag}
                         </span>
@@ -167,7 +166,7 @@ const AboutPage = () => {
         </motion.section>
 
         {/* STORY SECTION */}
-        <section className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-16 py-20 border-b border-gray-100 relative">
+        <section className="relative grid grid-cols-1 gap-16 border-b border-gray-100 py-20 dark:border-white/10 lg:grid-cols-[200px_1fr]">
           <aside className="hidden lg:block sticky top-24 self-start space-y-8 pt-2">
             <div>
               <p className="text-[10px] text-gray-300 uppercase tracking-widest mb-4 font-bold">

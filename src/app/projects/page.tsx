@@ -25,7 +25,7 @@ export default function ProjectsPage() {
   }, [searchQuery, activeTab]);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col pt-24 pb-16">
+    <div className="flex min-h-screen flex-col bg-gray-50 pt-24 pb-16 dark:bg-zinc-950">
       <div className="fixed top-0 left-0 right-0 z-50">
         <Navbar />
       </div>
@@ -35,10 +35,10 @@ export default function ProjectsPage() {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
             <div>
-                <Link href="/#featured-projects" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 transition-colors mb-4">
+                <Link href="/#featured-projects" className="mb-4 inline-flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
                     <ArrowLeft className="w-4 h-4" /> Back to Home
                 </Link>
-                <h1 className="text-4xl font-bold tracking-tight text-gray-900 mb-6">Portfolio Projects</h1>
+                <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Portfolio Projects</h1>
                 
                 {/* Search Bar */}
                 <div className="relative w-full max-w-md">
@@ -47,7 +47,7 @@ export default function ProjectsPage() {
                     </div>
                     <input
                         type="text"
-                        className="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all sm:text-sm shadow-sm"
+                        className="block w-full rounded-xl border border-gray-200 bg-white py-2.5 pr-3 pl-10 leading-5 text-gray-900 placeholder-gray-400 shadow-sm transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-white/10 dark:bg-slate-900 dark:text-white dark:placeholder:text-gray-500 sm:text-sm"
                         placeholder="Search projects..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -64,7 +64,7 @@ export default function ProjectsPage() {
                         className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                             activeTab === tab
                                 ? "bg-blue-500 text-white shadow-md shadow-blue-500/20"
-                                : "bg-white text-gray-600 hover:bg-gray-100 hover:text-gray-900 border border-gray-200"
+                                : "border border-gray-200 bg-white text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:border-white/10 dark:bg-slate-900 dark:text-gray-300 dark:hover:bg-slate-800 dark:hover:text-white"
                         }`}
                     >
                         {tab}
@@ -87,7 +87,7 @@ export default function ProjectsPage() {
                         exit={{ opacity: 0, scale: 0.9 }}
                         transition={{ duration: 0.2 }}
                         key={project.id}
-                        className="group relative flex flex-col bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300"
+                        className="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-xl dark:border-white/10 dark:bg-slate-900"
                     >
                         {/* Image Container with Hover Overlay */}
                         <div className="relative w-full aspect-[4/3] overflow-hidden bg-gray-100">
@@ -117,18 +117,18 @@ export default function ProjectsPage() {
 
                         {/* Content Section */}
                         <div className="p-6 flex flex-col flex-grow">
-                            <h3 className="font-bold text-xl text-gray-900 mb-2">{project.name}</h3>
-                            <p className="text-gray-600 text-sm line-clamp-3 mb-4 flex-grow">{project.desc}</p>
+                            <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">{project.name}</h3>
+                            <p className="mb-4 flex-grow text-sm text-gray-600 line-clamp-3 dark:text-gray-300">{project.desc}</p>
                             
                             {/* Tags */}
                             <div className="flex flex-wrap gap-2 mt-auto">
                                 {project.tech.slice(0, 3).map((tag, i) => (
-                                    <span key={i} className="px-2.5 py-1 bg-gray-50 text-gray-600 text-xs rounded-md border border-gray-100">
+                                    <span key={i} className="rounded-md border border-gray-100 bg-gray-50 px-2.5 py-1 text-xs text-gray-600 dark:border-white/10 dark:bg-slate-800 dark:text-gray-300">
                                         {tag}
                                     </span>
                                 ))}
                                 {project.tech.length > 3 && (
-                                    <span className="px-2.5 py-1 bg-gray-50 text-gray-600 text-xs rounded-md border border-gray-100">
+                                    <span className="rounded-md border border-gray-100 bg-gray-50 px-2.5 py-1 text-xs text-gray-600 dark:border-white/10 dark:bg-slate-800 dark:text-gray-300">
                                         +{project.tech.length - 3}
                                     </span>
                                 )}
@@ -139,7 +139,7 @@ export default function ProjectsPage() {
             </AnimatePresence>
             
             {filteredProjects.length === 0 && (
-                <div className="col-span-full py-20 text-center text-gray-500">
+                <div className="col-span-full py-20 text-center text-gray-500 dark:text-gray-400">
                     No projects found for &quot;{searchQuery}&quot; in {activeTab}.
                 </div>
             )}

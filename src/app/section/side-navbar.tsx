@@ -38,9 +38,9 @@ const SideNavbar = () => {
     }
 
     return (
-        <div className="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-start gap-0">
+        <div className="fixed left-6 top-1/2 z-50 hidden -translate-y-1/2 flex-col items-start gap-0 lg:flex">
             {/* vertical line */}
-            <div className="absolute left-[5px] top-0 bottom-0 w-px bg-gray-200" />
+            <div className="absolute bottom-0 left-[5px] top-0 w-px bg-gray-200 dark:bg-white/10" />
 
             {sections.map(({ id, label }) => (
                 <button
@@ -52,7 +52,7 @@ const SideNavbar = () => {
                     <div className={`relative z-10 w-[11px] h-[11px] rounded-full border-2 transition-all duration-300 flex-shrink-0
                         ${active === id
                             ? 'border-blue-500 bg-blue-500 scale-110'
-                            : 'border-gray-300 bg-white group-hover:border-blue-400'
+                            : 'border-gray-300 bg-white group-hover:border-blue-400 dark:border-white/20 dark:bg-slate-950'
                         }`}
                     />
 
@@ -60,7 +60,7 @@ const SideNavbar = () => {
                     <span className={`text-xs tracking-wide transition-all duration-300 whitespace-nowrap
                         ${active === id
                             ? 'text-blue-500 font-medium opacity-100'
-                            : 'text-gray-400 opacity-0 group-hover:opacity-100'
+                            : 'text-gray-400 opacity-0 group-hover:opacity-100 dark:text-gray-500'
                         }`}
                     >
                         {label}
