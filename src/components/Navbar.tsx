@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { Kbd } from "@/components/ui/kbd"
+import { createContext } from 'react'
 
 const Navbar = () => {
     return (
@@ -20,7 +21,8 @@ const Navbar = () => {
                         <Link href="/projects" className="text-sm text-gray-500 hover:text-blue-500 transition-colors">Projects</Link>
                         <Link href="/contact" className="text-sm text-gray-500 hover:text-blue-500 transition-colors">Contact</Link>
                        <button className="border border-blue-400 bg-blue-100 cursor-pointer flex items-center gap-2  rounded-lg px-3 py-2">
-                        <span className="text-blue-300 text-sm">Search...</span>
+                       <span className="text-blue-300 text-sm" >Search...</span>
+                
                         <div className="flex items-center gap-1 ml-auto">
                             <Kbd className='text-blue-300'>⌘</Kbd>
                             <Kbd className='text-blue-300'>K</Kbd>
