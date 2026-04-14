@@ -52,7 +52,7 @@ const About = () => {
             className="flex flex-col gap-6 sm:gap-8 w-full"
           >
             <div className="rounded-2xl bg-zinc-50 p-4 sm:p-6 md:p-8 shadow-sm">
-              <p className="text-gray-700 leading-relaxed text-sm sm:text-base md:text-lg lg:text-[17px]">
+              <p className="text-gray-500 leading-relaxed text-sm sm:text-base md:text-lg lg:text-[17px]">
                 {aboutText}
               </p>
             </div>

@@ -38,7 +38,7 @@ export default function ProjectsPage() {
                 <Link href="/#featured-projects" className="mb-4 inline-flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
                     <ArrowLeft className="w-4 h-4" /> Back to Home
                 </Link>
-                <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Portfolio Projects</h1>
+                <h1 className="mb-6 text-4xl font-bold tracking-tighter leading-tight text-gray-900 dark:text-white">Portfolio Projects</h1>
                 
                 {/* Search Bar */}
                 <div className="relative w-full max-w-md">

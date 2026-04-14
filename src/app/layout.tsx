@@ -11,7 +11,7 @@ import { AppUIProvider } from "@/components/providers/AppUIProvider";
 const outfit = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
 
@@ -62,7 +62,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${outfit.variable} min-h-screen flex flex-col font-sans bg-background text-foreground`}
+        className={`${outfit.variable} min-h-screen flex flex-col bg-background text-foreground`}
       >
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <AppUIProvider>

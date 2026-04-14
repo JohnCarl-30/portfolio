@@ -91,14 +91,14 @@ const Hero = () => {
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 lg:px-8">
         <div className="px-8">
-          <h1 className="mb-4 text-4xl font-bold text-gray-800 dark:text-gray-100 md:text-6xl">
+          <h1 className="mb-4 text-4xl font-bold tracking-tighter leading-tight text-gray-900 dark:text-white md:text-6xl lg:text-7xl">
             My name is{" "}
             <span className="text-blue-500">
               {nameText}
               {!nameDone && <span className="animate-pulse">|</span>}
             </span>
           </h1>
-          <p className="mb-10 min-h-[2rem] text-xl text-gray-600 dark:text-gray-300 md:text-2xl">
+          <p className="mb-10 min-h-[2rem] text-xl text-gray-500 dark:text-gray-400 md:text-2xl">
             {taglineText}
             {nameDone &&
               taglineText.length <
