@@ -54,7 +54,7 @@ const AboutPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100 selection:text-blue-900 dark:bg-zinc-950 dark:text-white">
+    <div className="min-h-screen bg-white text-gray-900 selection:bg-blue-100 selection:text-blue-900 dark:bg-zinc-950 dark:text-white">
       <Navbar />
 
       <main className="max-w-5xl mx-auto px-6 lg:px-8">
