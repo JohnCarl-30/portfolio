@@ -104,7 +104,7 @@ interface OrbitProps {
 
 const Orbit: React.FC<OrbitProps> = ({
     orbitSize,
-    className = 'border-blue-300',
+    className = 'border-border',
 }: OrbitProps) => {
     return (
         <span
@@ -120,7 +120,7 @@ interface NucleusProps {
 }
 
 const Nucleus: FCC<NucleusProps> = ({
-    className = 'bg-blue-300',
+    className = 'bg-primary/10',
     children,
     onClick = () => { },
 }) => {

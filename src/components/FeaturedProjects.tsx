@@ -57,10 +57,10 @@ const FeaturedProjects = () => {
                 <motion.div
                     key={project.id}
                     variants={itemVariants}
-                    className="group relative flex flex-col bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300"
+                    className="group relative flex flex-col bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-xl transition-all duration-300"
                 >
                     {/* Image Container with Hover Overlay */}
-                    <div className="relative w-full aspect-[4/3] overflow-hidden bg-gray-100">
+                    <div className="relative w-full aspect-[4/3] overflow-hidden bg-muted">
                         {/* We use a div as placeholder for the image if it doesn't exist */}
                         {project.url ? (
                             <Image
@@ -70,7 +70,7 @@ const FeaturedProjects = () => {
                                 className="object-cover group-hover:scale-105 transition-transform duration-500"
                             />
                         ) : (
-                            <div className="w-full h-full bg-blue-50 flex items-center justify-center text-blue-200">
+                            <div className="w-full h-full bg-blue-50 dark:bg-slate-900 flex items-center justify-center text-blue-200 dark:text-blue-900">
                                 No Image
                             </div>
                         )}
@@ -79,7 +79,7 @@ const FeaturedProjects = () => {
                         <div className="absolute inset-0 bg-blue-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
                             <Link 
                                 href={`/projects/${project.id}`}
-                                className="bg-white text-gray-900 px-6 py-2 rounded-full font-medium shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 pointer-events-auto"
+                                className="bg-white text-gray-900 dark:bg-slate-950 dark:text-white px-6 py-2 rounded-full font-medium shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 pointer-events-auto"
                             >
                                 View Project
                             </Link>
@@ -88,18 +88,18 @@ const FeaturedProjects = () => {
 
                     {/* Content Section */}
                     <div className="p-6 flex flex-col flex-grow">
-                        <h3 className="font-bold text-xl text-gray-900 mb-2">{project.name}</h3>
-                        <p className="text-gray-600 text-sm line-clamp-3 mb-4 flex-grow">{project.desc}</p>
+                        <h3 className="font-bold text-xl text-foreground mb-2">{project.name}</h3>
+                        <p className="text-muted-foreground text-sm line-clamp-3 mb-4 flex-grow">{project.desc}</p>
                         
                         {/* Tags */}
                         <div className="flex flex-wrap gap-2 mt-auto">
                             {project.tech.slice(0, 3).map((tag, i) => (
-                                <span key={i} className="px-2.5 py-1 bg-gray-50 text-gray-600 text-xs rounded-md border border-gray-100">
+                                <span key={i} className="px-2.5 py-1 bg-muted text-muted-foreground text-xs rounded-md border border-border">
                                     {tag}
                                 </span>
                             ))}
                             {project.tech.length > 3 && (
-                                <span className="px-2.5 py-1 bg-gray-50 text-gray-600 text-xs rounded-md border border-gray-100">
+                                <span className="px-2.5 py-1 bg-muted text-muted-foreground text-xs rounded-md border border-border">
                                     +{project.tech.length - 3}
                                 </span>
                             )}

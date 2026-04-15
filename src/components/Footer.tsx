@@ -15,13 +15,13 @@ const Footer = () => {
 
                 {/* Social Links */}
                 <div className="flex items-center gap-5">
-                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-[var(--footer-muted)] transition-colors hover:text-[var(--footer-hover)]">
+                    <a href="https://github.com/santosjohncarl" target="_blank" rel="noopener noreferrer" className="text-[var(--footer-muted)] transition-colors hover:text-[var(--footer-hover)]">
                         <Github className="w-5 h-5" />
                     </a>
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-[var(--footer-muted)] transition-colors hover:text-[var(--footer-hover)]">
+                    <a href="https://linkedin.com/in/santosjohncarl" target="_blank" rel="noopener noreferrer" className="text-[var(--footer-muted)] transition-colors hover:text-[var(--footer-hover)]">
                         <Linkedin className="w-5 h-5" />
                     </a>
-                    <a href="mailto:contact@example.com" className="text-[var(--footer-muted)] transition-colors hover:text-[var(--footer-hover)]">
+                    <a href="mailto:johncarl.santos@example.com" className="text-[var(--footer-muted)] transition-colors hover:text-[var(--footer-hover)]">
                         <Mail className="w-5 h-5" />
                     </a>
                 </div>
