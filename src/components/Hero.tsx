@@ -14,11 +14,12 @@ function useTypewriter(text: string, speed = 40, delay = 0) {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    let i = 0;
-    setDisplayed("");
-    setDone(false);
+    let interval: NodeJS.Timeout;
     const timeout = setTimeout(() => {
-      const interval = setInterval(() => {
+      let i = 0;
+      setDisplayed("");
+      setDone(false);
+      interval = setInterval(() => {
         setDisplayed(text.slice(0, i + 1));
         i++;
         if (i >= text.length) {
@@ -26,9 +27,12 @@ function useTypewriter(text: string, speed = 40, delay = 0) {
           setDone(true);
         }
       }, speed);
-      return () => clearInterval(interval);
     }, delay);
-    return () => clearTimeout(timeout);
+
+    return () => {
+      clearTimeout(timeout);
+      if (interval) clearInterval(interval);
+    };
   }, [text, speed, delay]);
 
   return { displayed, done };
@@ -149,10 +153,9 @@ const Hero = () => {
                 bounce: 0.4,
               }}
             >
-              <FloatingCircle
+            <FloatingCircle
                 style={{ right: "50rem", top: "5rem" }}
                 orbitSize="45rem"
-                orbitClass="border-gray-300"
                 toastMessage={
                   <span>
                     Yes, I&apos;m good at{" "}
@@ -177,8 +180,7 @@ const Hero = () => {
               <FloatingCircle
                 style={{ right: "30rem", bottom: "10rem" }}
                 orbitSize="25rem"
-                orbitClass="border-gray-300"
-                nucleusClass="bg-[#ffe58e]"
+                nucleusClass="bg-yellow-500/20"
                 toastMessage={
                   <span>
                     I also do <b>ML</b> with{" "}

@@ -14,19 +14,19 @@ interface HeroIcon {
 export const HERO_ICONS: HeroIcon[] = [
   {
     name: 'Instagram',
-    href: 'https://instagram.com',
+    href: 'https://instagram.com/santosjohncarl',
     icon: <InstagramLineIcon size={40} />,
   },
   {
     name: 'Facebook',
-    href: 'https://facebook.com',
+    href: 'https://facebook.com/santosjohncarl',
     icon: <FacebookCircleLineIcon size={40} />,
   },
 
 
   {
     name: 'GitHub',
-    href: 'https://github.com',
+    href: 'https://github.com/santosjohncarl',
     icon: <GithubLineIcon size={40} />,
   },
 ]

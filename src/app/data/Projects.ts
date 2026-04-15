@@ -26,7 +26,7 @@ export const projectsData: ProjectItem[] = [
     desc: "An AI-powered study platform that automatically generates flashcards and summaries from study materials to enhance learning efficiency.",
     longDescription: "StudyAI (autocards.app) is an advanced educational platform designed to streamline the learning process. By leveraging AI, it transforms complex study materials, notes, and PDFs into interactive flashcards and concise summaries. The platform features a sophisticated study workspace, OCR capabilities for image-based notes, and personalized study sessions to maximize information retention.",
     url: "/projects/autocards.png",
-    tech: ["NextJS", "TypeScript", "OpenAI API", "TailwindCSS", "Framer Motion"],
+    tech: ["NextJS", "TypeScript", "OpenAI API", "TailwindCSS", "Framer Motion", "Supabase", "Docker", "Digital Ocean", "Redis", "Celery", "pgvector"],
     role: "Lead Developer",
     timeline: "2024 - Present",
     keyFeatures: [

@@ -52,11 +52,11 @@ const Skills = () => {
                             y: -4,
                             boxShadow: "0 8px 30px rgba(96, 165, 250, 0.25)",
                             borderColor: "rgba(96, 165, 250, 0.9)",
-                            backgroundColor: "#fff",
+                            backgroundColor: "var(--card)",
                             transition: { duration: 0.2 }
                         }}
                         whileTap={{ scale: 0.97 }}
-                        className="flex items-center gap-x-3 rounded-xl border border-blue-300 bg-zinc-100 px-4 py-3 cursor-default"
+                        className="flex items-center gap-x-3 rounded-xl border border-blue-300 bg-card px-4 py-3 cursor-default"
                         style={{ willChange: "transform" }}
                     >
                         <motion.div
