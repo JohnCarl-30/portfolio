@@ -1,42 +1,33 @@
 "use client";
+
 import Image from "next/image";
-import { useMotionValue, useTransform, motion, useSpring } from "framer-motion";
-import { useState, useEffect } from "react";
-import ParticlesBackground from "./particles-background";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 import { HiOutlineDocumentDownload as ResumeIcon } from "react-icons/hi";
-import FloatingCircle, { getContainerVariants } from "./floating_cirlce";
 import { FaReact } from "react-icons/fa";
 
-// Typewriter hook
-function useTypewriter(text: string, speed = 40, delay = 0) {
-  const [displayed, setDisplayed] = useState("");
-  const [done, setDone] = useState(false);
+import FloatingCircle, { getContainerVariants } from "./floating_cirlce";
+import ParticlesBackground from "./particles-background";
 
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    const timeout = setTimeout(() => {
-      let i = 0;
-      setDisplayed("");
-      setDone(false);
-      interval = setInterval(() => {
-        setDisplayed(text.slice(0, i + 1));
-        i++;
-        if (i >= text.length) {
-          clearInterval(interval);
-          setDone(true);
-        }
-      }, speed);
-    }, delay);
-
-    return () => {
-      clearTimeout(timeout);
-      if (interval) clearInterval(interval);
-    };
-  }, [text, speed, delay]);
-
-  return { displayed, done };
-}
+const socialLinks = [
+  {
+    href: "https://github.com/santosjohncarl",
+    label: "GitHub",
+    icon: Github,
+  },
+  {
+    href: "https://linkedin.com/in/santosjohncarl",
+    label: "LinkedIn",
+    icon: Linkedin,
+  },
+  {
+    href: "mailto:johncarl.santos@example.com",
+    label: "Email",
+    icon: Mail,
+  },
+];
 
 const Hero = () => {
   const [windowOffset, setWindowOffset] = useState({
@@ -49,10 +40,19 @@ const Hero = () => {
   const y = useMotionValue(0);
 
   useEffect(() => {
-    setWindowOffset({
-      innerWidth: window.innerWidth,
-      innerHeight: window.innerHeight,
-    });
+    const syncWindow = () => {
+      setWindowOffset({
+        innerWidth: window.innerWidth,
+        innerHeight: window.innerHeight,
+      });
+    };
+
+    syncWindow();
+    window.addEventListener("resize", syncWindow);
+
+    return () => {
+      window.removeEventListener("resize", syncWindow);
+    };
   }, []);
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -60,169 +60,182 @@ const Hero = () => {
     y.set(event.clientY);
   };
 
-  const ySpring = useSpring(y, { stiffness: 100, damping: 10 });
-  const xSpring = useSpring(x, { stiffness: 100, damping: 10 });
+  const ySpring = useSpring(y, { stiffness: 100, damping: 12 });
+  const xSpring = useSpring(x, { stiffness: 100, damping: 12 });
   const rotateY = useTransform(
     xSpring,
-    [0, windowOffset.innerWidth],
-    [-10, 10],
+    [0, windowOffset.innerWidth || 1],
+    [-8, 8],
   );
   const rotateX = useTransform(
     ySpring,
-    [0, windowOffset.innerHeight],
-    [10, -10],
-  );
-
-  const { displayed: nameText, done: nameDone } = useTypewriter(
-    "John Carl Santos",
-    60,
-    300,
-  );
-  const { displayed: taglineText } = useTypewriter(
-    "I'm trying to turn coding into a hobby.",
-    40,
-    nameDone ? 0 : 99999,
+    [0, windowOffset.innerHeight || 1],
+    [8, -8],
   );
 
   return (
     <section
-      className="relative min-h-screen w-full flex items-center overflow-x-hidden pt-40 pb-16"
+      id="hero"
+      className="relative isolate flex min-h-[calc(100svh-5rem)] items-center overflow-hidden pt-8 pb-16 sm:pt-10 lg:pt-12"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setMouseMove(true)}
       onMouseLeave={() => setMouseMove(false)}
     >
       <ParticlesBackground />
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 lg:px-8">
-        <div className="px-8">
-          <h1 className="mb-4 text-4xl font-bold tracking-tighter leading-tight text-gray-900 dark:text-white md:text-6xl lg:text-7xl">
-            My name is{" "}
-            <span className="text-blue-500">
-              {nameText}
-              {!nameDone && <span className="animate-pulse">|</span>}
-            </span>
-          </h1>
-          <p className="mb-10 min-h-[2rem] text-xl text-gray-500 dark:text-gray-400 md:text-2xl">
-            {taglineText}
-            {nameDone &&
-              taglineText.length <
-                "I'm trying to turn coding into a hobby.".length && (
-                <span className="animate-pulse">|</span>
-              )}
-          </p>
-        </div>
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.16),transparent_30%),radial-gradient(circle_at_78%_18%,rgba(14,165,233,0.12),transparent_22%),linear-gradient(180deg,rgba(248,250,252,0.28),rgba(248,250,252,0.82)_58%,rgba(248,250,252,0.98))] dark:bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.18),transparent_30%),radial-gradient(circle_at_78%_18%,rgba(245,158,11,0.08),transparent_22%),linear-gradient(180deg,rgba(15,23,42,0.3),rgba(2,6,23,0.7)_58%,rgba(2,6,23,0.96))]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-background" />
 
-        {/* Main Vertical Stack */}
-        <div className="flex flex-col items-start gap-12 md:pl-6">
-          {/* MEDIA SECTION */}
-          <motion.div
-            className="flex flex-col md:flex-row items-center md:items-start gap-8 w-full"
-            style={{
-              rotateX: mouseMove ? rotateX : 0,
-              rotateY: mouseMove ? rotateY : 0,
-              perspective: 1000,
-            }}
-          >
-            <div className="w-full sm:w-full md:w-[370px] md:flex-shrink-0 shadow-2xl rounded-2xl overflow-hidden">
-              <Image
-                src="/personal.jpg"
-                alt="John Carl Santos"
-                width={400}
-                height={400}
-                priority
-                className="h-auto w-full object-cover"
-                id="hero"
-              />
-            </div>
-          </motion.div>
+      <div className="page-shell relative z-10 grid items-center gap-14 lg:grid-cols-[0.96fr_1.04fr]">
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="md:pl-6"
+        >
+          <div className="max-w-xl space-y-8">
+            <h1 className="text-[clamp(4rem,9vw,7rem)] font-semibold leading-[0.88] tracking-[-0.08em] text-slate-950 dark:text-white">
+              John
+              <span className="font-serif text-primary italic"> Carl </span>
+              Santos
+            </h1>
 
-          {/* FLOATING CIRCLES */}
-          <motion.div
-            variants={getContainerVariants(0.2, 1)}
-            initial="hidden"
-            animate="visible"
-            className="hidden md:block"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{
-                delay: 1.8,
-                duration: 0.6,
-                type: "spring",
-                bounce: 0.4,
-              }}
-            >
-            <FloatingCircle
-                style={{ right: "50rem", top: "5rem" }}
-                orbitSize="45rem"
-                toastMessage={
-                  <span>
-                    Yes, I&apos;m good at{" "}
-                    <b className="text-[#60a5fa]">React</b>!
-                  </span>
-                }
-              >
-                <FaReact className="text-blue-400" size="2rem" />
-              </FloatingCircle>
-            </motion.div>
+            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-slate-400 dark:text-slate-500">
+              Aspiring AI Engineer
+            </p>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{
-                delay: 2.2,
-                duration: 0.6,
-                type: "spring",
-                bounce: 0.4,
-              }}
-            >
-              <FloatingCircle
-                style={{ right: "30rem", bottom: "10rem" }}
-                orbitSize="25rem"
-                nucleusClass="bg-yellow-500/20"
-                toastMessage={
-                  <span>
-                    I also do <b>ML</b> with{" "}
-                    <b className="text-[#ffca1d]">Python</b>!
-                  </span>
-                }
-              >
-                <div
-                  className="h-12 w-12"
-                  style={{
-                    backgroundImage: `url('/img/python-logo.svg')`,
-                    backgroundPosition: "center",
-                    backgroundSize: "contain",
-                  }}
-                />
-              </FloatingCircle>
-            </motion.div>
-          </motion.div>
-
-          <div className="w-full">
-            {/* BUTTONS */}
-            <div className="flex flex-wrap gap-6">
+            <div className="flex flex-wrap gap-4">
               <Link
                 href="/JohnCarl_Resume.pdf"
                 target="_blank"
-                className="group relative"
+                className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-sm font-medium text-white transition-transform hover:-translate-y-0.5 dark:bg-white dark:text-slate-950"
               >
-                <span className="relative z-10 block px-8 py-3 bg-blue-500 text-white transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1 font-medium">
-                  <ResumeIcon className="inline mr-2" size="1.2rem" /> Resume
-                </span>
-                <span className="absolute inset-0 bg-blue-800"></span>
+                <ResumeIcon size="1.15rem" />
+                Resume
               </Link>
 
-              <Link href="/contact" className="group relative">
-                <span className="relative z-10 block border border-blue-500 bg-white px-8 py-3 font-medium text-blue-500 transition-all group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:bg-blue-500 group-hover:text-white dark:bg-slate-950 dark:text-blue-300">
-                  Get in Touch
-                </span>
-                <span className="absolute inset-0 bg-blue-500/10"></span>
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/80 px-6 py-3 text-sm font-medium text-slate-700 transition-all hover:border-primary/40 hover:text-primary dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-primary/40 dark:hover:text-primary"
+              >
+                Projects
+                <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
+
+            <div className="flex items-center gap-3">
+              {socialLinks.map((item) => {
+                const Icon = item.icon;
+
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target={item.href.startsWith("http") ? "_blank" : undefined}
+                    rel={
+                      item.href.startsWith("http")
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
+                    aria-label={item.label}
+                    title={item.label}
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/80 bg-white/80 text-slate-500 transition-all hover:border-primary/40 hover:text-primary dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-primary/40 dark:hover:text-primary"
+                  >
+                    <Icon className="h-4 w-4" />
+                  </a>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 36 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.12, ease: "easeOut" }}
+          className="relative flex justify-center lg:justify-end"
+        >
+          <div className="relative w-full max-w-[470px]">
+            <div className="pointer-events-none absolute -left-8 top-10 hidden h-40 w-40 rounded-full bg-blue-300/30 blur-3xl dark:bg-blue-500/15 md:block" />
+            <div className="pointer-events-none absolute -right-4 bottom-10 hidden h-36 w-36 rounded-full bg-sky-200/40 blur-3xl dark:bg-sky-400/10 md:block" />
+
+            <motion.div
+              className="glass-panel relative overflow-hidden rounded-[2rem]"
+              style={{
+                rotateX: mouseMove ? rotateX : 0,
+                rotateY: mouseMove ? rotateY : 0,
+                transformPerspective: 1200,
+              }}
+            >
+              <div className="relative aspect-[4/5]">
+                <Image
+                  src="/personal.jpg"
+                  alt="John Carl Santos"
+                  fill
+                  priority
+                  className="object-cover object-center"
+                />
+              </div>
+            </motion.div>
+
+            <motion.div
+              variants={getContainerVariants(0.2, 0.8)}
+              initial="hidden"
+              animate="visible"
+              className="hidden xl:block"
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  delay: 1.2,
+                  duration: 0.6,
+                  type: "spring",
+                  bounce: 0.35,
+                }}
+              >
+                <FloatingCircle
+                  style={{ left: "-2.5rem", top: "2.5rem" }}
+                  orbitSize="13rem"
+                  toastMessage={
+                    <span>
+                      React
+                    </span>
+                  }
+                >
+                  <FaReact className="text-blue-400" size="2rem" />
+                </FloatingCircle>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  delay: 1.45,
+                  duration: 0.6,
+                  type: "spring",
+                  bounce: 0.35,
+                }}
+              >
+                <FloatingCircle
+                  style={{ right: "-1.25rem", bottom: "4rem" }}
+                  orbitSize="11rem"
+                  nucleusClass="bg-yellow-500/20"
+                  toastMessage={<span>Python</span>}
+                >
+                  <div
+                    className="h-12 w-12"
+                    style={{
+                      backgroundImage: "url('/img/python-logo.svg')",
+                      backgroundPosition: "center",
+                      backgroundSize: "contain",
+                    }}
+                  />
+                </FloatingCircle>
+              </motion.div>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
