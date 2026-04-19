@@ -1,4 +1,4 @@
-import { Outfit } from "next/font/google";
+import { Cormorant_Garamond, Outfit } from "next/font/google";
 import "./globals.css";
 import "remixicon/fonts/remixicon.css";
 import { Toaster } from "react-hot-toast";
@@ -14,10 +14,16 @@ const outfit = Outfit({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+});
 
 export const metadata = {
   title: "John Carl Santos",
-  description: "A personal portfolio website built with Next.js and Tailwind CSS.",
+  description: "Portfolio of John Carl Santos, focused on software engineering, AI workflows, and thoughtful product experiences.",
 };
 
 const themeScript = `
@@ -62,7 +68,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${outfit.variable} min-h-screen flex flex-col bg-background text-foreground`}
+        className={`${outfit.variable} ${cormorant.variable} flex min-h-screen flex-col bg-background text-foreground`}
       >
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <AppUIProvider>

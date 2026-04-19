@@ -1,101 +1,117 @@
-'use client'
-import Heading from "./sub/Heading";
+"use client";
+
 import Image from "next/image";
-import { projectsData } from "../app/data/Projects";
-import { motion } from "framer-motion";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
+import { projectsData } from "@/app/data/Projects";
+import Heading from "./sub/Heading";
+
+const placeholderStyles = [
+  "from-sky-500/30 via-blue-500/15 to-slate-900/80",
+  "from-emerald-500/25 via-cyan-500/15 to-slate-900/80",
+  "from-violet-500/25 via-indigo-500/15 to-slate-900/80",
+];
+
 const FeaturedProjects = () => {
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      }
-    }
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring" as const,
-        stiffness: 260,
-        damping: 20,
-      }
-    }
-  }
-
-  // Display only top 3 featured projects
   const featured = projectsData.slice(0, 3);
 
   return (
-    <div className="flex flex-col items-center max-w-6xl mx-auto gap-y-10 px-6 lg:px-8 py-24" id="featured-projects">
-        <div className="md:pl-6 w-full flex items-center justify-between">
-            <Heading text={"Featured Projects"} />
-            <Link 
-                href="/projects" 
-                className="group flex items-center gap-2 text-blue-500 font-medium hover:text-blue-600 transition-colors"
-            >
-                View All
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+    <section id="featured-projects" className="section-band section-band--mist">
+      <div className="page-shell">
+        <div className="grid gap-8 md:grid-cols-[0.9fr_auto] md:items-end">
+          <div className="md:pl-6">
+            <div className="section-kicker">
+              <span className="section-rule" />
+              Work
+            </div>
+            <Heading text="Projects." />
+          </div>
+
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 self-start text-sm font-medium text-primary transition-transform hover:translate-x-1"
+          >
+            View all
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
 
         <motion.div
-            className="md:pl-6 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+          className="mt-14 grid gap-6 md:pl-6 lg:grid-cols-3"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.1,
+              },
+            },
+          }}
         >
-            {featured.map((project) => (
-                <motion.div
-                    key={project.id}
-                    variants={itemVariants}
-                    className="group relative flex flex-col bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-xl transition-all duration-300"
-                >
-                    {/* Image Container with Hover Overlay */}
-                    <div className="relative w-full aspect-[4/3] overflow-hidden bg-muted">
-                        {/* We use a div as placeholder for the image if it doesn't exist */}
-                        {project.url ? (
-                            <Image
-                                src={project.url}
-                                alt={project.name}
-                                fill
-                                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                            />
-                        ) : (
-                            <div className="w-full h-full bg-blue-50 dark:bg-slate-900 flex items-center justify-center text-blue-200 dark:text-blue-900">
-                                No Image
-                            </div>
-                        )}
-                        
-                        {/* Hover Overlay */}
-                        <div className="absolute inset-0 bg-blue-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
-                            <Link 
-                                href={`/projects/${project.id}`}
-                                className="bg-white text-gray-900 dark:bg-slate-950 dark:text-white px-6 py-2 rounded-full font-medium shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 pointer-events-auto"
-                            >
-                                View Project
-                            </Link>
-                        </div>
-                    </div>
+          {featured.map((project, index) => {
+            const placeholderTone =
+              placeholderStyles[index % placeholderStyles.length];
 
-                    {/* Content Section */}
-                    <div className="p-6 flex flex-col flex-grow">
-                        <h3 className="font-bold text-xl text-foreground mb-2">{project.name}</h3>
-                        <p className="text-muted-foreground text-sm line-clamp-3 mb-4 flex-grow">{project.desc}</p>
+            return (
+              <motion.div
+                key={project.id}
+                variants={{
+                  hidden: { opacity: 0, y: 24 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.45, ease: "easeOut" },
+                  },
+                }}
+              >
+                <Link
+                  href={`/projects/${project.id}`}
+                  className="group block overflow-hidden rounded-[1.85rem] border border-slate-200/80 bg-white/60 shadow-[0_28px_90px_-42px_rgba(15,23,42,0.34)] transition-transform hover:-translate-y-1 dark:border-white/10 dark:bg-white/5"
+                >
+                  <div className="relative aspect-[4/5]">
+                    {project.url ? (
+                      <Image
+                        src={project.url}
+                        alt={project.name}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div
+                        className={`flex h-full w-full items-end bg-gradient-to-br ${placeholderTone} p-6 text-white`}
+                      >
+                        <p className="text-3xl font-semibold tracking-[-0.05em]">
+                          {project.name}
+                        </p>
+                      </div>
+                    )}
+
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/82 via-slate-950/18 to-transparent p-6">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-white/70">
+                        {project.category} • {project.timeline}
+                      </p>
+                      <div className="mt-3 flex items-center justify-between gap-4">
+                        <p className="text-2xl font-semibold tracking-[-0.04em] text-white">
+                          {project.name}
+                        </p>
+                        <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-transform group-hover:translate-x-1">
+                          <ArrowRight className="h-5 w-5" />
+                        </span>
+                      </div>
                     </div>
-                </motion.div>
-            ))}
+                  </div>
+                </Link>
+              </motion.div>
+            );
+          })}
         </motion.div>
-    </div>
-  )
-}
+      </div>
+    </section>
+  );
+};
 
 export default FeaturedProjects;
