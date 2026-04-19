@@ -20,35 +20,6 @@ export interface ProjectItem {
 
 export const projectsData: ProjectItem[] = [
   {
-    id: "alphaexplora",
-    name: "Alphaexplora",
-    category: "Web",
-    desc: "A fintech workflow platform empowering modern fintech teams to scale with confidence through real-time visibility and automated multi-entity control.",
-    longDescription: "Alphaexplora is a premium fintech workflow platform designed to build trust from the first scroll. It provides financial institutions with comprehensive tools for real-time visibility across multi-entity operations and automated workflow management. The platform prioritizes user experience with smooth interactions and an intuitive interface tailored for finance professionals.",
-    url: "/projects/alphaexplora.jpg",
-    tech: ["NextJS", "TypeScript", "TailwindCSS", "Framer Motion"],
-    role: "Web Developer",
-    timeline: "2024",
-    keyFeatures: [
-      {
-        title: "Real-time Visibility",
-        description: "Monitor fintech operations across multiple entities with live dashboards and instant updates.",
-        image: "/projects/alphaexplora.jpg",
-      },
-      {
-        title: "Automated Multi-Entity Control",
-        description: "Streamline workflow management across your entire fintech infrastructure with advanced automation.",
-        image: "/projects/alphaexplora.jpg",
-      },
-      {
-        title: "Enterprise-Grade Security",
-        description: "Built with financial-grade security standards to protect sensitive transaction data.",
-        image: "/projects/alphaexplora.jpg",
-      }
-    ],
-    liveDemoUrl: "https://fintech-nine-psi.vercel.app/#pricing"
-  },
-  {
     id: "study-ai",
     name: "StudyAI (autocards.app)",
     category: "Web",
