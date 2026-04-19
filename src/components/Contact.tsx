@@ -14,12 +14,35 @@ const Contact = () => {
         e.preventDefault();
         setIsSubmitting(true);
         
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        toast.success("Message sent! John will get back to you soon.");
-        setIsSubmitting(false);
-        (e.target as HTMLFormElement).reset();
+        const formData = new FormData(e.currentTarget);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            subject: formData.get('subject'),
+            message: formData.get('message'),
+        };
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+                toast.success("Message sent! John will get back to you soon.");
+                (e.target as HTMLFormElement).reset();
+            } else {
+                toast.error("Failed to send message. Please try again.");
+            }
+        } catch (error) {
+            console.error('Error sending message:', error);
+            toast.error("Failed to send message. Please try again.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (

@@ -90,20 +90,6 @@ const FeaturedProjects = () => {
                     <div className="p-6 flex flex-col flex-grow">
                         <h3 className="font-bold text-xl text-foreground mb-2">{project.name}</h3>
                         <p className="text-muted-foreground text-sm line-clamp-3 mb-4 flex-grow">{project.desc}</p>
-                        
-                        {/* Tags */}
-                        <div className="flex flex-wrap gap-2 mt-auto">
-                            {project.tech.slice(0, 3).map((tag, i) => (
-                                <span key={i} className="px-2.5 py-1 bg-muted text-muted-foreground text-xs rounded-md border border-border">
-                                    {tag}
-                                </span>
-                            ))}
-                            {project.tech.length > 3 && (
-                                <span className="px-2.5 py-1 bg-muted text-muted-foreground text-xs rounded-md border border-border">
-                                    +{project.tech.length - 3}
-                                </span>
-                            )}
-                        </div>
                     </div>
                 </motion.div>
             ))}
