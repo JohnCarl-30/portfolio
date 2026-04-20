@@ -5,6 +5,7 @@ import UserLineIcon from 'remixicon-react/UserLineIcon'
 import HistoryLineIcon from 'remixicon-react/HistoryLineIcon'
 import BriefcaseLineIcon from 'remixicon-react/BriefcaseLineIcon'
 import UserStarLineIcon from 'remixicon-react/UserStarLineIcon'
+import AwardLineIcon from 'remixicon-react/AwardLineIcon'
 import ProjectorLineIcon from 'remixicon-react/ProjectorLineIcon'
 import PriceTag3LineIcon from 'remixicon-react/PriceTag3LineIcon'
 import ContactsBook2LineIcon from 'remixicon-react/ContactsBook2LineIcon'
@@ -24,6 +25,7 @@ export const navbarData: NavItem[] = [
     { id: 'experience', name: 'MyRoad', icon: <HistoryLineIcon /> },
     { id: 'skills', name: 'Skills', icon: <BriefcaseLineIcon /> },
     { id: 'reviews', name: 'Reviews', icon: <UserStarLineIcon /> },
+    { id: 'certifications', name: 'Certifications', icon: <AwardLineIcon /> },
     { id: 'projects', name: 'Projects', icon: <ProjectorLineIcon /> },
     { id: 'pricing', name: 'Pricing', icon: <PriceTag3LineIcon /> },
     { id: 'contact', name: 'Contact', icon: <ContactsBook2LineIcon /> },
