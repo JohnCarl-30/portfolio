@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
+import Certifications from "@/components/Certifications";
 import FeaturedProjects from "@/components/FeaturedProjects";
 import Navbar from "@/components/Navbar";
 import SideNavbar from "@/app/section/side-navbar";
@@ -15,6 +16,7 @@ export default function HomeComponent() {
         <About />
         <FeaturedProjects />
         <Skills />
+        <Certifications />
         <Contact />
       </main>
       <SideNavbar />

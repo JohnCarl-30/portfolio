@@ -45,9 +45,8 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 border-t border-[var(--footer-border)] pt-6 text-xs text-[var(--footer-muted)] md:flex-row md:items-center md:justify-between">
+        <div className="flex justify-center items-center gap-3 border-t border-[var(--footer-border)] pt-6 text-xs text-[var(--footer-muted)]">
           <p>Copyright © {new Date().getFullYear()} John Carl Santos.</p>
-          <p>Designed and built with Next.js, Tailwind CSS, and Framer Motion.</p>
         </div>
       </div>
     </footer>
