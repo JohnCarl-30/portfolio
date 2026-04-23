@@ -124,9 +124,7 @@ const AboutPage = () => {
                 John Carl Santos · 2024
               </div>
             </div>
-            <p className="pt-2 text-center text-[10px] font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500">
-              CJ · dyeyc · @johncarlsantos
-            </p>
+           
           </div>
 
           <div className="flex flex-col justify-center divide-y divide-gray-100 dark:divide-white/10">

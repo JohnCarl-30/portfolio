@@ -43,6 +43,7 @@ const Chatbot = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const MAX_CHARACTERS = 1000;
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -167,19 +168,26 @@ const Chatbot = () => {
             {/* Input */}
             <div className="p-4 border-t border-gray-100 dark:border-zinc-800 bg-white dark:bg-zinc-900">
               <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault();
-                      void handleSend();
-                    }
-                  }}
-                  placeholder="Type your message..."
-                  className="flex-1 p-2 bg-zinc-100 dark:bg-zinc-800 border-none rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none text-gray-800 dark:text-gray-200"
-                />
+                <div className="flex-1">
+                  <input
+                    type="text"
+                    value={input}
+                    onChange={(e) => {
+                      if (e.target.value.length <= MAX_CHARACTERS) {
+                        setInput(e.target.value);
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        void handleSend();
+                      }
+                    }}
+                    placeholder="Type your message..."
+                    className="w-full p-2 bg-zinc-100 dark:bg-zinc-800 border-none rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none text-gray-800 dark:text-gray-200"
+                  />
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{input.length} / {MAX_CHARACTERS}</p>
+                </div>
                 <button
                   onClick={handleSend}
                   disabled={isLoading}
