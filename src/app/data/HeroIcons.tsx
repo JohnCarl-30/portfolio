@@ -36,23 +36,24 @@ export const aboutText: string = "I am a passionate software developer who enjoy
 interface Skill {
   name: string;
   icon: string;
+  category: 'frontend' | 'backend' | 'infra' | 'ai';
 }
 
 export const skillsData: Skill[] = [
-  { name: 'Figma', icon: '/skills/figma.png' },
-  { name: 'VS Code', icon: '/skills/vscode.png' },
-  { name: 'HTML', icon: '/skills/html.png' },
-  { name: 'CSS', icon: '/skills/css.png' },
-  { name: 'JavaScript', icon: '/skills/js.png' },
-  { name: 'TailwindCSS', icon: '/skills/tailwind.png' },
-  { name: 'Vite', icon: '/skills/vite.png' },
-  { name: 'ReactJS', icon: '/skills/react.png' },
-  { name: 'TypeScript', icon: '/skills/ts.png' },
-  { name: 'AI', icon: '/skills/ai.png' },
-  { name: 'NextJS', icon: '/skills/nextjs.png' },
-  { name: 'NodeJS', icon: '/skills/nodejs.png' },
-  { name: 'Github', icon: '/skills/github.png' },
-  { name:'Docker', icon:'/skills/Docker.png'},
-  {name: 'Python', icon: '/skills/python-logo.svg'},
-  {name: 'Postgresql', icon: '/skills/PostgresSQL.png'}
+  { name: 'Figma', icon: '/skills/figma.png', category: 'frontend' },
+  { name: 'VS Code', icon: '/skills/vscode.png', category: 'infra' },
+  { name: 'HTML', icon: '/skills/html.png', category: 'frontend' },
+  { name: 'CSS', icon: '/skills/css.png', category: 'frontend' },
+  { name: 'JavaScript', icon: '/skills/js.png', category: 'frontend' },
+  { name: 'TailwindCSS', icon: '/skills/tailwind.png', category: 'frontend' },
+  { name: 'Vite', icon: '/skills/vite.png', category: 'frontend' },
+  { name: 'ReactJS', icon: '/skills/react.png', category: 'frontend' },
+  { name: 'TypeScript', icon: '/skills/ts.png', category: 'frontend' },
+  { name: 'AI', icon: '/skills/ai.png', category: 'ai' },
+  { name: 'NextJS', icon: '/skills/nextjs.png', category: 'frontend' },
+  { name: 'NodeJS', icon: '/skills/nodejs.png', category: 'backend' },
+  { name: 'Github', icon: '/skills/github.png', category: 'infra' },
+  { name: 'Docker', icon: '/skills/Docker.png', category: 'infra' },
+  { name: 'Python', icon: '/skills/python-logo.svg', category: 'backend' },
+  { name: 'Postgresql', icon: '/skills/PostgresSQL.png', category: 'backend' }
 ];
