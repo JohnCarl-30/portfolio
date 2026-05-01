@@ -23,7 +23,7 @@ const socialLinks = [
     icon: Linkedin,
   },
   {
-    href: "mailto:johncarl.santos@example.com",
+    href: "mailto:johncarlsantos30@gmail.com",
     label: "Email",
     icon: Mail,
   },
