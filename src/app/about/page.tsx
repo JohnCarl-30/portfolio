@@ -115,7 +115,7 @@ const AboutPage = () => {
           <div className="space-y-4">
             <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-gray-100 group">
               <Image
-                src="/personal.jpg"
+                src="/img/pic2.jpeg"
                 alt="John Carl Santos"
                 fill
                 className="object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-500"
