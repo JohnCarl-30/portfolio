@@ -6,7 +6,7 @@ import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 
 const contactLinks = [
   {
-    href: "mailto:johncarl.santos@example.com",
+    href: "mailto:johncarlsantos30@gmail.com",
     label: "Email",
     icon: Mail,
   },
@@ -40,10 +40,10 @@ const Contact = () => {
                 Contact
               </div>
               <a
-                href="mailto:johncarl.santos@example.com"
+                href="mailto:johncarlsantos30@gmail.com"
                 className="text-[clamp(2rem,4vw,3.2rem)] font-semibold leading-[1] tracking-[-0.06em] text-slate-950 transition-colors hover:text-primary dark:text-white dark:hover:text-primary"
               >
-                johncarl.santos@example.com
+                johncarlsantos30@gmail.com
               </a>
             </div>
 
