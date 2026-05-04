@@ -45,6 +45,7 @@
     --color-sidebar-ring: var(--sidebar-ring);
     --font-sans: var(--font-outfit);
     --font-serif: var(--font-cormorant);
+    --font-mono: var(--font-fira-code);
 }
 
 :root {
@@ -272,4 +273,23 @@ html[data-theme-selection="midnight"] body {
     radial-gradient(circle at 82% 14%, rgba(148, 163, 184, 0.08), transparent 24%);
   border-top-color: rgba(148, 163, 184, 0.14);
   border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+@keyframes moveUpInitial {
+  to { transform: translateY(-105%); }
+}
+
+@keyframes moveUpEnd {
+  0% { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes slide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-100% - 32px)); }
+}
+
+@keyframes slideReverse {
+  0% { transform: translateX(calc(-100% - 32px)); }
+  100% { transform: translateX(0); }
 }
