@@ -4,7 +4,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 import { skillsData } from "@/app/data/HeroIcons";
-import Heading from "./sub/Heading";
 
 const categoryOrder = ["frontend", "backend", "infra", "ai"] as const;
 
@@ -24,19 +23,19 @@ const Skills = () => {
   return (
     <section className="section-band section-band--sand">
       <div className="page-shell">
-        <div className="grid gap-12 lg:grid-cols-[0.78fr_1.22fr]">
+        <div className="grid gap-12 lg:grid-cols-[0.35fr_1fr]">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.55 }}
-            className="md:pl-6"
           >
-            <div className="section-kicker">
-              <span className="section-rule" />
+            <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80 mb-6">
               Stack
-            </div>
-            <Heading text="Tools." />
+            </p>
+            <h2 className="text-4xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">
+              Tools.
+            </h2>
           </motion.div>
 
           <motion.div
@@ -52,21 +51,21 @@ const Skills = () => {
                 },
               },
             }}
-            className="space-y-8"
+            className="space-y-10"
           >
             {groupedSkills.map(({ category, skills }) => (
-              <div key={category} className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <h3 className="shrink-0 text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-slate-500 dark:text-slate-300/80">
+              <div key={category}>
+                <div className="mb-4 flex items-center gap-4">
+                  <h3 className="shrink-0 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
                     {categoryTitles[category]}
                   </h3>
                   <span className="h-px w-full bg-slate-200 dark:bg-white/10" />
-                  <span className="shrink-0 text-[0.68rem] font-semibold tracking-[0.16em] text-slate-400 dark:text-slate-500">
+                  <span className="shrink-0 font-mono text-xs font-semibold text-slate-400 dark:text-slate-500">
                     {String(skills.length).padStart(2, "0")}
                   </span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+                <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
                   {skills.map((skill) => (
                     <motion.div
                       key={skill.name}
@@ -81,18 +80,18 @@ const Skills = () => {
                           },
                         },
                       }}
-                      whileHover={{ y: -3, borderColor: "rgba(100,116,139,0.45)" }}
+                      whileHover={{ y: -3 }}
                       title={skill.name}
-                      className="group flex aspect-[0.93/1] min-h-[90px] flex-col items-center justify-center gap-2 rounded-[0.95rem] border border-slate-200/80 bg-white/70 p-2.5 text-slate-900 backdrop-blur-sm transition-colors hover:border-primary/40 dark:border-white/10 dark:bg-white/5 dark:text-slate-100 dark:hover:border-primary/40"
+                      className="group flex flex-col items-center justify-center gap-2 rounded-xl border border-slate-200/60 bg-white/50 p-3 text-slate-900 transition-colors hover:border-slate-400 dark:border-white/10 dark:bg-white/5 dark:text-slate-100"
                     >
                       <Image
                         src={skill.icon}
                         alt={skill.name}
-                        width={28}
-                        height={28}
-                        className="h-7 w-7 object-contain"
+                        width={24}
+                        height={24}
+                        className="h-6 w-6 object-contain"
                       />
-                      <span className="text-[0.78rem] font-medium tracking-[0.01em] text-slate-600 transition-colors group-hover:text-slate-900 dark:text-slate-300 dark:group-hover:text-white">
+                      <span className="text-xs font-medium text-slate-600 transition-colors group-hover:text-slate-900 dark:text-slate-300 dark:group-hover:text-white">
                         {skill.name}
                       </span>
                     </motion.div>
