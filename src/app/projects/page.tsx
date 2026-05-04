@@ -49,10 +49,9 @@ export default function ProjectsPage() {
             </Link>
 
             <div className="mt-6">
-              <div className="section-kicker">
-                <span className="section-rule" />
+              <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80 mb-6">
                 Projects
-              </div>
+              </p>
               <h1 className="text-5xl font-semibold tracking-[-0.06em] text-slate-950 dark:text-white md:text-6xl">
                 Selected builds across AI, fintech, and product design.
               </h1>
