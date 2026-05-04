@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 import { projectsData } from "@/app/data/Projects";
-import Heading from "./sub/Heading";
 
 const placeholderStyles = [
   "from-sky-500/30 via-blue-500/15 to-slate-900/80",
@@ -20,26 +19,27 @@ const FeaturedProjects = () => {
   return (
     <section id="featured-projects" className="section-band section-band--mist">
       <div className="page-shell">
-        <div className="grid gap-8 md:grid-cols-[0.9fr_auto] md:items-end">
-          <div className="md:pl-6">
-            <div className="section-kicker">
-              <span className="section-rule" />
+        <div className="flex items-end justify-between">
+          <div>
+            <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80 mb-6">
               Work
-            </div>
-            <Heading text="Projects." />
+            </p>
+            <h2 className="text-4xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">
+              Projects.
+            </h2>
           </div>
 
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 self-start text-sm font-medium text-primary transition-transform hover:translate-x-1"
+            className="group hidden items-center gap-2 text-sm font-medium text-slate-500 transition-colors hover:text-slate-950 sm:inline-flex dark:text-slate-400 dark:hover:text-white"
           >
             View all
-            <ArrowRight className="h-4 w-4" />
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
 
         <motion.div
-          className="mt-14 grid gap-6 md:pl-6 lg:grid-cols-3"
+          className="mt-14 grid gap-6 lg:grid-cols-3"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -70,9 +70,9 @@ const FeaturedProjects = () => {
               >
                 <Link
                   href={`/projects/${project.id}`}
-                  className="group block overflow-hidden rounded-[1.85rem] border border-slate-200/80 bg-white/60 shadow-[0_28px_90px_-42px_rgba(15,23,42,0.34)] transition-transform hover:-translate-y-1 dark:border-white/10 dark:bg-white/5"
+                  className="group block overflow-hidden rounded-2xl border border-slate-200/60 bg-white/50 transition-all hover:-translate-y-1 dark:border-white/10 dark:bg-white/5"
                 >
-                  <div className="relative aspect-[4/5]">
+                  <div className="relative aspect-[4/3]">
                     {project.url ? (
                       <Image
                         src={project.url}
@@ -84,22 +84,22 @@ const FeaturedProjects = () => {
                       <div
                         className={`flex h-full w-full items-end bg-gradient-to-br ${placeholderTone} p-6 text-white`}
                       >
-                        <p className="text-3xl font-semibold tracking-[-0.05em]">
+                        <p className="text-2xl font-semibold tracking-[-0.04em]">
                           {project.name}
                         </p>
                       </div>
                     )}
 
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/82 via-slate-950/18 to-transparent p-6">
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-white/70">
-                        {project.category} • {project.timeline}
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent p-5">
+                      <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-white/60">
+                        {project.category}
                       </p>
-                      <div className="mt-3 flex items-center justify-between gap-4">
-                        <p className="text-2xl font-semibold tracking-[-0.04em] text-white">
+                      <div className="mt-2 flex items-center justify-between gap-4">
+                        <p className="text-lg font-semibold tracking-[-0.02em] text-white">
                           {project.name}
                         </p>
-                        <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-transform group-hover:translate-x-1">
-                          <ArrowRight className="h-5 w-5" />
+                        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-transform group-hover:translate-x-1">
+                          <ArrowRight className="h-4 w-4" />
                         </span>
                       </div>
                     </div>
@@ -109,6 +109,16 @@ const FeaturedProjects = () => {
             );
           })}
         </motion.div>
+
+        <div className="mt-8 flex justify-center sm:hidden">
+          <Link
+            href="/projects"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition-colors hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
+          >
+            View all projects
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </Link>
+        </div>
       </div>
     </section>
   );
