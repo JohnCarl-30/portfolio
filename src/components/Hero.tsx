@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
-import { HiOutlineDocumentDownload as ResumeIcon } from "react-icons/hi";
 import { FaReact } from "react-icons/fa";
 
 import FloatingCircle, { getContainerVariants } from "./floating_cirlce";
@@ -76,7 +75,7 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative isolate flex min-h-[calc(100svh-5rem)] items-center overflow-hidden pt-8 pb-16 sm:pt-10 lg:pt-12"
+      className="relative isolate flex min-h-[calc(100svh-6rem)] items-center overflow-hidden pt-8 pb-16"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setMouseMove(true)}
       onMouseLeave={() => setMouseMove(false)}
@@ -86,44 +85,49 @@ const Hero = () => {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.16),transparent_30%),radial-gradient(circle_at_78%_18%,rgba(14,165,233,0.12),transparent_22%),linear-gradient(180deg,rgba(248,250,252,0.28),rgba(248,250,252,0.82)_58%,rgba(248,250,252,0.98))] dark:bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.18),transparent_30%),radial-gradient(circle_at_78%_18%,rgba(245,158,11,0.08),transparent_22%),linear-gradient(180deg,rgba(15,23,42,0.3),rgba(2,6,23,0.7)_58%,rgba(2,6,23,0.96))]" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-background" />
 
-      <div className="page-shell relative z-10 grid items-center gap-14 lg:grid-cols-[0.96fr_1.04fr]">
+      <div className="page-shell relative z-10 grid items-center gap-16 lg:grid-cols-[1fr_0.9fr]">
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="md:pl-6"
         >
-          <div className="max-w-xl space-y-8">
-            <h1 className="text-[clamp(4rem,9vw,7rem)] font-semibold leading-[0.88] tracking-[-0.08em] text-slate-950 dark:text-white">
-              John
-              <span className="font-serif text-primary italic"> Carl </span>
-              Santos
-            </h1>
+          <div className="max-w-xl space-y-10">
+            <div className="space-y-6">
+              <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
+                Aspiring AI Engineer
+              </p>
 
-            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-slate-400 dark:text-slate-500">
-              Aspiring AI Engineer
-            </p>
+              <h1 className="text-[clamp(3.5rem,8vw,6.5rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-slate-950 dark:text-white">
+                John
+                <br />
+                <span className="font-serif text-primary italic">Carl</span>{" "}
+                Santos
+              </h1>
 
-            <div className="flex flex-wrap gap-4">
+              <p className="max-w-md text-base leading-relaxed text-slate-500 dark:text-slate-400">
+                Building intelligent systems and full-stack products. Focused on
+                AI, backend architecture, and shipping real solutions.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-4">
               <Link
-                href="/JohnCarl_Resume.pdf"
-                target="_blank"
-                className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-sm font-medium text-white transition-transform hover:-translate-y-0.5 dark:bg-white dark:text-slate-950"
+                href="/projects"
+                className="group inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-sm font-medium text-white transition-transform hover:-translate-y-0.5 dark:bg-white dark:text-slate-950"
               >
-                <ResumeIcon size="1.15rem" />
-                Resume
+                View Projects
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
 
               <Link
-                href="/projects"
-                className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/80 px-6 py-3 text-sm font-medium text-slate-700 transition-all hover:border-primary/40 hover:text-primary dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-primary/40 dark:hover:text-primary"
+                href="/about"
+                className="text-sm font-medium text-slate-500 underline-offset-4 transition-colors hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
               >
-                Projects
-                <ArrowRight className="h-4 w-4" />
+                More about me
               </Link>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4 pt-2">
               {socialLinks.map((item) => {
                 const Icon = item.icon;
 
@@ -139,7 +143,7 @@ const Hero = () => {
                     }
                     aria-label={item.label}
                     title={item.label}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/80 bg-white/80 text-slate-500 transition-all hover:border-primary/40 hover:text-primary dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-primary/40 dark:hover:text-primary"
+                    className="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-400 transition-all hover:border-slate-400 hover:text-slate-950 dark:border-white/10 dark:text-slate-500 dark:hover:border-white/30 dark:hover:text-white"
                   >
                     <Icon className="h-4 w-4" />
                   </a>
@@ -153,14 +157,14 @@ const Hero = () => {
           initial={{ opacity: 0, y: 36 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.12, ease: "easeOut" }}
-          className="relative flex justify-center lg:justify-end"
+          className="relative hidden justify-center lg:flex"
         >
-          <div className="relative w-full max-w-[470px]">
-            <div className="pointer-events-none absolute -left-8 top-10 hidden h-40 w-40 rounded-full bg-blue-300/30 blur-3xl dark:bg-blue-500/15 md:block" />
-            <div className="pointer-events-none absolute -right-4 bottom-10 hidden h-36 w-36 rounded-full bg-sky-200/40 blur-3xl dark:bg-sky-400/10 md:block" />
+          <div className="relative w-full max-w-[420px]">
+            <div className="pointer-events-none absolute -left-6 top-8 h-32 w-32 rounded-full bg-blue-300/25 blur-3xl dark:bg-blue-500/12" />
+            <div className="pointer-events-none absolute -right-4 bottom-8 h-28 w-28 rounded-full bg-sky-200/30 blur-3xl dark:bg-sky-400/10" />
 
             <motion.div
-              className="glass-panel relative overflow-hidden rounded-[2rem]"
+              className="relative overflow-hidden rounded-2xl border border-slate-200/60 dark:border-white/10"
               style={{
                 rotateX: mouseMove ? rotateX : 0,
                 rotateY: mouseMove ? rotateY : 0,
@@ -197,11 +201,7 @@ const Hero = () => {
                 <FloatingCircle
                   style={{ left: "-2.5rem", top: "2.5rem" }}
                   orbitSize="13rem"
-                  toastMessage={
-                    <span>
-                      React
-                    </span>
-                  }
+                  toastMessage={<span>React</span>}
                 >
                   <FaReact className="text-blue-400" size="2rem" />
                 </FloatingCircle>
