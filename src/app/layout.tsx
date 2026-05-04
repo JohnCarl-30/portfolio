@@ -1,4 +1,4 @@
-import { Cormorant_Garamond, Outfit } from "next/font/google";
+import { Cormorant_Garamond, Outfit, Fira_Code } from "next/font/google";
 import "./globals.css";
 import "remixicon/fonts/remixicon.css";
 import { Toaster } from "react-hot-toast";
@@ -19,6 +19,12 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
+});
+
+const firaCode = Fira_Code({
+  variable: "--font-fira-code",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata = {
@@ -68,7 +74,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${outfit.variable} ${cormorant.variable} flex min-h-screen flex-col bg-background text-foreground`}
+        className={`${outfit.variable} ${cormorant.variable} ${firaCode.variable} flex min-h-screen flex-col bg-background text-foreground`}
       >
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <AppUIProvider>
