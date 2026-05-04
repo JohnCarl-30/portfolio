@@ -1,11 +1,7 @@
-"use client";
+'use client'
 
 import Link from "next/link";
-import { Search } from "lucide-react";
 import { usePathname } from "next/navigation";
-
-import { useAppUI } from "@/components/providers/AppUIProvider";
-import { Kbd } from "@/components/ui/kbd";
 
 const navLinks = [
   { href: "/about", label: "About" },
@@ -16,20 +12,19 @@ const navLinks = [
 
 const Navbar = () => {
   const pathname = usePathname();
-  const { isSearchOpen, openSearch } = useAppUI();
 
   return (
-    <nav className="w-full py-4">
+    <nav className="w-full py-6">
       <div className="page-shell">
-        <div className="glass-panel flex h-16 items-center justify-between rounded-full px-4 sm:px-6">
+        <div className="flex h-14 items-center justify-between">
           <Link
             href="/"
-            className="text-lg font-semibold tracking-[-0.04em] text-slate-900 dark:text-white"
+            className="font-mono text-sm font-semibold tracking-tight text-slate-900 dark:text-white"
           >
-            John <span className="font-serif text-primary italic">Carl</span>
+            JC.
           </Link>
 
-          <div className="hidden items-center gap-1 md:flex">
+          <div className="hidden items-center gap-8 md:flex">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
 
@@ -37,39 +32,35 @@ const Navbar = () => {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`rounded-full px-4 py-2 text-sm transition-colors ${
+                  className={`group relative text-sm font-medium transition-colors ${
                     isActive
-                      ? "bg-slate-950 text-white dark:bg-white dark:text-slate-950"
-                      : "text-slate-500 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white"
+                      ? "text-slate-950 dark:text-white"
+                      : "text-slate-400 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
                   }`}
                 >
                   {link.label}
+                  <span
+                    className={`absolute -bottom-1 left-0 h-px bg-slate-950 transition-all duration-300 dark:bg-white ${
+                      isActive ? "w-full" : "w-0 group-hover:w-full"
+                    }`}
+                  />
                 </Link>
               );
             })}
           </div>
 
-          <button
-            type="button"
-            onClick={openSearch}
-            aria-expanded={isSearchOpen}
-            aria-haspopup="dialog"
-            aria-label="Open global search"
-            className="flex cursor-pointer items-center gap-3 rounded-full border border-slate-200/80 bg-white/80 px-3 py-2 text-left transition-all hover:border-primary/40 hover:bg-white dark:border-white/10 dark:bg-white/5 dark:hover:border-primary/40 dark:hover:bg-white/10"
+          <Link
+            href="/JohnCarl_Resume.pdf"
+            target="_blank"
+            className="group relative overflow-hidden rounded-full border border-slate-200 bg-white px-5 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-slate-400 dark:border-white/10 dark:bg-transparent dark:text-slate-200 dark:hover:border-white/30"
           >
-            <Search className="h-4 w-4 text-primary" />
-            <span className="hidden text-sm text-slate-600 sm:inline dark:text-slate-300">
-              Search
+            <span className="relative z-10 inline-block transition-transform duration-200 group-hover:-translate-y-full">
+              Resume
             </span>
-            <div className="ml-auto hidden items-center gap-1 md:flex">
-              <Kbd className="border-slate-200 bg-white text-slate-500 dark:border-white/10 dark:bg-slate-900 dark:text-slate-300">
-                ⌘
-              </Kbd>
-              <Kbd className="border-slate-200 bg-white text-slate-500 dark:border-white/10 dark:bg-slate-900 dark:text-slate-300">
-                K
-              </Kbd>
-            </div>
-          </button>
+            <span className="absolute inset-0 flex items-center justify-center translate-y-full transition-transform duration-200 group-hover:translate-y-0">
+              Resume
+            </span>
+          </Link>
         </div>
       </div>
     </nav>
