@@ -26,61 +26,58 @@ const Contact = () => {
   return (
     <section id="contact" className="section-band section-band--slate">
       <div className="page-shell">
-        <div className="glass-panel rounded-[2rem] px-6 py-10 md:px-10 md:py-12">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.55 }}
-            className="grid gap-8 lg:grid-cols-[1fr_auto]"
-          >
-            <div>
-              <div className="section-kicker">
-                <span className="section-rule" />
-                Contact
-              </div>
-              <a
-                href="mailto:johncarlsantos30@gmail.com"
-                className="text-[clamp(2rem,4vw,3.2rem)] font-semibold leading-[1] tracking-[-0.06em] text-slate-950 transition-colors hover:text-primary dark:text-white dark:hover:text-primary"
-              >
-                johncarlsantos30@gmail.com
-              </a>
-            </div>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55 }}
+          className="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end"
+        >
+          <div>
+            <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80 mb-6">
+              Contact
+            </p>
+            <a
+              href="mailto:johncarlsantos30@gmail.com"
+              className="text-[clamp(1.75rem,4vw,3rem)] font-semibold leading-[1.1] tracking-[-0.04em] text-slate-950 transition-colors hover:text-primary dark:text-white dark:hover:text-primary"
+            >
+              johncarlsantos30@gmail.com
+            </a>
+          </div>
 
-            <div className="flex flex-wrap items-center gap-3 lg:justify-end">
-              <Link
-                href="/JohnCarl_Resume.pdf"
-                target="_blank"
-                className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition-transform hover:-translate-y-0.5 dark:bg-white dark:text-slate-950"
-              >
-                Resume
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+          <div className="flex flex-wrap items-center gap-3">
+            <Link
+              href="/JohnCarl_Resume.pdf"
+              target="_blank"
+              className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition-transform hover:-translate-y-0.5 dark:bg-white dark:text-slate-950"
+            >
+              Resume
+              <ArrowRight className="h-4 w-4" />
+            </Link>
 
-              {contactLinks.map((item) => {
-                const Icon = item.icon;
+            {contactLinks.map((item) => {
+              const Icon = item.icon;
 
-                return (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    target={item.href.startsWith("http") ? "_blank" : undefined}
-                    rel={
-                      item.href.startsWith("http")
-                        ? "noopener noreferrer"
-                        : undefined
-                    }
-                    aria-label={item.label}
-                    title={item.label}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/80 bg-white/80 text-slate-500 transition-all hover:border-primary/40 hover:text-primary dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-primary/40 dark:hover:text-primary"
-                  >
-                    <Icon className="h-4 w-4" />
-                  </a>
-                );
-              })}
-            </div>
-          </motion.div>
-        </div>
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target={item.href.startsWith("http") ? "_blank" : undefined}
+                  rel={
+                    item.href.startsWith("http")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
+                  aria-label={item.label}
+                  title={item.label}
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/60 text-slate-500 transition-all hover:border-slate-400 hover:text-slate-950 dark:border-white/10 dark:text-slate-300 dark:hover:border-white/30 dark:hover:text-white"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              );
+            })}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
