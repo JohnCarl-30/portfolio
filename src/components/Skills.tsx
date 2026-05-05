@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 
 import { skillsData } from "@/app/data/HeroIcons";
@@ -84,10 +83,13 @@ const Skills = () => {
                       title={skill.name}
                       className="group flex flex-col items-center justify-center gap-2 rounded-xl border border-slate-200/60 bg-white/50 p-3 text-slate-900 transition-colors hover:border-slate-400 dark:border-white/10 dark:bg-white/5 dark:text-slate-100"
                     >
-                      <img
+                      <Image
                         src={skill.icon}
                         alt={skill.name}
+                        width={24}
+                        height={24}
                         className="h-6 w-6 object-contain"
+                        unoptimized
                       />
                       <span className="text-xs font-medium text-slate-600 transition-colors group-hover:text-slate-900 dark:text-slate-300 dark:group-hover:text-white">
                         {skill.name}
