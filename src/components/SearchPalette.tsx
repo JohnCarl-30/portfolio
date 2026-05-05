@@ -408,8 +408,9 @@ export default function SearchPalette() {
 
   return (
     <AnimatePresence>
-      {isSearchOpen ? (
+      {isSearchOpen && (
         <motion.div
+          key="search-palette"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -574,7 +575,7 @@ export default function SearchPalette() {
             )}
           </motion.div>
         </motion.div>
-      ) : null}
+      )}
     </AnimatePresence>
   );
 }
