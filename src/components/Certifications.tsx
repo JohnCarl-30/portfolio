@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { Award } from "lucide-react";
 
 export interface Certification {
@@ -100,17 +101,51 @@ const Certifications: React.FC<CertificationsProps> = ({
   return (
     <section id="certifications" className="py-24 px-4 md:px-0">
       <div className="page-shell">
-        <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80 mb-6">
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.5 }}
+          className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80 mb-6"
+        >
           Credentials
-        </p>
-        <h2 className="mb-12 text-4xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">
+        </motion.p>
+        <motion.h2
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.55, delay: 0.05 }}
+          className="mb-12 text-4xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl"
+        >
           Certifications.
-        </h2>
+        </motion.h2>
         
-        <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2">
+        <motion.div
+          className="grid gap-4 md:grid-cols-1 lg:grid-cols-2"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.08,
+              },
+            },
+          }}
+        >
           {visibleCertifications.map((cert) => (
-            <a
+            <motion.a
               key={cert.id}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.4, ease: "easeOut" },
+                },
+              }}
+              whileHover={{ y: -2 }}
               href={cert.credentialUrl}
               target="_blank"
               rel="noopener noreferrer"
@@ -145,9 +180,9 @@ const Certifications: React.FC<CertificationsProps> = ({
                   </div>
                 </div>
               </div>
-            </a>
+            </motion.a>
           ))}
-        </div>
+        </motion.div>
 
         {showViewMoreButton && certifications.length > 4 && !showAllByDefault && (
           <div className="relative z-10 mt-8 flex justify-center">
