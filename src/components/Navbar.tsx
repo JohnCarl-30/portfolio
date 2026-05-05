@@ -19,7 +19,7 @@ const Navbar = () => {
   const { isSearchOpen, openSearch } = useAppUI();
 
   return (
-    <nav className="w-full py-6">
+    <nav className="relative z-10 w-full py-6">
       <div className="page-shell">
         <div className="flex h-14 items-center justify-between">
           <Link

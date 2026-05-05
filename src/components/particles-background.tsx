@@ -97,7 +97,7 @@ const ParticlesBackground: React.FC = () => {
     return (
         <Particles
             id="particles"
-            className="fixed h-full w-full object-cover"
+            className="pointer-events-none fixed h-full w-full object-cover"
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             options={options as any}
         />

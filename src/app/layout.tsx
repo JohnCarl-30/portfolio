@@ -4,6 +4,7 @@ import "remixicon/fonts/remixicon.css";
 import { Toaster } from "react-hot-toast";
 
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import SearchPalette from "@/components/SearchPalette";
 import Chatbot from "@/components/Chatbot";
 import { AppUIProvider } from "@/components/providers/AppUIProvider";
@@ -78,6 +79,7 @@ export default function RootLayout({
       >
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <AppUIProvider>
+          <Navbar />
           <div className="flex-grow flex flex-col">
             {children}
           </div>

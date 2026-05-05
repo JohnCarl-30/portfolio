@@ -3,7 +3,6 @@ import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Certifications from "@/components/Certifications";
 import FeaturedProjects from "@/components/FeaturedProjects";
-import Navbar from "@/components/Navbar";
 import SideNavbar from "@/app/section/side-navbar";
 import Contact from "@/components/Contact";
 

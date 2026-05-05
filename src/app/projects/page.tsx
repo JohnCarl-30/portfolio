@@ -6,7 +6,6 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, ExternalLink, Search } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
-import Navbar from "@/components/Navbar";
 import { projectsButton, projectsData } from "@/app/data/Projects";
 
 const placeholderStyles = [
