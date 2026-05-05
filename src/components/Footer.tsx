@@ -1,37 +1,84 @@
 'use client'
 
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const Footer = () => {
   return (
     <footer className="relative z-10 site-footer mt-auto w-full border-t border-[var(--footer-border)] bg-[var(--footer-bg)] py-10 text-[var(--footer-foreground)] transition-colors duration-200">
       <div className="page-shell flex flex-col gap-8">
-        <div className="flex flex-col items-center justify-center gap-6">
-          <div className="flex flex-row gap-6 items-center">
-            <Link
-              href="/#hero"
-              className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col items-center justify-center gap-6"
+        >
+          <motion.div
+            className="flex flex-row gap-6 items-center"
+            variants={{
+              hidden: {},
+              visible: {
+                transition: {
+                  staggerChildren: 0.1,
+                },
+              },
+            }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 10 },
+                visible: { opacity: 1, y: 0 },
+              }}
             >
-              Home
-            </Link>
-            <Link
-              href="/about"
-              className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
+              <Link
+                href="/#hero"
+                className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
+              >
+                Home
+              </Link>
+            </motion.div>
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 10 },
+                visible: { opacity: 1, y: 0 },
+              }}
             >
-              About
-            </Link>
-            <Link
-              href="/#skills"
-              className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
+              <Link
+                href="/about"
+                className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
+              >
+                About
+              </Link>
+            </motion.div>
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 10 },
+                visible: { opacity: 1, y: 0 },
+              }}
             >
-              Skills
-            </Link>
-          </div>
-        </div>
+              <Link
+                href="/#skills"
+                className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
+              >
+                Skills
+              </Link>
+            </motion.div>
+          </motion.div>
+        </motion.div>
 
-        <div className="flex justify-center items-center gap-3 border-t border-[var(--footer-border)] pt-6 text-xs text-[var(--footer-muted)]">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="flex justify-center items-center gap-3 border-t border-[var(--footer-border)] pt-6 text-xs text-[var(--footer-muted)]"
+        >
           <p>Copyright © {new Date().getFullYear()} John Carl Santos.</p>
-        </div>
+        </motion.div>
       </div>
     </footer>
   );

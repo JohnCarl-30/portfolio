@@ -93,24 +93,44 @@ const Hero = () => {
         >
           <div className="max-w-xl space-y-10">
             <div className="space-y-6">
-              <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
+              <motion.p
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500"
+              >
                 Aspiring AI Engineer
-              </p>
+              </motion.p>
 
-              <h1 className="text-[clamp(3.5rem,8vw,6.5rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-slate-950 dark:text-white">
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
+                className="text-[clamp(3.5rem,8vw,6.5rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-slate-950 dark:text-white"
+              >
                 John
                 <br />
                 <span className="font-serif text-primary italic">Carl</span>{" "}
                 Santos
-              </h1>
+              </motion.h1>
 
-              <p className="max-w-md text-base leading-relaxed text-slate-500 dark:text-slate-400">
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+                className="max-w-md text-base leading-relaxed text-slate-500 dark:text-slate-400"
+              >
                 Building intelligent systems and full-stack products. Focused on
                 AI, backend architecture, and shipping real solutions.
-              </p>
+              </motion.p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.45, ease: "easeOut" }}
+              className="flex flex-wrap items-center gap-4"
+            >
               <Link
                 href="/projects"
                 className="group inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-sm font-medium text-white transition-transform hover:-translate-y-0.5 dark:bg-white dark:text-slate-950"
@@ -125,9 +145,14 @@ const Hero = () => {
               >
                 More about me
               </Link>
-            </div>
+            </motion.div>
 
-            <div className="flex items-center gap-4 pt-2">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
+              className="flex items-center gap-4 pt-2"
+            >
               {socialLinks.map((item) => {
                 const Icon = item.icon;
 
@@ -149,7 +174,7 @@ const Hero = () => {
                   </a>
                 );
               })}
-            </div>
+            </motion.div>
           </div>
         </motion.div>
 
