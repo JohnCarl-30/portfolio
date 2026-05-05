@@ -31,6 +31,28 @@ const firaCode = Fira_Code({
 export const metadata = {
   title: "John Carl Santos",
   description: "Portfolio of John Carl Santos, focused on software engineering, AI workflows, and thoughtful product experiences.",
+  icons: {
+    icon: "/personal.jpg",
+    apple: "/personal.jpg",
+  },
+  openGraph: {
+    title: "John Carl Santos",
+    description: "Portfolio of John Carl Santos, focused on software engineering, AI workflows, and thoughtful product experiences.",
+    images: [
+      {
+        url: "/personal.jpg",
+        width: 1200,
+        height: 630,
+        alt: "John Carl Santos",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "John Carl Santos",
+    description: "Portfolio of John Carl Santos, focused on software engineering, AI workflows, and thoughtful product experiences.",
+    images: ["/personal.jpg"],
+  },
 };
 
 const themeScript = `
