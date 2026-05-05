@@ -113,7 +113,7 @@ export const projectsData: ProjectItem[] = [
     desc: "A social learning platform connecting students and educators with real-time collaboration tools, resource sharing, and interactive study groups.",
     longDescription: "SociaTech is a social learning platform designed to bridge the gap between students and educators. It features real-time collaboration tools, resource sharing, interactive study groups, and Firebase authentication with Google Sign-In for seamless access.",
     url: "/projects/sociatech.jpg",
-    tech: ["React", "Firebase", "Node.js", "Express", "JWT"],
+    tech: ["React", "PHP", "Firebase", "XAMPP", "phpMyAdmin"],
     role: "Project Lead & Backend Developer",
     timeline: "2024",
     keyFeatures: [
