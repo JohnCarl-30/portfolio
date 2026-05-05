@@ -9,7 +9,6 @@ import {
   UserCircle,
 } from "lucide-react";
 
-import Navbar from "@/components/Navbar";
 import { projectsData } from "@/app/data/Projects";
 
 const placeholderStyles = [
@@ -43,11 +42,7 @@ export default async function ProjectDetail({
     ];
 
   return (
-    <div className="flex min-h-screen flex-col pt-24 pb-20">
-      <div className="fixed left-0 right-0 top-0 z-50">
-        <Navbar />
-      </div>
-
+    <div className="flex min-h-screen flex-col pt-6 pb-20">
       <main className="page-shell mt-4 flex-1">
         <Link
           href="/projects"
