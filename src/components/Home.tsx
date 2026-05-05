@@ -9,7 +9,6 @@ import Contact from "@/components/Contact";
 export default function HomeComponent() {
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
       <main className="flex-grow">
         <Hero />
         <About />
