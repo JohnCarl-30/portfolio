@@ -106,6 +106,34 @@ export const projectsData: ProjectItem[] = [
     ],
     liveDemoUrl: "https://taskspay.vercel.app/"
   },
+  {
+    id: "civireport",
+    name: "CiviReport",
+    category: "Mobile",
+    desc: "A barangay issue tracking mobile app that enables citizens to file complaints, track their status, and send emergency alerts to local officials.",
+    longDescription: "CiviReport is a civic engagement mobile application designed to bridge the gap between citizens and their local barangay officials. The app provides an intuitive interface for filing complaints, tracking their resolution progress, and sending emergency alerts with automatic location sharing for immediate response.",
+    url: "/projects/civireport.jpg",
+    tech: ["Java", "FastAPI", "Firebase"],
+    role: "Mobile Developer",
+    timeline: "2025",
+    keyFeatures: [
+      {
+        title: "File a Complaint",
+        description: "Submit new reports directly through the app with an easy-to-use complaint filing system.",
+        image: "/projects/civireport.jpg",
+      },
+      {
+        title: "Check Complaint Status",
+        description: "Track the progress of filed complaints in real-time with status updates.",
+        image: "/projects/civireport.jpg",
+      },
+      {
+        title: "Emergency Report",
+        description: "Send urgent alerts to barangay officials with automatic location and report details included.",
+        image: "/projects/civireport.jpg",
+      }
+    ],
+  },
 
 ];
 
