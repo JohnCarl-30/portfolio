@@ -107,6 +107,34 @@ export const projectsData: ProjectItem[] = [
     liveDemoUrl: "https://taskspay.vercel.app/"
   },
   {
+    id: "sociatech",
+    name: "SociaTech",
+    category: "Web",
+    desc: "A social learning platform connecting students and educators with real-time collaboration tools, resource sharing, and interactive study groups.",
+    longDescription: "SociaTech is a social learning platform designed to bridge the gap between students and educators. It features real-time collaboration tools, resource sharing, interactive study groups, and Firebase authentication with Google Sign-In for seamless access.",
+    url: "/projects/sociatech.jpg",
+    tech: ["React", "Firebase", "Node.js", "Express", "JWT"],
+    role: "Project Lead & Backend Developer",
+    timeline: "2024",
+    keyFeatures: [
+      {
+        title: "Firebase Authentication",
+        description: "Secure sign-in with email/password and Google OAuth integration.",
+        image: "/projects/sociatech.jpg",
+      },
+      {
+        title: "Real-time Collaboration",
+        description: "Interactive study groups and live resource sharing between students.",
+        image: "/projects/sociatech.jpg",
+      },
+      {
+        title: "REST API Backend",
+        description: "Scalable backend with JWT-secured endpoints for user and content management.",
+        image: "/projects/sociatech.jpg",
+      }
+    ],
+  },
+  {
     id: "civireport",
     name: "CiviReport",
     category: "Mobile",
