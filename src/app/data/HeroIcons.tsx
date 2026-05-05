@@ -56,7 +56,7 @@ export const skillsData: Skill[] = [
   { name: 'Docker', icon: '/skills/Docker.png', category: 'infra' },
   { name: 'Python', icon: '/skills/python-logo.svg', category: 'backend' },
   { name: 'Postgresql', icon: '/skills/PostgresSQL.png', category: 'backend' },
-  { name: 'TensorFlow', icon: '/skills/tensorflow.png', category: 'ai' },
-  { name: 'LangChain', icon: '/skills/langchain.png', category: 'ai' },
-  { name: 'LangGraph', icon: '/skills/langgraph.png', category: 'ai' }
+  { name: 'TensorFlow', icon: '/skills/tensorflow.svg', category: 'ai' },
+  { name: 'LangChain', icon: '/skills/langchain.svg', category: 'ai' },
+  { name: 'LangGraph', icon: '/skills/langgraph.svg', category: 'ai' }
 ];
