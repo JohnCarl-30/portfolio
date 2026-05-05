@@ -31,11 +31,7 @@ export default function ProjectsPage() {
   }, [activeTab, searchQuery]);
 
   return (
-    <div className="flex min-h-screen flex-col pt-24 pb-16">
-      <div className="fixed left-0 right-0 top-0 z-50">
-        <Navbar />
-      </div>
-
+    <div className="flex min-h-screen flex-col pt-6 pb-16">
       <main className="page-shell mt-4 flex flex-1 flex-col">
         <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr]">
           <div>
