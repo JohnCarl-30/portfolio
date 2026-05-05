@@ -78,6 +78,20 @@ const Certifications: React.FC<CertificationsProps> = ({
       issueDate: "2026",
       description: "Verified Databricks credential published through Databricks Credentials.",
       credentialUrl: "https://credentials.databricks.com/5e635c80-e18d-4450-98e0-a67e3aa3d4ff"
+    },
+    {
+      id: "8",
+      title: "GEN AI TO Z: A Career Summit in an AI-driven World",
+      issuer: "Vibe Coders PH · EMC² Fraternity UP",
+      issueDate: "Mar 2026",
+      description: "Certificate of participation for the career summit focused on AI-driven careers, held at UP Diliman.",
+    },
+    {
+      id: "9",
+      title: "Exploring Career Paths in the AI Space",
+      issuer: "CISCO · AI Pilipinas · GDG USC",
+      issueDate: "Mar 2026",
+      description: "Active engagement certificate for acquiring industry-level insights into AI career trajectories and technical demands.",
     }
   ]
 }) => {
