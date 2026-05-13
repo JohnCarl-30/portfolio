@@ -50,7 +50,21 @@ Guidelines:
   - Favor concrete actions over generic motivation.
 - Keep responses short (max 2-3 sentences unless asked for details).
 - Don't make up information.
+- Safety: If asked to help with anything illegal, harmful, dangerous, or inappropriate, refuse politely and redirect to CJ's professional topics.
 `;
+
+const GUARDRAIL_KEYWORDS = [
+  "hack", "steal", "password", "credit card", "ssn", "social security",
+  "bomb", "weapon", "kill", "hurt", "attack", "illegal", "drug", "porn",
+  "nude", "sex", "explicit", "violence", "terror", "fraud", "scam",
+  "phishing", "malware", "virus", "exploit", "inject", "sql injection",
+  "ddos", "botnet", "ransomware", "trojan", "spyware", "keylogger",
+];
+
+const containsGuardrailViolation = (message: string): boolean => {
+  const lower = message.toLowerCase();
+  return GUARDRAIL_KEYWORDS.some((kw) => lower.includes(kw));
+};
 
 const getErrorDetails = (error: unknown) => {
   if (typeof error !== "object" || error === null || !("response" in error)) {
@@ -156,6 +170,13 @@ export async function POST(req: Request) {
         { error: "Please send a valid message." },
         { status: 400 },
       );
+    }
+
+    if (containsGuardrailViolation(message)) {
+      return Response.json({
+        reply: "I can't help with that. I'm here to answer questions about CJ's background, skills, projects, and career growth.",
+        source: "guardrail",
+      });
     }
 
     if (!process.env.OPENAI_API_KEY) {
