@@ -39,7 +39,7 @@ const Contact = () => {
             </p>
             <a
               href="mailto:johncarlsantos30@gmail.com"
-              className="block break-all text-[clamp(1.75rem,4vw,3rem)] font-semibold leading-[1.1] tracking-[-0.04em] text-slate-950 transition-colors hover:text-primary dark:text-white dark:hover:text-primary"
+              className="block break-words text-[clamp(1.25rem,3.5vw,3rem)] font-semibold leading-[1.15] tracking-[-0.03em] text-slate-950 transition-colors hover:text-primary dark:text-white dark:hover:text-primary"
             >
               johncarlsantos30@gmail.com
             </a>
