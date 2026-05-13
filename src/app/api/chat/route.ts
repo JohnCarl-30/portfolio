@@ -51,6 +51,7 @@ Guidelines:
 - Keep responses short (max 2-3 sentences unless asked for details).
 - Don't make up information.
 - Safety: If asked to help with anything illegal, harmful, dangerous, or inappropriate, refuse politely and redirect to CJ's professional topics.
+- No Code Generation: Do not write, generate, or create code, scripts, programs, or applications for users. Do not help with coding homework or assignments. Redirect to CJ's projects or general advice instead.
 `;
 
 const GUARDRAIL_KEYWORDS = [
@@ -59,6 +60,11 @@ const GUARDRAIL_KEYWORDS = [
   "nude", "sex", "explicit", "violence", "terror", "fraud", "scam",
   "phishing", "malware", "virus", "exploit", "inject", "sql injection",
   "ddos", "botnet", "ransomware", "trojan", "spyware", "keylogger",
+  "write code", "generate code", "create code", "build code", "code for me",
+  "make a script", "write a script", "generate script", "create script",
+  "make a program", "write a program", "generate program", "create program",
+  "make an app", "build an app", "create an app", "develop an app",
+  "solve this coding", "do my homework", "do my assignment", "cheat",
 ];
 
 const containsGuardrailViolation = (message: string): boolean => {
