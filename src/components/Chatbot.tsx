@@ -11,9 +11,9 @@ type ChatApiResponse = {
 };
 
 const quickReplies = [
-  "Tell me about yourself",
-  "What are your skills?",
-  "View your projects",
+  "What projects should I see first?",
+  "What AI work have you built?",
+  "How can I contact John Carl?",
 ];
 
 const parseApiResponse = async (response: Response): Promise<ChatApiResponse> => {
@@ -44,7 +44,7 @@ const parseApiResponse = async (response: Response): Promise<ChatApiResponse> =>
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{ role: 'user' | 'bot'; content: string }[]>([
-    { role: 'bot', content: "Hi there! I'm CJ's AI assistant. Feel free to ask me anything about his background, skills, projects, or even general topics. How can I help?" }
+    { role: 'bot', content: "Hi, I'm John Carl's portfolio assistant. Ask me about his AI work, project stack, experience, or the best way to contact him." }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -94,6 +94,8 @@ const Chatbot = () => {
       {/* Floating Bubble */}
       <button
         onClick={() => setIsOpen(!isOpen)}
+        aria-label={isOpen ? "Close portfolio assistant" : "Open portfolio assistant"}
+        title={isOpen ? "Close assistant" : "Ask about my work"}
         className="fixed bottom-6 right-6 z-50 p-4 bg-slate-950 text-white rounded-full shadow-lg hover:bg-slate-800 transition-all duration-300 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
       >
         {isOpen ? <X size={24} /> : <MessageCircle size={24} />}

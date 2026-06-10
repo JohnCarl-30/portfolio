@@ -22,6 +22,7 @@ const About = () => {
                   src="/img/pic2.jpeg"
                   alt="John Carl Santos portrait"
                   fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
                   className="object-cover"
                 />
               </div>
