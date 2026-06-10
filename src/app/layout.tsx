@@ -9,6 +9,12 @@ import SearchPalette from "@/components/SearchPalette";
 import Chatbot from "@/components/Chatbot";
 import { AppUIProvider } from "@/components/providers/AppUIProvider";
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000");
+
 const outfit = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
@@ -29,6 +35,7 @@ const firaCode = Fira_Code({
 });
 
 export const metadata = {
+  metadataBase: new URL(siteUrl),
   title: "John Carl Santos",
   description: "Portfolio of John Carl Santos, focused on software engineering, AI workflows, and thoughtful product experiences.",
   icons: {

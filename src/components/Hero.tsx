@@ -28,6 +28,21 @@ const socialLinks = [
   },
 ];
 
+const proofPoints = [
+  {
+    value: "5+",
+    label: "shipped builds",
+  },
+  {
+    value: "AI",
+    label: "product focus",
+  },
+  {
+    value: "Full-stack",
+    label: "web + backend",
+  },
+];
+
 const Hero = () => {
   const [windowOffset, setWindowOffset] = useState({
     innerWidth: 0,
@@ -120,10 +135,32 @@ const Hero = () => {
                 transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
                 className="max-w-md text-base leading-relaxed text-slate-500 dark:text-slate-400"
               >
-                Building intelligent systems and full-stack products. Focused on
-                AI, backend architecture, and shipping real solutions.
+                I build AI-powered web apps, backend systems, and automation
+                tools with Next.js, Python, cloud infrastructure, and LLM
+                workflows.
               </motion.p>
             </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.38, ease: "easeOut" }}
+              className="grid max-w-lg grid-cols-3 overflow-hidden rounded-2xl border border-slate-200/70 bg-white/55 backdrop-blur-md dark:border-white/10 dark:bg-white/5"
+            >
+              {proofPoints.map((point) => (
+                <div
+                  key={point.label}
+                  className="border-r border-slate-200/70 px-4 py-3 last:border-r-0 dark:border-white/10"
+                >
+                  <p className="text-lg font-semibold tracking-[-0.03em] text-slate-950 dark:text-white">
+                    {point.value}
+                  </p>
+                  <p className="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">
+                    {point.label}
+                  </p>
+                </div>
+              ))}
+            </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -201,7 +238,7 @@ const Hero = () => {
                   src="/personal.jpg"
                   alt="John Carl Santos"
                   fill
-                  priority
+                  sizes="(min-width: 1024px) 420px, 1px"
                   className="object-cover object-center"
                 />
               </div>

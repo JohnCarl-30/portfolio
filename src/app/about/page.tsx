@@ -112,6 +112,7 @@ const AboutPage = () => {
                 src="/img/pic2.jpeg"
                 alt="John Carl Santos"
                 fill
+                sizes="(min-width: 768px) 320px, 100vw"
                 className="object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-500"
               />
               <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md px-3 py-2 rounded-lg border border-slate-100 text-[10px] text-slate-500 text-center font-semibold dark:bg-black/80 dark:border-white/10 dark:text-slate-300">

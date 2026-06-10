@@ -5,6 +5,7 @@ import {
   ArrowLeft,
   ArrowRight,
   Calendar,
+  CheckCircle2,
   ExternalLink,
   UserCircle,
 } from "lucide-react";
@@ -61,6 +62,7 @@ export default async function ProjectDetail({
                   alt={project.name}
                   fill
                   priority
+                  sizes="(min-width: 1024px) 52vw, 100vw"
                   className="object-cover"
                 />
               ) : (
@@ -98,6 +100,25 @@ export default async function ProjectDetail({
                 <p key={index}>{paragraph}</p>
               ))}
             </div>
+
+            {project.highlights && project.highlights.length > 0 && (
+              <div className="mt-8 rounded-2xl border border-slate-200/70 bg-white/60 p-5 dark:border-white/10 dark:bg-white/5">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-primary/80">
+                  Build highlights
+                </p>
+                <ul className="mt-4 space-y-3">
+                  {project.highlights.map((highlight) => (
+                    <li
+                      key={highlight}
+                      className="flex gap-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300"
+                    >
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             <div className="mt-8 flex flex-wrap gap-3">
               {project.tech.map((tech) => (
@@ -188,6 +209,7 @@ export default async function ProjectDetail({
                           src={feature.image}
                           alt={feature.title}
                           fill
+                          sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"
                           className="object-cover"
                         />
                       ) : (

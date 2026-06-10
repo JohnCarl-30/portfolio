@@ -14,6 +14,7 @@ export interface ProjectItem {
   role: string;
   timeline: string;
   longDescription: string;
+  highlights?: string[];
   keyFeatures: KeyFeature[];
   liveDemoUrl?: string;
 }
@@ -24,26 +25,31 @@ export const projectsData: ProjectItem[] = [
     name: "Alphaexplora",
     category: "Web",
     desc: "A fintech workflow platform empowering modern fintech teams to scale with confidence through real-time visibility and automated multi-entity control.",
-    longDescription: "Alphaexplora is a premium fintech workflow platform designed to build trust from the first scroll. It provides financial institutions with comprehensive tools for real-time visibility across multi-entity operations and automated workflow management. The platform prioritizes user experience with smooth interactions and an intuitive interface tailored for finance professionals.",
-    url: "",
-    tech: [],
+    longDescription: "Alphaexplora is a premium fintech workflow platform designed to build trust from the first scroll. It presents a finance-grade product story with confident positioning, clear pricing paths, and crisp interface sections for compliance-heavy teams.\n\nThe build focuses on fast landing-page performance, responsive presentation, and a polished visual system that feels credible for fintech buyers.",
+    url: "/projects/alphaexplora.png",
+    tech: ["NextJS", "TypeScript", "TailwindCSS", "Framer Motion", "Vercel"],
     role: "Web Developer",
     timeline: "2024",
+    highlights: [
+      "Designed a fintech landing experience with enterprise-oriented messaging and conversion paths.",
+      "Built responsive sections for features, pricing, testimonials, and beta sign-up flows.",
+      "Used motion and visual hierarchy to make a trust-heavy product feel fast and modern.",
+    ],
     keyFeatures: [
       {
         title: "Real-time Visibility",
         description: "Monitor fintech operations across multiple entities with live dashboards and instant updates.",
-        image: "",
+        image: "/projects/alphaexplora.png",
       },
       {
         title: "Automated Multi-Entity Control",
         description: "Streamline workflow management across your entire fintech infrastructure with advanced automation.",
-        image: "",
+        image: "/projects/alphaexplora.png",
       },
       {
         title: "Enterprise-Grade Security",
         description: "Built with financial-grade security standards to protect sensitive transaction data.",
-        image: "",
+        image: "/projects/alphaexplora.png",
       }
     ],
     liveDemoUrl: "https://fintech-nine-psi.vercel.app/"
@@ -58,6 +64,11 @@ export const projectsData: ProjectItem[] = [
     tech: ["NextJS", "TypeScript", "OpenAI API", "TailwindCSS", "Framer Motion", "Supabase", "Docker", "Digital Ocean", "Redis", "Celery", "pgvector"],
     role: "Lead Developer",
     timeline: "2024 - Present",
+    highlights: [
+      "Built the AI generation workflow for turning notes and PDFs into flashcards and summaries.",
+      "Designed asynchronous processing with Redis and Celery for heavier document jobs.",
+      "Integrated Supabase and pgvector to support searchable study content and user workspaces.",
+    ],
     keyFeatures: [
       {
         title: "AI Flashcard Generation",
@@ -83,25 +94,30 @@ export const projectsData: ProjectItem[] = [
     category: "Web",
     desc: "A blockchain-based task payment platform built on the Stellar network, enabling secure and instant payments for completed tasks using smart contracts.",
     longDescription: "TasksPay is a decentralized task marketplace powered by the Stellar blockchain. It leverages Soroban smart contracts for secure task execution and payment settlement. Users can post tasks, complete assignments, and receive instant payments in stablecoins on the Stellar network. The platform combines modern web frontend with blockchain technology to create a trustless peer-to-peer task economy.",
-    url: "",
+    url: "/projects/taskspay.png",
     tech: ["React", "JavaScript", "Soroban SDK", "Stellar", "Rust", "TailwindCSS"],
     role: "Full-stack Developer",
     timeline: "2024",
+    highlights: [
+      "Built a wallet-connected escrow interface for creating and tracking milestone-based tasks.",
+      "Integrated Stellar and Soroban concepts into a web workflow for automated settlement.",
+      "Designed a focused product interface around trust, payment status, and task progress.",
+    ],
     keyFeatures: [
       {
         title: "Stellar Blockchain Integration",
         description: "Leverages the Stellar network for fast, low-cost transactions and cryptocurrency payments.",
-        image: "",
+        image: "/projects/taskspay.png",
       },
       {
         title: "Smart Contract Execution",
         description: "Uses Soroban smart contracts to ensure secure and automated task completion verification and payment settlement.",
-        image: "",
+        image: "/projects/taskspay.png",
       },
       {
         title: "Decentralized Task Marketplace",
         description: "A trustless peer-to-peer platform where users can post tasks and earn cryptocurrency upon completion.",
-        image: "",
+        image: "/projects/taskspay.png",
       }
     ],
     liveDemoUrl: "https://taskspay.vercel.app/"
@@ -112,25 +128,30 @@ export const projectsData: ProjectItem[] = [
     category: "Web",
     desc: "A social learning platform connecting students and educators with real-time collaboration tools, resource sharing, and interactive study groups.",
     longDescription: "SociaTech is a social learning platform designed to bridge the gap between students and educators. It features real-time collaboration tools, resource sharing, interactive study groups, and Firebase authentication with Google Sign-In for seamless access.",
-    url: "/projects/sociatech.jpg",
+    url: "",
     tech: ["React", "PHP", "Firebase", "XAMPP", "phpMyAdmin"],
     role: "Project Lead & Backend Developer",
     timeline: "2024",
+    highlights: [
+      "Led the build across authentication, content workflows, and student collaboration features.",
+      "Implemented Firebase sign-in and backend API endpoints for user and content management.",
+      "Coordinated frontend and backend decisions for a practical classroom collaboration tool.",
+    ],
     keyFeatures: [
       {
         title: "Firebase Authentication",
         description: "Secure sign-in with email/password and Google OAuth integration.",
-        image: "/projects/sociatech.jpg",
+        image: "",
       },
       {
         title: "Real-time Collaboration",
         description: "Interactive study groups and live resource sharing between students.",
-        image: "/projects/sociatech.jpg",
+        image: "",
       },
       {
         title: "REST API Backend",
         description: "Scalable backend with JWT-secured endpoints for user and content management.",
-        image: "/projects/sociatech.jpg",
+        image: "",
       }
     ],
   },
@@ -140,25 +161,30 @@ export const projectsData: ProjectItem[] = [
     category: "Mobile",
     desc: "A barangay issue tracking mobile app that enables citizens to file complaints, track their status, and send emergency alerts to local officials.",
     longDescription: "CiviReport is a civic engagement mobile application designed to bridge the gap between citizens and their local barangay officials. The app provides an intuitive interface for filing complaints, tracking their resolution progress, and sending emergency alerts with automatic location sharing for immediate response.",
-    url: "/projects/civireport.jpg",
+    url: "",
     tech: ["Java", "FastAPI", "Firebase"],
     role: "Mobile Developer",
     timeline: "2025",
+    highlights: [
+      "Built mobile complaint filing flows for citizens to report barangay concerns.",
+      "Connected report tracking to backend services for status visibility.",
+      "Added emergency reporting patterns with location-aware response context.",
+    ],
     keyFeatures: [
       {
         title: "File a Complaint",
         description: "Submit new reports directly through the app with an easy-to-use complaint filing system.",
-        image: "/projects/civireport.jpg",
+        image: "",
       },
       {
         title: "Check Complaint Status",
         description: "Track the progress of filed complaints in real-time with status updates.",
-        image: "/projects/civireport.jpg",
+        image: "",
       },
       {
         title: "Emergency Report",
         description: "Send urgent alerts to barangay officials with automatic location and report details included.",
-        image: "/projects/civireport.jpg",
+        image: "",
       }
     ],
   },
