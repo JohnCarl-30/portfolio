@@ -68,7 +68,7 @@ export default function ProjectsPage() {
                   <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                   <input
                     type="text"
-                    className="block h-12 w-full rounded-full border border-slate-200/80 bg-white/75 py-3 pl-11 pr-4 text-sm text-slate-900 shadow-none outline-none transition-all placeholder:text-slate-400 focus:border-primary/40 focus:ring-4 focus:ring-primary/10 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-500"
+                    className="block h-12 w-full rounded-full border border-slate-200/80 bg-white/75 py-3 pl-11 pr-4 text-sm text-slate-900 shadow-none outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-slate-400 focus:border-primary/40 focus:ring-4 focus:ring-primary/10 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-500"
                     placeholder="Search by name or description"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -80,8 +80,9 @@ export default function ProjectsPage() {
                 {projectsButton.map((tab) => (
                   <button
                     key={tab}
+                    type="button"
                     onClick={() => setActiveTab(tab)}
-                    className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
+                    className={`rounded-full px-4 py-2 text-sm font-medium transition-[color,background-color,border-color,transform] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98] ${
                       activeTab === tab
                         ? "bg-slate-950 text-white dark:bg-white dark:text-slate-950"
                         : "border border-slate-200/80 bg-white/75 text-slate-600 hover:border-primary/40 hover:text-primary dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-primary/40 dark:hover:text-primary"
@@ -201,13 +202,23 @@ export default function ProjectsPage() {
           </AnimatePresence>
 
           {filteredProjects.length === 0 && (
-            <div className="glass-panel col-span-full rounded-[1.75rem] px-6 py-16 text-center">
-              <p className="text-lg font-medium text-slate-800 dark:text-slate-100">
-                No projects match your search yet.
+            <div className="col-span-full rounded-2xl border border-dashed border-border/70 bg-secondary/20 px-6 py-12 text-center">
+              <p className="text-sm font-medium text-foreground">
+                No projects match your search
               </p>
-              <p className="mt-2 text-sm soft-text">
+              <p className="mt-1 text-sm text-muted-foreground">
                 Try a different keyword or switch the category filter.
               </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchQuery("");
+                  setActiveTab("All");
+                }}
+                className="mt-4 inline-flex items-center rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-[color,transform] duration-150 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98]"
+              >
+                Clear filters
+              </button>
             </div>
           )}
         </motion.div>
