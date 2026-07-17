@@ -70,7 +70,7 @@ const FeaturedProjects = () => {
               >
                 <Link
                   href={`/projects/${project.id}`}
-                  className="group block overflow-hidden rounded-2xl border border-slate-200/60 bg-white/50 transition-all hover:-translate-y-1 dark:border-white/10 dark:bg-white/5"
+                  className="group block overflow-hidden rounded-2xl border border-slate-200/60 bg-white/50 transition-[transform,border-color,background-color] duration-200 hover:-translate-y-1 hover:border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-white/10 dark:bg-white/5"
                 >
                   <div className="relative aspect-[4/3]">
                     {project.url ? (
