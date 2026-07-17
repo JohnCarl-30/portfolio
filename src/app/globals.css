@@ -159,6 +159,7 @@ html[data-theme-selection="midnight"] body {
 @layer base {
   html {
     scroll-behavior: smooth;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
   * {
     @apply border-border outline-ring/50;
@@ -292,4 +293,39 @@ html[data-theme-selection="midnight"] body {
 @keyframes slideReverse {
   0% { transform: translateX(calc(-100% - 32px)); }
   100% { transform: translateX(0); }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  .animate-fade-up {
+    animation: fade-up 0.45s ease-out both;
+  }
+
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
