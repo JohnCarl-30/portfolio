@@ -465,7 +465,7 @@ export default function SearchPalette() {
                                 type="button"
                                 onMouseEnter={() => setSearchIndex(itemIndex)}
                                 onClick={() => runEntry(entry)}
-                                className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition ${
+                                className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                                   isActive
                                     ? "bg-white/10 text-white"
                                     : "text-zinc-100 hover:bg-white/6"
@@ -523,7 +523,7 @@ export default function SearchPalette() {
                     type="button"
                     onClick={() => setView("search")}
                     aria-label="Back to search"
-                    className="flex h-10 w-10 items-center justify-center rounded-xl text-zinc-300 transition hover:bg-white/6 hover:text-white"
+                    className="flex h-10 w-10 items-center justify-center rounded-xl text-zinc-300 transition-colors duration-150 hover:bg-white/6 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     <ChevronLeft className="h-5 w-5" />
                   </button>
@@ -552,7 +552,7 @@ export default function SearchPalette() {
                           title={option.label}
                           onMouseEnter={() => setThemeIndex(index)}
                           onClick={() => chooseTheme(option.id)}
-                          className={`flex h-12 w-14 items-center justify-center rounded-2xl transition ${
+                          className={`flex h-12 w-14 items-center justify-center rounded-2xl transition-[box-shadow,transform] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.98] ${
                             option.swatchClassName
                           } ${
                             isSelected || isKeyboardTarget
