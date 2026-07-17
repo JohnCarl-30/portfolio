@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 import { FaReact } from "react-icons/fa";
 
@@ -44,6 +44,7 @@ const proofPoints = [
 ];
 
 const Hero = () => {
+  const shouldReduceMotion = useReducedMotion();
   const [windowOffset, setWindowOffset] = useState({
     innerWidth: 0,
     innerHeight: 0,
@@ -101,52 +102,28 @@ const Hero = () => {
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-background" />
 
       <div className="page-shell relative z-10 grid items-center gap-16 lg:grid-cols-[1fr_0.9fr]">
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-        >
+        <div>
           <div className="max-w-xl space-y-10">
             <div className="space-y-6">
-              <motion.p
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500"
-              >
+              <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
                 Aspiring AI Engineer
-              </motion.p>
+              </p>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-                className="text-[clamp(3.5rem,8vw,6.5rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-slate-950 dark:text-white"
-              >
+              <h1 className="text-[clamp(3.5rem,8vw,6.5rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-slate-950 dark:text-white">
                 John
                 <br />
                 <span className="font-serif text-primary italic">Carl</span>{" "}
                 Santos
-              </motion.h1>
+              </h1>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
-                className="max-w-md text-base leading-relaxed text-slate-500 dark:text-slate-400"
-              >
+              <p className="max-w-md text-base leading-relaxed text-slate-500 dark:text-slate-400">
                 I build AI-powered web apps, backend systems, and automation
                 tools with Next.js, Python, cloud infrastructure, and LLM
                 workflows.
-              </motion.p>
+              </p>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.38, ease: "easeOut" }}
-              className="grid max-w-lg grid-cols-3 overflow-hidden rounded-2xl border border-slate-200/70 bg-white/55 backdrop-blur-md dark:border-white/10 dark:bg-white/5"
-            >
+            <div className="grid max-w-lg grid-cols-3 overflow-hidden rounded-2xl border border-slate-200/70 bg-white/55 backdrop-blur-md dark:border-white/10 dark:bg-white/5">
               {proofPoints.map((point) => (
                 <div
                   key={point.label}
@@ -160,36 +137,26 @@ const Hero = () => {
                   </p>
                 </div>
               ))}
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.45, ease: "easeOut" }}
-              className="flex flex-wrap items-center gap-4"
-            >
+            <div className="flex flex-wrap items-center gap-4">
               <Link
                 href="/projects"
-                className="group inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-sm font-medium text-white transition-transform hover:-translate-y-0.5 dark:bg-white dark:text-slate-950"
+                className="group inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-sm font-medium text-white transition-[color,transform] duration-150 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98] dark:bg-white dark:text-slate-950"
               >
                 View Projects
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
               </Link>
 
               <Link
                 href="/about"
-                className="text-sm font-medium text-slate-500 underline-offset-4 transition-colors hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
+                className="text-sm font-medium text-slate-500 underline-offset-4 transition-colors duration-150 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:text-slate-400 dark:hover:text-white"
               >
                 More about me
               </Link>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
-              className="flex items-center gap-4 pt-2"
-            >
+            <div className="flex items-center gap-4 pt-2">
               {socialLinks.map((item) => {
                 const Icon = item.icon;
 
@@ -205,22 +172,17 @@ const Hero = () => {
                     }
                     aria-label={item.label}
                     title={item.label}
-                    className="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-400 transition-all hover:border-slate-400 hover:text-slate-950 dark:border-white/10 dark:text-slate-500 dark:hover:border-white/30 dark:hover:text-white"
+                    className="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-400 transition-[color,border-color,transform] duration-150 hover:border-slate-400 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98] dark:border-white/10 dark:text-slate-500 dark:hover:border-white/30 dark:hover:text-white"
                   >
                     <Icon className="h-4 w-4" />
                   </a>
                 );
               })}
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 36 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.12, ease: "easeOut" }}
-          className="relative hidden justify-center lg:flex"
-        >
+        <div className="relative hidden justify-center lg:flex">
           <div className="relative w-full max-w-[420px]">
             <div className="pointer-events-none absolute -left-6 top-8 h-32 w-32 rounded-full bg-blue-300/25 blur-3xl dark:bg-blue-500/12" />
             <div className="pointer-events-none absolute -right-4 bottom-8 h-28 w-28 rounded-full bg-sky-200/30 blur-3xl dark:bg-sky-400/10" />
@@ -228,8 +190,8 @@ const Hero = () => {
             <motion.div
               className="relative overflow-hidden rounded-2xl border border-slate-200/60 dark:border-white/10"
               style={{
-                rotateX: mouseMove ? rotateX : 0,
-                rotateY: mouseMove ? rotateY : 0,
+                rotateX: mouseMove && !shouldReduceMotion ? rotateX : 0,
+                rotateY: mouseMove && !shouldReduceMotion ? rotateY : 0,
                 transformPerspective: 1200,
               }}
             >
@@ -244,60 +206,62 @@ const Hero = () => {
               </div>
             </motion.div>
 
-            <motion.div
-              variants={getContainerVariants(0.2, 0.8)}
-              initial="hidden"
-              animate="visible"
-              className="hidden xl:block"
-            >
+            {!shouldReduceMotion && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                  delay: 1.2,
-                  duration: 0.6,
-                  type: "spring",
-                  bounce: 0.35,
-                }}
+                variants={getContainerVariants(0.2, 0.8)}
+                initial="hidden"
+                animate="visible"
+                className="hidden xl:block"
               >
-                <FloatingCircle
-                  style={{ left: "-2.5rem", top: "2.5rem" }}
-                  orbitSize="13rem"
-                  toastMessage={<span>React</span>}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    delay: 1.2,
+                    duration: 0.6,
+                    type: "spring",
+                    bounce: 0.35,
+                  }}
                 >
-                  <FaReact className="text-blue-400" size="2rem" />
-                </FloatingCircle>
-              </motion.div>
+                  <FloatingCircle
+                    style={{ left: "-2.5rem", top: "2.5rem" }}
+                    orbitSize="13rem"
+                    toastMessage={<span>React</span>}
+                  >
+                    <FaReact className="text-blue-400" size="2rem" />
+                  </FloatingCircle>
+                </motion.div>
 
-              <motion.div
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                  delay: 1.45,
-                  duration: 0.6,
-                  type: "spring",
-                  bounce: 0.35,
-                }}
-              >
-                <FloatingCircle
-                  style={{ right: "-1.25rem", bottom: "4rem" }}
-                  orbitSize="11rem"
-                  nucleusClass="bg-yellow-500/20"
-                  toastMessage={<span>Python</span>}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    delay: 1.45,
+                    duration: 0.6,
+                    type: "spring",
+                    bounce: 0.35,
+                  }}
                 >
-                  <div
-                    className="h-12 w-12"
-                    style={{
-                      backgroundImage: "url('/img/python-logo.svg')",
-                      backgroundPosition: "center",
-                      backgroundSize: "contain",
-                    }}
-                  />
-                </FloatingCircle>
+                  <FloatingCircle
+                    style={{ right: "-1.25rem", bottom: "4rem" }}
+                    orbitSize="11rem"
+                    nucleusClass="bg-yellow-500/20"
+                    toastMessage={<span>Python</span>}
+                  >
+                    <div
+                      className="h-12 w-12"
+                      style={{
+                        backgroundImage: "url('/img/python-logo.svg')",
+                        backgroundPosition: "center",
+                        backgroundSize: "contain",
+                      }}
+                    />
+                  </FloatingCircle>
+                </motion.div>
               </motion.div>
-            </motion.div>
+            )}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
