@@ -12,7 +12,7 @@ import ParticlesBackground from "./particles-background";
 
 const socialLinks = [
   {
-    href: "https://github.com/santosjohncarl",
+    href: "https://github.com/JohnCarl-30",
     label: "GitHub",
     icon: Github,
   },
