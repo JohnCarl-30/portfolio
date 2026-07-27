@@ -36,15 +36,49 @@ const firaCode = Fira_Code({
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
-  title: "John Carl Santos",
-  description: "Portfolio of John Carl Santos, focused on software engineering, AI workflows, and thoughtful product experiences.",
+  title: {
+    default: "John Carl Santos — AI & Full-Stack Engineer",
+    template: "%s | John Carl Santos",
+  },
+  description:
+    "Portfolio of John Carl Santos — aspiring AI engineer building RAG systems, full-stack web apps, and automation tools with Next.js, Python, and cloud infrastructure.",
+  keywords: [
+    "John Carl Santos",
+    "AI engineer",
+    "full-stack developer",
+    "Next.js",
+    "Python",
+    "RAG",
+    "portfolio",
+    "web developer",
+    "machine learning",
+    "cloud infrastructure",
+  ],
+  authors: [{ name: "John Carl Santos" }],
+  creator: "John Carl Santos",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: "/personal.jpg",
     apple: "/personal.jpg",
   },
   openGraph: {
-    title: "John Carl Santos",
-    description: "Portfolio of John Carl Santos, focused on software engineering, AI workflows, and thoughtful product experiences.",
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: "John Carl Santos",
+    title: "John Carl Santos — AI & Full-Stack Engineer",
+    description:
+      "Portfolio of John Carl Santos — aspiring AI engineer building RAG systems, full-stack web apps, and automation tools.",
     images: [
       {
         url: "/personal.jpg",
@@ -56,9 +90,11 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "John Carl Santos",
-    description: "Portfolio of John Carl Santos, focused on software engineering, AI workflows, and thoughtful product experiences.",
+    title: "John Carl Santos — AI & Full-Stack Engineer",
+    description:
+      "Portfolio of John Carl Santos — aspiring AI engineer building RAG systems, full-stack web apps, and automation tools.",
     images: ["/personal.jpg"],
+    creator: "@dyeyyyccc",
   },
 };
 
