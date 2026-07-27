@@ -201,26 +201,35 @@ export default function ProjectsPage() {
             })}
           </AnimatePresence>
 
-          {filteredProjects.length === 0 && (
-            <div className="col-span-full rounded-2xl border border-dashed border-border/70 bg-secondary/20 px-6 py-12 text-center">
-              <p className="text-sm font-medium text-foreground">
-                No projects match your search
-              </p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Try a different keyword or switch the category filter.
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  setSearchQuery("");
-                  setActiveTab("All");
-                }}
-                className="mt-4 inline-flex items-center rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-[color,transform] duration-150 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98]"
+          <AnimatePresence>
+            {filteredProjects.length === 0 && (
+              <motion.div
+                key="empty-state"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="col-span-full rounded-2xl border border-dashed border-border/70 bg-secondary/20 px-6 py-12 text-center"
               >
-                Clear filters
-              </button>
-            </div>
-          )}
+                <p className="text-sm font-medium text-foreground">
+                  No projects match your search
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Try a different keyword or switch the category filter.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setActiveTab("All");
+                  }}
+                  className="mt-4 inline-flex items-center rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-[color,transform] duration-150 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98]"
+                >
+                  Clear filters
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </main>
     </div>
