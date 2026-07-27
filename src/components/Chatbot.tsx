@@ -188,21 +188,41 @@ const Chatbot = () => {
               ))}
 
               {/* Quick Replies */}
-              {showQuickReplies && (
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {quickReplies.map((reply) => (
-                    <button
-                      key={reply}
-                      type="button"
-                      disabled={isLoading}
-                      onClick={() => handleSend(reply)}
-                      className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 transition-colors duration-150 hover:border-slate-400 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:border-zinc-500 dark:hover:text-white"
-                    >
-                      {reply}
-                    </button>
-                  ))}
-                </div>
-              )}
+              <AnimatePresence>
+                {showQuickReplies && (
+                  <motion.div
+                    key="quick-replies"
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    variants={{
+                      hidden: {},
+                      visible: { transition: { staggerChildren: 0.06 } },
+                    }}
+                    className="flex flex-wrap gap-2 pt-2"
+                  >
+                    {quickReplies.map((reply) => (
+                      <motion.button
+                        key={reply}
+                        type="button"
+                        disabled={isLoading}
+                        onClick={() => handleSend(reply)}
+                        variants={{
+                          hidden: { opacity: 0, y: 8 },
+                          visible: {
+                            opacity: 1,
+                            y: 0,
+                            transition: { duration: 0.2, ease: "easeOut" },
+                          },
+                        }}
+                        className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 transition-colors duration-150 hover:border-slate-400 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:border-zinc-500 dark:hover:text-white"
+                      >
+                        {reply}
+                      </motion.button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               {isLoading && (
                 <div className="flex justify-start">

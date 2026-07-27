@@ -495,15 +495,24 @@ export default function SearchPalette() {
                       </div>
                     ))
                   ) : (
-                    <div className="flex flex-col items-center justify-center px-6 py-16 text-center">
-                      <Search className="mb-4 h-10 w-10 text-zinc-600" />
-                      <p className="text-lg font-medium text-white">
-                        No matches found
-                      </p>
-                      <p className="mt-2 max-w-sm text-sm text-zinc-400">
-                        Try searching for home, about, projects, or theme.
-                      </p>
-                    </div>
+                    <AnimatePresence>
+                      <motion.div
+                        key="no-results"
+                        initial={{ opacity: 0, scale: 0.97 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.18, ease: "easeOut" }}
+                        className="flex flex-col items-center justify-center px-6 py-16 text-center"
+                      >
+                        <Search className="mb-4 h-10 w-10 text-zinc-600" />
+                        <p className="text-lg font-medium text-white">
+                          No matches found
+                        </p>
+                        <p className="mt-2 max-w-sm text-sm text-zinc-400">
+                          Try searching for home, about, projects, or theme.
+                        </p>
+                      </motion.div>
+                    </AnimatePresence>
                   )}
                 </div>
 
