@@ -26,7 +26,7 @@ export const HERO_ICONS: HeroIcon[] = [
 
   {
     name: 'GitHub',
-    href: 'https://github.com/santosjohncarl',
+    href: 'https://github.com/JohnCarl-30',
     icon: <GithubLineIcon size={40} />,
   },
 ]
