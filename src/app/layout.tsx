@@ -44,6 +44,8 @@ export const metadata = {
     "Portfolio of John Carl Santos — aspiring AI engineer building RAG systems, full-stack web apps, and automation tools with Next.js, Python, and cloud infrastructure.",
   keywords: [
     "John Carl Santos",
+    "dyeyc",
+    "dyeyyyccc",
     "AI engineer",
     "full-stack developer",
     "Next.js",
@@ -54,7 +56,7 @@ export const metadata = {
     "machine learning",
     "cloud infrastructure",
   ],
-  authors: [{ name: "John Carl Santos" }],
+  authors: [{ name: "John Carl Santos", url: "https://x.com/dyeyyyccc" }],
   creator: "John Carl Santos",
   robots: {
     index: true,
@@ -90,6 +92,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    site: "@dyeyyyccc",
     title: "John Carl Santos — AI & Full-Stack Engineer",
     description:
       "Portfolio of John Carl Santos — aspiring AI engineer building RAG systems, full-stack web apps, and automation tools.",
