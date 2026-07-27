@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import {
   ArrowLeft,
   ArrowRight,
@@ -22,6 +23,29 @@ export function generateStaticParams() {
   return projectsData.map((project) => ({
     id: project.id,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const project = projectsData.find((p) => p.id === id);
+
+  if (!project) {
+    return { title: "Project Not Found" };
+  }
+
+  return {
+    title: project.name,
+    description: project.desc,
+    openGraph: {
+      title: `${project.name} | John Carl Santos`,
+      description: project.desc,
+      images: project.url ? [{ url: project.url, alt: project.name }] : [],
+    },
+  };
 }
 
 export default async function ProjectDetail({
