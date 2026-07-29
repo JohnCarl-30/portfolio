@@ -10,7 +10,8 @@
 ## Architecture
 - **Navbar is in root layout** (`src/app/layout.tsx`). Do **not** add `<Navbar />` to individual pages — it causes duplicate navbars and build errors.
 - **Client components** using Framer Motion (`motion`, `AnimatePresence`) must have `"use client"` at the top. Static generation fails without it.
-- **Data sources**: `src/app/data/Projects.ts` (projects) and `src/app/data/HeroIcons.ts` (skills, about text).
+- **Data sources**: `src/app/data/Projects.ts` (projects), `src/app/data/Blog.ts` (blog posts), and `src/app/data/HeroIcons.ts` (skills, about text).
+- **Blog**: `/blog` listing + `/blog/[slug]` detail. Static TypeScript posts (no MDX). Giscus comments are optional and not wired by default.
 - **Theme system**: Custom light/dark/midnight via `localStorage` key `portfolio-theme`. The theme script runs inline in `layout.tsx` before React hydrates.
 
 ## Key Gotchas
