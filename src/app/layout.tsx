@@ -70,8 +70,9 @@ export const metadata = {
     },
   },
   icons: {
-    icon: "/personal.jpg",
-    apple: "/personal.jpg",
+    icon: [{ url: "/personal.jpg", type: "image/jpeg" }],
+    apple: [{ url: "/personal.jpg", type: "image/jpeg" }],
+    shortcut: "/personal.jpg",
   },
   openGraph: {
     type: "website",
