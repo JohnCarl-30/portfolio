@@ -3,6 +3,7 @@ import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Certifications from "@/components/Certifications";
 import FeaturedProjects from "@/components/FeaturedProjects";
+import FeaturedBlog from "@/components/FeaturedBlog";
 import SideNavbar from "@/app/section/side-navbar";
 import Contact from "@/components/Contact";
 
@@ -13,6 +14,7 @@ export default function HomeComponent() {
         <Hero />
         <About />
         <FeaturedProjects />
+        <FeaturedBlog />
         <Skills />
         <Certifications />
         <Contact />
