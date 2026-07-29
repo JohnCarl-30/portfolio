@@ -44,6 +44,7 @@ export const metadata = {
     "Portfolio of John Carl Santos — aspiring AI engineer building RAG systems, full-stack web apps, and automation tools with Next.js, Python, and cloud infrastructure.",
   keywords: [
     "John Carl Santos",
+    "John Carl",
     "dyeyc",
     "dyeyyyccc",
     "AI engineer",
@@ -70,9 +71,12 @@ export const metadata = {
     },
   },
   icons: {
-    icon: [{ url: "/personal.jpg", type: "image/jpeg" }],
-    apple: [{ url: "/personal.jpg", type: "image/jpeg" }],
-    shortcut: "/personal.jpg",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
+    shortcut: "/favicon.ico",
   },
   openGraph: {
     type: "website",
