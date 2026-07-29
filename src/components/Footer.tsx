@@ -67,6 +67,19 @@ const Footer = () => {
                 Skills
               </Link>
             </motion.div>
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 10 },
+                visible: { opacity: 1, y: 0 },
+              }}
+            >
+              <Link
+                href="/blog"
+                className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
+              >
+                Blog
+              </Link>
+            </motion.div>
           </motion.div>
         </motion.div>
 
