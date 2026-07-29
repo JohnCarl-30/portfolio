@@ -15,6 +15,7 @@ import {
   Home,
   MonitorCog,
   MoonStar,
+  Newspaper,
   Rocket,
   Search,
   SunMedium,
@@ -27,11 +28,12 @@ import {
   type ThemePreference,
   useAppUI,
 } from "@/components/providers/AppUIProvider";
+import { getAllPosts } from "@/app/data/Blog";
 import { projectsData } from "@/app/data/Projects";
 import { Kbd } from "@/components/ui/kbd";
 
 type SearchView = "search" | "theme";
-type SearchGroup = "Site" | "Main Pages" | "Projects";
+type SearchGroup = "Site" | "Main Pages" | "Projects" | "Blog";
 
 type ThemeOption = {
   icon: LucideIcon;
@@ -90,6 +92,16 @@ const PAGE_ITEMS: SearchEntry[] = [
     keywords: ["portfolio", "work", "case studies"],
     kind: "route",
   },
+  {
+    id: "blog",
+    title: "Blog",
+    description: "Read notes on AI and full-stack shipping.",
+    href: "/blog",
+    group: "Main Pages",
+    icon: Newspaper,
+    keywords: ["writing", "posts", "articles", "notes"],
+    kind: "route",
+  },
 ];
 
 const PROJECT_ITEMS: SearchEntry[] = projectsData.map((project) => ({
@@ -100,6 +112,17 @@ const PROJECT_ITEMS: SearchEntry[] = projectsData.map((project) => ({
   group: "Projects",
   icon: FolderKanban,
   keywords: [project.category, project.role, ...project.tech],
+  kind: "route",
+}));
+
+const BLOG_ITEMS: SearchEntry[] = getAllPosts().map((post) => ({
+  id: post.slug,
+  title: post.title,
+  description: post.excerpt,
+  href: `/blog/${post.slug}`,
+  group: "Blog",
+  icon: Newspaper,
+  keywords: [...post.tags, "blog", "post"],
   kind: "route",
 }));
 
@@ -131,7 +154,7 @@ const THEME_OPTIONS: ThemeOption[] = [
   },
 ];
 
-const GROUP_ORDER: SearchGroup[] = ["Site", "Main Pages", "Projects"];
+const GROUP_ORDER: SearchGroup[] = ["Site", "Main Pages", "Projects", "Blog"];
 
 const getThemeLabel = (theme: ThemePreference) => {
   switch (theme) {
@@ -209,6 +232,7 @@ export default function SearchPalette() {
       createThemeEntry(themePreference, resolvedTheme),
       ...PAGE_ITEMS,
       ...PROJECT_ITEMS,
+      ...BLOG_ITEMS,
     ],
     [resolvedTheme, themePreference],
   );
@@ -216,7 +240,10 @@ export default function SearchPalette() {
   const filteredEntries = useMemo(
     () =>
       entries.filter((entry) => {
-        if (!hasActiveQuery && entry.group === "Projects") {
+        if (
+          !hasActiveQuery &&
+          (entry.group === "Projects" || entry.group === "Blog")
+        ) {
           return false;
         }
 
