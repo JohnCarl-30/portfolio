@@ -11,83 +11,42 @@ const Footer = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.35 }}
           className="flex flex-col items-center justify-center gap-6"
         >
-          <motion.div
-            className="flex flex-row gap-6 items-center"
-            variants={{
-              hidden: {},
-              visible: {
-                transition: {
-                  staggerChildren: 0.1,
-                },
-              },
-            }}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, y: 10 },
-                visible: { opacity: 1, y: 0 },
-              }}
+          <div className="flex flex-row gap-6 items-center">
+            <Link
+              href="/#hero"
+              className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
             >
-              <Link
-                href="/#hero"
-                className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
-              >
-                Home
-              </Link>
-            </motion.div>
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, y: 10 },
-                visible: { opacity: 1, y: 0 },
-              }}
+              Home
+            </Link>
+            <Link
+              href="/about"
+              className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
             >
-              <Link
-                href="/about"
-                className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
-              >
-                About
-              </Link>
-            </motion.div>
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, y: 10 },
-                visible: { opacity: 1, y: 0 },
-              }}
+              About
+            </Link>
+            <Link
+              href="/#skills"
+              className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
             >
-              <Link
-                href="/#skills"
-                className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
-              >
-                Skills
-              </Link>
-            </motion.div>
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, y: 10 },
-                visible: { opacity: 1, y: 0 },
-              }}
+              Skills
+            </Link>
+            <Link
+              href="/blog"
+              className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
             >
-              <Link
-                href="/blog"
-                className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
-              >
-                Blog
-              </Link>
-            </motion.div>
-          </motion.div>
+              Blog
+            </Link>
+          </div>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.35, delay: 0.1 }}
           className="flex justify-center items-center gap-3 border-t border-[var(--footer-border)] pt-6 text-xs text-[var(--footer-muted)]"
         >
           <p>Copyright © {new Date().getFullYear()} John Carl Santos.</p>
