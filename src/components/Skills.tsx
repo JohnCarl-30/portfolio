@@ -28,7 +28,7 @@ const Skills = () => {
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.55 }}
+            transition={{ duration: 0.35 }}
           >
             <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80 mb-6">
               Stack
