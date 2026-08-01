@@ -441,7 +441,7 @@ export default function SearchPalette() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] bg-slate-950/45 px-4 pt-[12vh] backdrop-blur-[2px]"
+          className="fixed inset-0 z-[100] bg-slate-950/45 px-4 pt-[12vh] backdrop-blur-sm"
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) {
               closePalette();
