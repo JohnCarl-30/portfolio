@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import ParticlesBackground from "@/components/particles-background";
 
 const AboutPage = () => {
   const facts = [
@@ -53,8 +54,9 @@ const AboutPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <main className="page-shell max-w-5xl">
+    <div className="relative min-h-screen bg-background text-foreground">
+      <ParticlesBackground />
+      <main className="relative z-10 page-shell max-w-5xl">
         {/* HERO STRIP */}
         <section className="grid grid-cols-1 items-end gap-8 border-b border-slate-200 pt-24 pb-12 dark:border-white/10 md:grid-cols-[1fr_auto]">
           <motion.div
