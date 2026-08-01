@@ -45,12 +45,12 @@ const Navbar = () => {
                       : "text-slate-400 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
                   }`}
                 >
-                  {link.label}
-                  <span
-                    className={`absolute -bottom-1 left-0 h-px bg-slate-950 transition-[width] duration-200 ease-out dark:bg-white ${
-                      isActive ? "w-full" : "w-0 group-hover:w-full"
-                    }`}
-                  />
+                {link.label}
+                <span
+                  className={`absolute -bottom-1 left-0 h-px w-full origin-left bg-slate-950 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] dark:bg-white ${
+                    isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                  }`}
+                />
                 </Link>
               );
             })}
