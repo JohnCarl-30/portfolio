@@ -117,6 +117,7 @@ const Chatbot = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={shouldReduceMotion ? undefined : { opacity: 0, y: 20, scale: 0.95 }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.25, ease: "easeOut" }}
+            style={{ transformOrigin: "bottom right" }}
             className="fixed bottom-24 right-6 z-50 flex h-[70vh] max-h-[500px] w-[350px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl dark:border-zinc-800 dark:bg-zinc-900"
           >
             {/* Header */}
