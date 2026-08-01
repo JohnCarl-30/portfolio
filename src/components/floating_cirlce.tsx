@@ -1,4 +1,4 @@
-import { motion, Variants } from 'framer-motion';
+import { Variants } from 'framer-motion';
 import { CSSProperties } from 'react';
 import React from 'react';
 import toast from 'react-hot-toast';
@@ -25,32 +25,6 @@ export const getContainerVariants = (
     };
 };
 
-const nucleusVariants: Variants = {
-    hidden: { scale: 0 },
-    visible: {
-        scale: 1,
-        transition: {
-            duration: 0.8,
-            type: 'spring',
-            when: 'beforeChildren',
-            stiffness: 200,
-        },
-    },
-};
-
-const nucleusChildVariants: Variants = {
-    hidden: {
-        opacity: 0,
-    },
-    visible: {
-        opacity: 1,
-        transition: {
-            duration: 0.8,
-            ease: 'circOut',
-        },
-    },
-};
-
 interface FloatingCircleProps {
     style: CSSProperties | undefined;
     orbitSize?: string;
@@ -68,20 +42,12 @@ const FloatingCircle: FCC<FloatingCircleProps> = ({
     floatDelay = 0,
     toastMessage = '',
 }) => {
-    style = {
-        ...style,
-    };
     return (
-        <motion.div
+        <div
             className="absolute flex h-20 w-20 items-center justify-center p-2 will-change-transform"
-            style={style}
-            initial={{ y: 0 }}
-            animate={{ y: -25 }}
-            transition={{
-                duration: 2,
-                delay: floatDelay,
-                repeat: Infinity,
-                repeatType: 'reverse',
+            style={{
+                ...style,
+                animation: `floating 2s ease-in-out ${floatDelay}s infinite alternate`,
             }}
         >
             <Nucleus
@@ -93,7 +59,7 @@ const FloatingCircle: FCC<FloatingCircleProps> = ({
                 {children}
             </Nucleus>
             <Orbit orbitSize={orbitSize} className={orbitClass} />
-        </motion.div>
+        </div>
     );
 };
 
@@ -108,7 +74,7 @@ const Orbit: React.FC<OrbitProps> = ({
 }: OrbitProps) => {
     return (
         <span
-            className={`orbit absolute rounded-full border opacity-40 transition-all duration-300 ${className}`}
+            className={`orbit absolute rounded-full border opacity-40 transition-[width,height] duration-300 ease-out ${className}`}
             style={{ width: orbitSize, height: orbitSize }}
         ></span>
     );
@@ -125,18 +91,17 @@ const Nucleus: FCC<NucleusProps> = ({
     onClick = () => { },
 }) => {
     return (
-        <motion.div
-            variants={nucleusVariants}
+        <div
             className="nucleus group absolute z-10 flex h-20 w-20 cursor-pointer items-center justify-center rounded-full"
             onClick={onClick}
         >
             <span
-                className={`absolute h-20 w-20 rounded-full opacity-40 transition-all group-hover:h-28 group-hover:w-28 ${className}`}
+                className={`absolute h-20 w-20 rounded-full opacity-40 transition-[width,height] duration-300 ease-out group-hover:h-28 group-hover:w-28 ${className}`}
             />
-            <motion.span variants={nucleusChildVariants} className="absolute">
+            <span className="absolute transition-opacity duration-300 ease-out">
                 {children}
-            </motion.span>
-        </motion.div>
+            </span>
+        </div>
     );
 };
 export default FloatingCircle;
