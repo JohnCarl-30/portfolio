@@ -14,7 +14,7 @@ const About = () => {
             initial={{ opacity: 0, y: 26 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.35 }}
           >
             <div className="relative overflow-hidden rounded-2xl border border-slate-200/60 dark:border-white/10">
               <div className="relative aspect-[4/5]">
@@ -33,7 +33,7 @@ const About = () => {
             initial={{ opacity: 0, y: 26 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.06 }}
+            transition={{ duration: 0.35, delay: 0.06 }}
           >
             <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80 mb-6">
               About
