@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 import { FaReact } from "react-icons/fa";
 
@@ -45,56 +45,39 @@ const proofPoints = [
 
 const Hero = () => {
   const shouldReduceMotion = useReducedMotion();
-  const [windowOffset, setWindowOffset] = useState({
-    innerWidth: 0,
-    innerHeight: 0,
-  });
-  const [mouseMove, setMouseMove] = useState(false);
+  const photoRef = useRef<HTMLDivElement>(null);
+  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
 
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  const handleMouseMove = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      if (shouldReduceMotion || !photoRef.current) return;
 
-  useEffect(() => {
-    const syncWindow = () => {
-      setWindowOffset({
-        innerWidth: window.innerWidth,
-        innerHeight: window.innerHeight,
-      });
-    };
+      const rect = photoRef.current.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
 
-    syncWindow();
-    window.addEventListener("resize", syncWindow);
+      const mouseX = event.clientX - centerX;
+      const mouseY = event.clientY - centerY;
 
-    return () => {
-      window.removeEventListener("resize", syncWindow);
-    };
+      const rotateY = (mouseX / (rect.width / 2)) * 8;
+      const rotateX = -(mouseY / (rect.height / 2)) * 8;
+
+      setRotation({ x: rotateX, y: rotateY });
+    },
+    [shouldReduceMotion],
+  );
+
+  const handleMouseEnter = useCallback(() => setIsHovering(true), []);
+  const handleMouseLeave = useCallback(() => {
+    setIsHovering(false);
+    setRotation({ x: 0, y: 0 });
   }, []);
-
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    x.set(event.clientX);
-    y.set(event.clientY);
-  };
-
-  const ySpring = useSpring(y, { stiffness: 100, damping: 12 });
-  const xSpring = useSpring(x, { stiffness: 100, damping: 12 });
-  const rotateY = useTransform(
-    xSpring,
-    [0, windowOffset.innerWidth || 1],
-    [-8, 8],
-  );
-  const rotateX = useTransform(
-    ySpring,
-    [0, windowOffset.innerHeight || 1],
-    [8, -8],
-  );
 
   return (
     <section
       id="hero"
       className="relative isolate flex min-h-[calc(100svh-6rem)] items-center overflow-hidden pt-8 pb-16"
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setMouseMove(true)}
-      onMouseLeave={() => setMouseMove(false)}
     >
       <ParticlesBackground />
 
@@ -187,15 +170,24 @@ const Hero = () => {
             <div className="pointer-events-none absolute -left-6 top-8 h-32 w-32 rounded-full bg-blue-300/25 blur-3xl dark:bg-blue-500/12" />
             <div className="pointer-events-none absolute -right-4 bottom-8 h-28 w-28 rounded-full bg-sky-200/30 blur-3xl dark:bg-sky-400/10" />
 
-            <motion.div
+            <div
+              ref={photoRef}
+              onMouseMove={handleMouseMove}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
               className="relative overflow-hidden rounded-2xl border border-slate-200/60 dark:border-white/10"
               style={{
-                rotateX: mouseMove && !shouldReduceMotion ? rotateX : 0,
-                rotateY: mouseMove && !shouldReduceMotion ? rotateY : 0,
-                transformPerspective: 1200,
+                perspective: 1200,
               }}
             >
-              <div className="relative aspect-[4/5]">
+              <div
+                className="relative aspect-[4/5] transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]"
+                style={{
+                  transform: isHovering && !shouldReduceMotion
+                    ? `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`
+                    : "rotateX(0deg) rotateY(0deg)",
+                }}
+              >
                 <Image
                   src="/personal.jpg"
                   alt="John Carl Santos"
@@ -204,7 +196,7 @@ const Hero = () => {
                   className="object-cover object-center"
                 />
               </div>
-            </motion.div>
+            </div>
 
             {!shouldReduceMotion && (
               <motion.div
