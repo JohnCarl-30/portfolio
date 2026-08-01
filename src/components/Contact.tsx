@@ -30,7 +30,7 @@ const Contact = () => {
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.55 }}
+          transition={{ duration: 0.35 }}
           className="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end"
         >
           <div className="min-w-0">
