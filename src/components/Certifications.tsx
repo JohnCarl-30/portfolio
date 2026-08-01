@@ -107,7 +107,7 @@ const Certifications: React.FC<CertificationsProps> = ({
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.35 }}
           className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80 mb-6"
         >
           Credentials
@@ -116,7 +116,7 @@ const Certifications: React.FC<CertificationsProps> = ({
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.55, delay: 0.05 }}
+          transition={{ duration: 0.35, delay: 0.05 }}
           className="mb-12 text-4xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl"
         >
           Certifications.
@@ -144,7 +144,7 @@ const Certifications: React.FC<CertificationsProps> = ({
                 visible: {
                   opacity: 1,
                   y: 0,
-                  transition: { duration: 0.4, ease: "easeOut" },
+                  transition: { duration: 0.35, ease: "easeOut" },
                 },
               }}
               whileHover={{ y: -2 }}
