@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { getAllPosts, getBlogTags } from "@/app/data/Blog";
 
@@ -65,62 +66,81 @@ export default function BlogPage() {
         </div>
 
         <div className="mt-12 flex flex-col gap-0">
-          {filteredPosts.map((post) => (
-            <Link
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="group border-t border-border/60 py-8 transition-colors duration-150 last:border-b focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            >
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
-                <div className="min-w-0 flex-1">
-                  <p className="font-mono text-xs text-muted-foreground">
-                    {formatDate(post.date)}
-                    <span className="mx-2 text-border">·</span>
-                    {post.readingTime}
-                  </p>
-                  <h2 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-foreground transition-colors duration-150 group-hover:text-primary">
-                    {post.title}
-                  </h2>
-                  <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-                    {post.excerpt}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {post.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full border border-border/60 px-3 py-1 text-xs font-medium text-muted-foreground"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <span className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-[color,transform] duration-150 group-hover:translate-x-0.5 group-hover:text-foreground">
-                  Read
-                  <ArrowRight className="h-4 w-4" />
-                </span>
-              </div>
-            </Link>
-          ))}
-
-          {filteredPosts.length === 0 && (
-            <div className="rounded-2xl border border-dashed border-border/70 bg-secondary/20 px-6 py-12 text-center">
-              <p className="text-sm font-medium text-foreground">
-                No posts in this tag
-              </p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Try another tag or clear the filter to see every post.
-              </p>
-              <button
-                type="button"
-                onClick={() => setActiveTag("All")}
-                className="mt-4 inline-flex min-h-11 items-center rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-[color,transform] duration-150 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98]"
+          <AnimatePresence mode="popLayout">
+            {filteredPosts.map((post) => (
+              <motion.div
+                key={post.slug}
+                layout
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
               >
-                Clear filters
-              </button>
-            </div>
-          )}
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="group border-t border-border/60 py-8 transition-colors duration-150 last:border-b focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                >
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+                    <div className="min-w-0 flex-1">
+                      <p className="font-mono text-xs text-muted-foreground">
+                        {formatDate(post.date)}
+                        <span className="mx-2 text-border">·</span>
+                        {post.readingTime}
+                      </p>
+                      <h2 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-foreground transition-colors duration-150 group-hover:text-primary">
+                        {post.title}
+                      </h2>
+                      <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                        {post.excerpt}
+                      </p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {post.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="rounded-full border border-border/60 px-3 py-1 text-xs font-medium text-muted-foreground"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <span className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-[color,transform] duration-150 group-hover:translate-x-0.5 group-hover:text-foreground">
+                      Read
+                      <ArrowRight className="h-4 w-4" />
+                    </span>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {filteredPosts.length === 0 && (
+              <motion.div
+                key="empty-state"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="rounded-2xl border border-dashed border-border/70 bg-secondary/20 px-6 py-12 text-center"
+              >
+                <p className="text-sm font-medium text-foreground">
+                  No posts in this tag
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Try another tag or clear the filter to see every post.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setActiveTag("All")}
+                  className="mt-4 inline-flex min-h-11 items-center rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-[color,transform] duration-150 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98]"
+                >
+                  Clear filters
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </main>
     </div>
