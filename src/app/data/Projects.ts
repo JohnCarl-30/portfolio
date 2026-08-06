@@ -21,6 +21,40 @@ export interface ProjectItem {
 
 export const projectsData: ProjectItem[] = [
   {
+    id: "resumae",
+    name: "Resumae",
+    category: "Web",
+    desc: "An AI-powered resume analyzer and builder that compares resumes with job postings and pinpoints missing keywords, weak bullets, and hard-to-scan layouts.",
+    longDescription: "Resumae helps job seekers tailor their resumes to the roles they want. It compares a resume with a target job posting and returns focused, line-by-line feedback on missing language, bullet impact, and readability so users know exactly what to improve.\n\nThe platform also includes a clean resume builder that works without signing in, keeping drafts in the browser until the user chooses to save them.",
+    url: "",
+    tech: ["NextJS", "TypeScript", "TailwindCSS", "Clerk", "AI Integration", "Vercel"],
+    role: "Full-stack Developer",
+    timeline: "2026 - Present",
+    highlights: [
+      "Built job-post-aligned resume analysis with actionable, line-level feedback.",
+      "Created focused checks for missing keywords, bullet strength, and six-second scan readability.",
+      "Added a no-sign-in resume builder with browser-based draft persistence.",
+    ],
+    keyFeatures: [
+      {
+        title: "Job-Aligned Analysis",
+        description: "Compare a resume directly with a target job post to uncover missing keywords and gaps in positioning.",
+        image: "",
+      },
+      {
+        title: "Actionable Resume Feedback",
+        description: "Get focused notes on bullet strength, measurable outcomes, layout, and six-second scan readability.",
+        image: "",
+      },
+      {
+        title: "No-Sign-In Resume Builder",
+        description: "Create a clean resume immediately, with drafts kept in the browser until the user chooses to save one.",
+        image: "",
+      }
+    ],
+    liveDemoUrl: "https://resumae.tech"
+  },
+  {
     id: "alphaexplora",
     name: "Alphaexplora",
     category: "Web",
