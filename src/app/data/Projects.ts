@@ -26,7 +26,7 @@ export const projectsData: ProjectItem[] = [
     category: "Web",
     desc: "An AI-powered resume analyzer and builder that compares resumes with job postings and pinpoints missing keywords, weak bullets, and hard-to-scan layouts.",
     longDescription: "Resumae helps job seekers tailor their resumes to the roles they want. It compares a resume with a target job posting and returns focused, line-by-line feedback on missing language, bullet impact, and readability so users know exactly what to improve.\n\nThe platform also includes a clean resume builder that works without signing in, keeping drafts in the browser until the user chooses to save them.",
-    url: "",
+    url: "/projects/resumae.png",
     tech: ["NextJS", "TypeScript", "TailwindCSS", "Clerk", "AI Integration", "Vercel"],
     role: "Full-stack Developer",
     timeline: "2026 - Present",
@@ -39,17 +39,17 @@ export const projectsData: ProjectItem[] = [
       {
         title: "Job-Aligned Analysis",
         description: "Compare a resume directly with a target job post to uncover missing keywords and gaps in positioning.",
-        image: "",
+        image: "/projects/resumae.png",
       },
       {
         title: "Actionable Resume Feedback",
         description: "Get focused notes on bullet strength, measurable outcomes, layout, and six-second scan readability.",
-        image: "",
+        image: "/projects/resumae.png",
       },
       {
         title: "No-Sign-In Resume Builder",
         description: "Create a clean resume immediately, with drafts kept in the browser until the user chooses to save one.",
-        image: "",
+        image: "/projects/resumae.png",
       }
     ],
     liveDemoUrl: "https://resumae.tech"
