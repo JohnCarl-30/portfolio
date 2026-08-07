@@ -152,8 +152,14 @@ export default function RootLayout({
       >
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <AppUIProvider>
+          <a
+            href="#main-content"
+            className="focus-ring sr-only z-[70] rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+          >
+            Skip to content
+          </a>
           <Navbar />
-          <div className="flex-grow flex flex-col">
+          <div id="main-content" className="flex-grow flex flex-col">
             {children}
           </div>
           <Footer />

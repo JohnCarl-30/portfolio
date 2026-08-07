@@ -101,14 +101,14 @@ const Certifications: React.FC<CertificationsProps> = ({
   const visibleCertifications = showAllByDefault ? certifications : certifications.slice(0, 4);
 
   return (
-    <section id="certifications" className="py-24 px-4 md:px-0">
+    <section id="certifications" className="py-16 sm:py-20 lg:py-24">
       <div className="page-shell">
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.35 }}
-          className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80 mb-6"
+          className="section-eyebrow"
         >
           Credentials
         </motion.p>
@@ -117,7 +117,7 @@ const Certifications: React.FC<CertificationsProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.35, delay: 0.05 }}
-          className="mb-12 text-4xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl"
+          className="section-title mb-12"
         >
           Certifications.
         </motion.h2>
@@ -151,31 +151,31 @@ const Certifications: React.FC<CertificationsProps> = ({
               href={cert.credentialUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-xl border border-slate-200/60 bg-white/50 p-6 transition-all hover:border-slate-400 dark:border-white/10 dark:bg-white/5"
+              className="card-surface focus-ring group relative overflow-hidden rounded-xl p-6 transition-colors hover:border-primary/40"
             >
               <div className="flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-100 dark:bg-white/5">
-                  <Award className="h-5 w-5 text-slate-500 dark:text-slate-400" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent">
+                  <Award className="h-5 w-5 text-primary" />
                 </div>
-                
+
                 <div className="flex-1 min-w-0">
-                  <h3 className="mb-1 text-base font-semibold tracking-[-0.01em] text-slate-950 dark:text-white">
+                  <h3 className="mb-1 text-base font-semibold tracking-[-0.01em] text-foreground">
                     {cert.title}
                   </h3>
-                  <p className="mb-2 text-sm text-slate-500 dark:text-slate-400">
+                  <p className="mb-2 text-sm text-muted-foreground">
                     {cert.issuer}
                   </p>
-                  
-                  <p className="mb-3 text-sm leading-relaxed text-slate-400 dark:text-slate-500">
+
+                  <p className="mb-3 text-sm leading-relaxed text-muted-foreground/80">
                     {cert.description}
                   </p>
-                  
+
                   <div className="flex flex-wrap items-center gap-2 text-xs">
-                    <span className="font-mono text-slate-400 dark:text-slate-500">
+                    <span className="font-mono text-muted-foreground/70">
                       {cert.issueDate}
                     </span>
                     {cert.expiryDate && (
-                      <span className="font-mono text-slate-400 dark:text-slate-500">
+                      <span className="font-mono text-muted-foreground/70">
                         — {cert.expiryDate}
                       </span>
                     )}
@@ -191,7 +191,7 @@ const Certifications: React.FC<CertificationsProps> = ({
             <a
               href="/certifications"
               aria-label="View all certifications"
-              className="rounded-full border border-slate-200/60 bg-white/50 px-5 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-slate-400 dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-white/30"
+              className="card-surface focus-ring rounded-full px-5 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/40"
             >
               View more certs
             </a>

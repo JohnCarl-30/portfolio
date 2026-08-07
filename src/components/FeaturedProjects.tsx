@@ -21,17 +21,13 @@ const FeaturedProjects = () => {
       <div className="page-shell">
         <div className="flex items-end justify-between">
           <div>
-            <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80 mb-6">
-              Work
-            </p>
-            <h2 className="text-4xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">
-              Projects.
-            </h2>
+            <p className="section-eyebrow">Work</p>
+            <h2 className="section-title">Projects.</h2>
           </div>
 
           <Link
             href="/projects"
-            className="group hidden items-center gap-2 text-sm font-medium text-slate-500 transition-colors hover:text-slate-950 sm:inline-flex dark:text-slate-400 dark:hover:text-white"
+            className="focus-ring group hidden items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground sm:inline-flex"
           >
             View all
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -70,7 +66,7 @@ const FeaturedProjects = () => {
               >
                 <Link
                   href={`/projects/${project.id}`}
-                  className="group block overflow-hidden rounded-2xl border border-slate-200/60 bg-white/50 transition-[transform,border-color,background-color] duration-200 hover:-translate-y-1 hover:border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-white/10 dark:bg-white/5"
+                  className="card-surface focus-ring group block overflow-hidden rounded-2xl transition-[transform,border-color] duration-200 hover:-translate-y-1 hover:border-primary/40"
                 >
                   <div className="relative aspect-[4/3]">
                     {project.url ? (
@@ -91,7 +87,7 @@ const FeaturedProjects = () => {
                       </div>
                     )}
 
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent p-5">
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 via-slate-950/45 to-transparent p-5 pt-16">
                       <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-white/60">
                         {project.category}
                       </p>
@@ -99,9 +95,26 @@ const FeaturedProjects = () => {
                         <p className="text-lg font-semibold tracking-[-0.02em] text-white">
                           {project.name}
                         </p>
-                        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-transform group-hover:translate-x-1">
+                        <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-transform group-hover:translate-x-1">
                           <ArrowRight className="h-4 w-4" />
                         </span>
+                      </div>
+
+                      <div className="reveal-on-hover">
+                        <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-white/70">
+                          {project.desc}
+                        </p>
+
+                        <div className="mt-3 flex flex-wrap gap-1.5">
+                          {project.tech.slice(0, 3).map((tech) => (
+                            <span
+                              key={tech}
+                              className="rounded-full border border-white/20 bg-white/10 px-2.5 py-1 text-[10px] font-medium text-white/80 backdrop-blur-md"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -114,7 +127,7 @@ const FeaturedProjects = () => {
         <div className="mt-8 flex justify-center sm:hidden">
           <Link
             href="/projects"
-            className="group inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition-colors hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
+            className="focus-ring group inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
             View all projects
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />

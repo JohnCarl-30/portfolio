@@ -54,9 +54,9 @@ const SideNavbar = () => {
   return (
     <nav
       aria-label="Page sections"
-      className="pointer-events-none fixed left-6 top-1/2 z-50 hidden -translate-y-1/2 xl:block"
+      className="pointer-events-none fixed left-6 top-1/2 z-30 hidden -translate-y-1/2 lg:block"
     >
-      <div className="pointer-events-auto relative flex border-r border-border/70 pr-5 dark:border-white/15">
+      <div className="pointer-events-auto relative flex border-r border-border/70 pr-5">
         {indicatorY !== null && (
           <span
             aria-hidden="true"

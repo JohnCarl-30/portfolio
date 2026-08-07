@@ -16,7 +16,7 @@ const About = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.35 }}
           >
-            <div className="relative overflow-hidden rounded-2xl border border-slate-200/60 dark:border-white/10">
+            <div className="relative overflow-hidden rounded-2xl border border-border/60">
               <div className="relative aspect-[4/5]">
                 <Image
                   src="/img/pic2.jpeg"
@@ -35,14 +35,10 @@ const About = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.35, delay: 0.06 }}
           >
-            <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80 mb-6">
-              About
-            </p>
-            <h2 className="text-4xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">
-              About Me.
-            </h2>
+            <p className="section-eyebrow">About</p>
+            <h2 className="section-title">About Me.</h2>
 
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-slate-500 dark:text-slate-400">
+            <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground">
               I&apos;m John Carl Santos, an aspiring AI Engineer and Software
               Developer from the Philippines. I build full-stack products with a
               focus on AI integration, backend systems, and thoughtful user
@@ -51,7 +47,7 @@ const About = () => {
 
             <Link
               href="/about"
-              className="group mt-8 inline-flex items-center gap-2 text-sm font-medium text-slate-950 transition-colors hover:text-primary dark:text-white dark:hover:text-primary"
+              className="focus-ring group mt-8 inline-flex items-center gap-2 text-sm font-medium text-foreground transition-colors hover:text-primary"
             >
               Read more
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
