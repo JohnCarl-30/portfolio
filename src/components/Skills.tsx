@@ -30,12 +30,8 @@ const Skills = () => {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.35 }}
           >
-            <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80 mb-6">
-              Stack
-            </p>
-            <h2 className="text-4xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">
-              Tools.
-            </h2>
+            <p className="section-eyebrow">Stack</p>
+            <h2 className="section-title">Tools.</h2>
           </motion.div>
 
           <motion.div
@@ -56,11 +52,11 @@ const Skills = () => {
             {groupedSkills.map(({ category, skills }) => (
               <div key={category}>
                 <div className="mb-4 flex items-center gap-4">
-                  <h3 className="shrink-0 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                  <h3 className="shrink-0 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                     {categoryTitles[category]}
                   </h3>
-                  <span className="h-px w-full bg-slate-200 dark:bg-white/10" />
-                  <span className="shrink-0 font-mono text-xs font-semibold text-slate-400 dark:text-slate-500">
+                  <span className="h-px w-full bg-border" />
+                  <span className="shrink-0 font-mono text-xs font-semibold text-muted-foreground/70">
                     {String(skills.length).padStart(2, "0")}
                   </span>
                 </div>
@@ -82,7 +78,7 @@ const Skills = () => {
                       }}
                       whileHover={{ y: -3 }}
                       title={skill.name}
-                      className="group flex flex-col items-center justify-center gap-2 rounded-xl border border-slate-200/60 bg-white/50 p-3 text-slate-900 transition-colors hover:border-slate-400 dark:border-white/10 dark:bg-white/5 dark:text-slate-100"
+                      className="card-surface group flex flex-col items-center justify-center gap-2 rounded-xl p-3 text-foreground transition-colors hover:border-primary/40"
                     >
                       <Image
                         src={skill.icon}
@@ -91,7 +87,7 @@ const Skills = () => {
                         height={24}
                         className="h-6 w-6 object-contain"
                       />
-                      <span className="text-xs font-medium text-slate-600 transition-colors group-hover:text-slate-900 dark:text-slate-300 dark:group-hover:text-white">
+                      <span className="text-center text-xs font-medium text-muted-foreground transition-colors group-hover:text-foreground">
                         {skill.name}
                       </span>
                     </motion.div>

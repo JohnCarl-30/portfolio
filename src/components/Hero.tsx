@@ -4,29 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { FaReact } from "react-icons/fa";
 
 import FloatingCircle, { getContainerVariants } from "./floating_cirlce";
 import ParticlesBackground from "./particles-background";
-
-const socialLinks = [
-  {
-    href: "https://github.com/JohnCarl-30",
-    label: "GitHub",
-    icon: Github,
-  },
-  {
-    href: "https://linkedin.com/in/santosjohncarl",
-    label: "LinkedIn",
-    icon: Linkedin,
-  },
-  {
-    href: "mailto:johncarlsantos30@gmail.com",
-    label: "Email",
-    icon: Mail,
-  },
-];
+import { socialLinks } from "@/app/data/Social";
 
 const proofPoints = [
   {
@@ -86,36 +69,51 @@ const Hero = () => {
 
       <div className="page-shell relative z-10 grid items-center gap-16 lg:grid-cols-[1fr_0.9fr]">
         <div>
-          <div className="max-w-xl space-y-10">
+          <div className="max-w-xl space-y-8 sm:space-y-10">
+            {/* The desktop portrait is a separate column below; on small
+                screens this compact version keeps a face on the page. */}
+            <div className="lg:hidden">
+              <div className="relative h-24 w-24 overflow-hidden rounded-2xl border border-border/60">
+                <Image
+                  src="/personal.jpg"
+                  alt="John Carl Santos"
+                  fill
+                  sizes="96px"
+                  priority
+                  className="object-cover object-center"
+                />
+              </div>
+            </div>
+
             <div className="space-y-6">
-              <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
+              <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
                 Aspiring AI Engineer
               </p>
 
-              <h1 className="text-[clamp(3.5rem,8vw,6.5rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-slate-950 dark:text-white">
+              <h1 className="text-[clamp(3rem,8vw,6.5rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-foreground">
                 John
                 <br />
                 <span className="font-serif text-primary italic">Carl</span>{" "}
                 Santos
               </h1>
 
-              <p className="max-w-md text-base leading-relaxed text-slate-500 dark:text-slate-400">
+              <p className="max-w-md text-base leading-relaxed text-muted-foreground">
                 I build AI-powered web apps, backend systems, and automation
                 tools with Next.js, Python, cloud infrastructure, and LLM
                 workflows.
               </p>
             </div>
 
-            <div className="grid max-w-lg grid-cols-3 overflow-hidden rounded-2xl border border-slate-200/70 bg-white/55 backdrop-blur-md dark:border-white/10 dark:bg-white/5">
+            <div className="grid max-w-lg grid-cols-3 overflow-hidden rounded-2xl border border-border/70 bg-card/60 backdrop-blur-md">
               {proofPoints.map((point) => (
                 <div
                   key={point.label}
-                  className="border-r border-slate-200/70 px-4 py-3 last:border-r-0 dark:border-white/10"
+                  className="border-r border-border/70 px-4 py-3 last:border-r-0"
                 >
-                  <p className="text-lg font-semibold tracking-[-0.03em] text-slate-950 dark:text-white">
+                  <p className="text-lg font-semibold tracking-[-0.03em] text-foreground">
                     {point.value}
                   </p>
-                  <p className="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">
+                  <p className="mt-1 text-xs font-medium text-muted-foreground">
                     {point.label}
                   </p>
                 </div>
@@ -125,7 +123,7 @@ const Hero = () => {
             <div className="flex flex-wrap items-center gap-4">
               <Link
                 href="/projects"
-                className="group inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-sm font-medium text-white transition-[color,transform] duration-150 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98] dark:bg-white dark:text-slate-950"
+                className="focus-ring group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-sm transition-[box-shadow,transform] duration-150 hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98]"
               >
                 View Projects
                 <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
@@ -133,7 +131,7 @@ const Hero = () => {
 
               <Link
                 href="/about"
-                className="text-sm font-medium text-slate-500 underline-offset-4 transition-colors duration-150 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:text-slate-400 dark:hover:text-white"
+                className="focus-ring text-sm font-medium text-muted-foreground underline-offset-4 transition-colors duration-150 hover:text-foreground"
               >
                 More about me
               </Link>
@@ -154,8 +152,7 @@ const Hero = () => {
                         : undefined
                     }
                     aria-label={item.label}
-                    title={item.label}
-                    className="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-400 transition-[color,border-color,transform] duration-150 hover:border-slate-400 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98] dark:border-white/10 dark:text-slate-500 dark:hover:border-white/30 dark:hover:text-white"
+                    className="focus-ring group inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-[color,border-color,transform] duration-150 hover:border-primary/40 hover:text-foreground active:scale-[0.98]"
                   >
                     <Icon className="h-4 w-4" />
                   </a>
@@ -175,7 +172,7 @@ const Hero = () => {
               onMouseMove={handleMouseMove}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
-              className="relative overflow-hidden rounded-2xl border border-slate-200/60 dark:border-white/10"
+              className="relative overflow-hidden rounded-2xl border border-border/60"
               style={{
                 perspective: 1200,
               }}
@@ -193,6 +190,7 @@ const Hero = () => {
                   alt="John Carl Santos"
                   fill
                   sizes="(min-width: 1024px) 420px, 1px"
+                  priority
                   className="object-cover object-center"
                 />
               </div>

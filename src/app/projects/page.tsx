@@ -37,7 +37,7 @@ export default function ProjectsPage() {
           <div>
             <Link
               href="/#featured-projects"
-              className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to home
@@ -47,7 +47,7 @@ export default function ProjectsPage() {
               <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80 mb-6">
                 Projects
               </p>
-              <h1 className="text-5xl font-semibold tracking-[-0.06em] text-slate-950 dark:text-white md:text-6xl">
+              <h1 className="text-5xl font-semibold tracking-[-0.06em] text-foreground md:text-6xl">
                 Selected builds across AI, fintech, and product design.
               </h1>
               <p className="mt-5 max-w-xl text-base leading-relaxed soft-text">
@@ -61,14 +61,14 @@ export default function ProjectsPage() {
           <div className="glass-panel rounded-[2rem] p-6 md:p-7">
             <div className="grid gap-5">
               <label className="grid gap-2">
-                <span className="text-sm font-medium text-slate-800 dark:text-slate-100">
+                <span className="text-sm font-medium text-foreground">
                   Search projects
                 </span>
                 <div className="relative">
-                  <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                  <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/70" />
                   <input
                     type="text"
-                    className="block h-12 w-full rounded-full border border-slate-200/80 bg-white/75 py-3 pl-11 pr-4 text-sm text-slate-900 shadow-none outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-slate-400 focus:border-primary/40 focus:ring-4 focus:ring-primary/10 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-500"
+                    className="block h-12 w-full rounded-full border border-border/70 bg-card/60 py-3 pl-11 pr-4 text-sm text-foreground shadow-none outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-muted-foreground/70 focus:border-primary/40 focus:ring-4 focus:ring-primary/10"
                     placeholder="Search by name or description"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -84,8 +84,8 @@ export default function ProjectsPage() {
                     onClick={() => setActiveTab(tab)}
                     className={`rounded-full px-4 py-2 text-sm font-medium transition-[color,background-color,border-color,transform] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98] ${
                       activeTab === tab
-                        ? "bg-slate-950 text-white dark:bg-white dark:text-slate-950"
-                        : "border border-slate-200/80 bg-white/75 text-slate-600 hover:border-primary/40 hover:text-primary dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-primary/40 dark:hover:text-primary"
+                        ? "bg-primary text-primary-foreground"
+                        : "border border-border/70 bg-card/60 text-muted-foreground hover:border-primary/40 hover:text-primary"
                     }`}
                   >
                     {tab}
@@ -151,7 +151,7 @@ export default function ProjectsPage() {
                       <span>{project.timeline}</span>
                     </div>
 
-                    <h2 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white">
+                    <h2 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-foreground">
                       {project.name}
                     </h2>
                     <p className="mt-3 text-sm leading-relaxed soft-text">
@@ -162,13 +162,13 @@ export default function ProjectsPage() {
                       {project.tech.slice(0, 4).map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-full border border-slate-200/80 bg-white/75 px-3 py-1.5 text-xs font-medium text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
+                          className="rounded-full border border-border/70 bg-card/60 px-3 py-1.5 text-xs font-medium text-muted-foreground"
                         >
                           {tag}
                         </span>
                       ))}
                       {project.tech.length > 4 && (
-                        <span className="rounded-full border border-slate-200/80 bg-white/75 px-3 py-1.5 text-xs font-medium text-slate-500 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
+                        <span className="rounded-full border border-border/70 bg-card/60 px-3 py-1.5 text-xs font-medium text-muted-foreground">
                           +{project.tech.length - 4}
                         </span>
                       )}
@@ -177,7 +177,7 @@ export default function ProjectsPage() {
                     <div className="mt-6 flex flex-wrap gap-4 text-sm font-medium">
                       <Link
                         href={`/projects/${project.id}`}
-                        className="inline-flex items-center gap-2 text-slate-800 transition-colors hover:text-primary dark:text-slate-100 dark:hover:text-primary"
+                        className="inline-flex items-center gap-2 text-foreground transition-colors hover:text-primary"
                       >
                         View project
                         <ArrowRight className="h-4 w-4" />
@@ -188,7 +188,7 @@ export default function ProjectsPage() {
                           href={project.liveDemoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-slate-500 transition-colors hover:text-primary dark:text-slate-300 dark:hover:text-primary"
+                          className="inline-flex items-center gap-2 text-muted-foreground transition-colors hover:text-primary"
                         >
                           Live demo
                           <ExternalLink className="h-4 w-4" />
