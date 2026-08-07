@@ -9,21 +9,27 @@ const AboutPage = () => {
   const facts = [
     {
       key: "education",
-      val: "BS Computer Science — AI Specialization",
-      sub: "Philippine Christian University · Bulacan · Year 3",
+      val: "BS Computer Science",
+      sub: "Philippine Christian University · Expected 2027 · Dean's Lister, GWA 1.15",
     },
     {
       key: "current role",
-      val: "Software Engineering Intern",
-      sub: "Express.js · actively targeting AI Engineer roles",
+      val: "AI Engineer",
+      sub: "SOFI AI Tech Solutions · training data and model evaluation",
     },
     {
       key: "certifications",
-      tags: ["☁️ Oracle GenAI", "🟠 AWS", "🤖 Claude Code"],
+      tags: [
+        "Oracle GenAI",
+        "Oracle AI Foundations",
+        "MongoDB RAG",
+        "AWS ML Foundations",
+        "Databricks GenAI",
+      ],
     },
     {
       key: "specialization",
-      val: "RAG · Full Stack AI",
+      val: "RAG Pipelines · LLM Evaluation · Full-Stack AI",
       accent: true,
     },
     {
@@ -35,22 +41,37 @@ const AboutPage = () => {
 
   const timeline = [
     {
-      date: "2026",
-      title: "Software Engineering Internship",
-      desc: "Express.js backend development in a production environment.",
+      date: "Present",
+      title: "AI Engineer · SOFI AI Tech Solutions",
+      desc: "Curating training datasets, defining annotation standards, and building evaluation sets for LLM and machine learning systems.",
     },
     {
-      date: "2023",
-      title: "BS CS starts · Philippine Christian University",
-      desc: "First line of code using Java",
+      date: "2 months",
+      title: "Backend Engineer Intern · FlyRank AI",
+      desc: "Built a RAG pipeline with vector search and LLM APIs, added JWT authorization, and containerized a multi-service backend.",
+    },
+    {
+      date: "3 months",
+      title: "Software Engineering Intern · Alphaexplora",
+      desc: "Developed RESTful APIs, delivered backend features, and optimized application performance in an agile environment.",
+    },
+    {
+      date: "Ongoing",
+      title: "PyTorch Data Scientist · Campus Student Program",
+      desc: "Building and evaluating deep learning models for classification and regression with PyTorch.",
+    },
+    {
+      date: "2023 — 2027",
+      title: "BS Computer Science · Philippine Christian University",
+      desc: "Consistent Dean's Lister with a 1.15 GWA and coursework spanning software engineering, algorithms, linear algebra, and AWS cloud computing.",
     },
   ];
 
   const hobbies = [
-    { icon: "🎮", name: "ML / COD" },
-    { icon: "🎱", name: "Billiards" },
-    { icon: "🏃", name: "Running" },
-    { icon: "🎵", name: "Music" },
+    { name: "ML / COD" },
+    { name: "Billiards" },
+    { name: "Running" },
+    { name: "Music" },
   ];
 
   return (
@@ -76,9 +97,8 @@ const AboutPage = () => {
               <strong className="font-semibold text-foreground">
                 Aspiring Software Engineer and AI enthusiast
               </strong>{" "}
-              based in the Philippines. Currently exploring{" "}
-              <span className="whitespace-nowrap">tech stack</span> (Python,
-              TypeScript, and learning Rust).
+              based in the Philippines. I work across Python and TypeScript,
+              and I&apos;m currently learning Go.
             </p>
           </motion.div>
 
@@ -197,22 +217,17 @@ const AboutPage = () => {
               </div>
               <div className="space-y-6 text-muted-foreground leading-relaxed text-sm">
                 <p>
-                  I started coding because I wanted to fix problems I saw around
-                  me. Filipino CS/IT students spending hours formatting OJT
-                  journals by hand. Students cramming with no good digital study
-                  tools.{" "}
-                  <strong className="text-foreground font-semibold italic">
-                    That&apos;s where PraktikAI and StudyAI came from — not
-                    tutorials, not trends.
-                  </strong>
+                  I build practical systems around problems people face every
+                  day: StudyAI turns documents into study material, Resumae
+                  helps job seekers improve resumes for specific roles, and
+                  CiviReport gives residents a direct way to file and track
+                  barangay complaints.
                 </p>
                 <p>
-                  There&apos;s something that drives me about building for
-                  people who don&apos;t have enough resources. The Philippines
-                  has brilliant developers, but the tooling built{" "}
-                  <em className="text-primary">for</em> us,{" "}
-                  <em className="text-primary">by</em> us, is still limited. I
-                  want to change that — one shipped product at a time.
+                  Across those products, I focus on the complete path from data
+                  and AI pipelines to APIs, infrastructure, and usable
+                  interfaces. I want each system to solve a clear problem and
+                  stay reliable beyond the demo.
                 </p>
               </div>
             </motion.div>
@@ -236,15 +251,11 @@ const AboutPage = () => {
               </div>
               <div className="space-y-6 text-muted-foreground leading-relaxed text-sm">
                 <p>
-                  I learn by shipping. Not by finishing courses or collecting
-                  certificates — I mean{" "}
-                  <strong className="text-foreground font-semibold">
-                    actually deploying things
-                  </strong>
-                  , watching them break in production, and fixing them. My
-                  StudyAI benchmark work, the RAG retrieval improvements, the
-                  SSE streaming optimizations — none of that happened in a
-                  classroom.
+                  I learn by shipping and measuring. StudyAI pushed me to
+                  benchmark retrieval latency and document throughput; Resumae
+                  grew into a tested monorepo with production deployments; and
+                  CiviReport taught me to connect real-time updates, secure
+                  authentication, and a mobile client.
                 </p>
                 <p>
                   I care deeply about the full picture: the AI layer, the
@@ -319,10 +330,7 @@ const AboutPage = () => {
                     key={i}
                     className="bg-accent/50 border border-border p-6 rounded-xl text-center group hover:border-primary/30 transition-all cursor-default"
                   >
-                    <span className="text-3xl block mb-3 group-hover:scale-110 transition-transform">
-                      {hobby.icon}
-                    </span>
-                    <span className="font-mono text-[10px] text-muted-foreground/70 uppercase tracking-wider font-bold">
+                    <span className="font-mono text-[10px] text-slate-400 uppercase tracking-wider font-bold dark:text-slate-500">
                       {hobby.name}
                     </span>
                   </div>
