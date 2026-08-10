@@ -12,6 +12,9 @@ import {
 } from "lucide-react";
 
 import { projectsData } from "@/app/data/Projects";
+import { getProjectImage } from "@/lib/projectImages";
+import PagerNav from "@/components/PagerNav";
+import Reveal from "@/components/Reveal";
 
 const placeholderStyles = [
   "from-sky-500/30 via-blue-500/15 to-slate-900/80",
@@ -78,14 +81,16 @@ export default async function ProjectDetail({
         </Link>
 
         <section className="mt-8 grid gap-12 lg:grid-cols-[minmax(0,1.02fr)_minmax(320px,0.98fr)] lg:items-center">
+          <Reveal>
           <div className="glass-panel overflow-hidden rounded-[2rem]">
             <div className="relative aspect-[4/3]">
               {project.url ? (
                 <Image
-                  src={project.url}
+                  src={getProjectImage(project.url) ?? project.url}
                   alt={project.name}
                   fill
                   priority
+                  placeholder={getProjectImage(project.url) ? "blur" : undefined}
                   sizes="(min-width: 1024px) 52vw, 100vw"
                   className="object-cover"
                 />
@@ -109,7 +114,9 @@ export default async function ProjectDetail({
               )}
             </div>
           </div>
+          </Reveal>
 
+          <Reveal delay={0.08}>
           <div>
             <div className="section-kicker">
               <span className="section-rule" />
@@ -173,10 +180,12 @@ export default async function ProjectDetail({
               )}
             </div>
           </div>
+          </Reveal>
         </section>
 
         <section className="mt-16 grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <aside className="space-y-8">
+            <Reveal>
             <div className="glass-panel rounded-[1.75rem] p-6">
               <h2 className="text-xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white">
                 Project details
@@ -212,6 +221,7 @@ export default async function ProjectDetail({
                 </div>
               </div>
             </div>
+            </Reveal>
           </aside>
 
           <div>
@@ -223,16 +233,22 @@ export default async function ProjectDetail({
             {project.keyFeatures.length > 0 ? (
               <div className="grid gap-6 sm:grid-cols-2">
                 {project.keyFeatures.map((feature, index) => (
-                  <article
+                  <Reveal
                     key={feature.title}
+                    delay={Math.min(index * 0.06, 0.24)}
+                  >
+                  <article
                     className="glass-panel overflow-hidden rounded-[1.5rem]"
                   >
                     <div className="relative aspect-[4/3]">
                       {feature.image ? (
                         <Image
-                          src={feature.image}
+                          src={getProjectImage(feature.image) ?? feature.image}
                           alt={feature.title}
                           fill
+                          placeholder={
+                            getProjectImage(feature.image) ? "blur" : undefined
+                          }
                           sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"
                           className="object-cover"
                         />
@@ -257,6 +273,7 @@ export default async function ProjectDetail({
                       </p>
                     </div>
                   </article>
+                  </Reveal>
                 ))}
               </div>
             ) : (
@@ -278,6 +295,27 @@ export default async function ProjectDetail({
             </div>
           </div>
         </section>
+
+        <PagerNav
+          prev={
+            projectIndex > 0
+              ? {
+                  href: `/projects/${projectsData[projectIndex - 1].id}`,
+                  kicker: "Previous project",
+                  title: projectsData[projectIndex - 1].name,
+                }
+              : undefined
+          }
+          next={
+            projectIndex < projectsData.length - 1
+              ? {
+                  href: `/projects/${projectsData[projectIndex + 1].id}`,
+                  kicker: "Next project",
+                  title: projectsData[projectIndex + 1].name,
+                }
+              : undefined
+          }
+        />
       </main>
     </div>
   );
