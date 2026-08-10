@@ -11,6 +11,7 @@ export const DOCK_SECTIONS = [
   { id: "projects", label: "projects" },
   { id: "work", label: "work" },
   { id: "toolkit", label: "toolkit" },
+  { id: "github", label: "github" },
   { id: "credentials", label: "credentials" },
   { id: "contact", label: "contact" },
   { id: "sandbox", label: "sandbox" },

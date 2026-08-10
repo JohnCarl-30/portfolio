@@ -20,6 +20,7 @@ import {
   Rocket,
   Search,
   SunMedium,
+  Terminal,
   UserRound,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -32,9 +33,10 @@ import {
 import { DOCK_SECTIONS } from "@/components/home/SectionDock";
 import { getAllPosts } from "@/app/data/Blog";
 import { projectsData } from "@/app/data/Projects";
+import TerminalView from "@/components/TerminalView";
 import { Kbd } from "@/components/ui/kbd";
 
-type SearchView = "search" | "theme";
+type SearchView = "search" | "theme" | "terminal";
 type SearchGroup = "Site" | "Sections" | "Main Pages" | "Projects" | "Writing";
 
 type ThemeOption = {
@@ -57,11 +59,22 @@ type SearchEntry = {
       kind: "route";
     }
   | {
-      action: "open-theme-picker";
+      action: "open-theme-picker" | "open-terminal";
       href?: never;
       kind: "action";
     }
 );
+
+const TERMINAL_ENTRY: SearchEntry = {
+  id: "terminal",
+  title: "Terminal",
+  description: "Open the hidden portfolio shell.",
+  group: "Site",
+  icon: Terminal,
+  keywords: ["terminal", "console", "shell", "cli", "command"],
+  action: "open-terminal",
+  kind: "action",
+};
 
 /**
  * The home page is a single scroll, so its sections are addressable the same
@@ -276,6 +289,7 @@ export default function SearchPalette() {
   const entries = useMemo(
     () => [
       createThemeEntry(themePreference, resolvedTheme),
+      TERMINAL_ENTRY,
       ...SECTION_ITEMS,
       ...PAGE_ITEMS,
       ...PROJECT_ITEMS,
@@ -360,6 +374,11 @@ export default function SearchPalette() {
   const runEntry = useCallback(
     (entry: SearchEntry) => {
       if (entry.kind === "action") {
+        if (entry.action === "open-terminal") {
+          setView("terminal");
+          return;
+        }
+
         setView("theme");
         setThemeIndex(getThemeOptionIndex(themePreference));
         return;
@@ -413,12 +432,16 @@ export default function SearchPalette() {
 
       if (event.key === "Escape") {
         event.preventDefault();
-        if (view === "theme") {
+        if (view === "theme" || view === "terminal") {
           setView("search");
           return;
         }
 
         closePalette();
+        return;
+      }
+
+      if (view === "terminal") {
         return;
       }
 
@@ -614,6 +637,31 @@ export default function SearchPalette() {
                   </div>
                 </div>
               </>
+            ) : view === "terminal" ? (
+              <div className="bg-[#0e1013] text-zinc-100">
+                <div className="flex items-center gap-2 border-b border-white/10 px-3 py-2.5">
+                  <button
+                    type="button"
+                    onClick={() => setView("search")}
+                    aria-label="Back to search"
+                    className="focus-ring flex h-7 w-7 items-center justify-center rounded-md text-zinc-400 transition-colors hover:bg-white/5 hover:text-white"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </button>
+                  <Terminal className="h-3.5 w-3.5 text-emerald-400" />
+                  <h2 className="text-[0.9rem] font-semibold text-white">
+                    portfolio shell
+                  </h2>
+                </div>
+                <TerminalView
+                  onExit={() => setView("search")}
+                  onNavigate={(href) => {
+                    closePalette();
+                    router.push(href);
+                  }}
+                  onSetTheme={setTheme}
+                />
+              </div>
             ) : (
               <>
                 <div className="flex items-center gap-2 border-b border-[var(--line)] px-3 py-2.5">

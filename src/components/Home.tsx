@@ -11,6 +11,7 @@ import SayHi from "@/components/home/SayHi";
 import ScrollProgress from "@/components/home/ScrollProgress";
 import SectionDock from "@/components/home/SectionDock";
 import Stack from "@/components/home/Stack";
+import GitHubContributions from "@/components/GitHubContributions";
 import { PreviewProvider } from "@/components/home/HoverPreview";
 
 export default function HomeComponent() {
@@ -25,6 +26,7 @@ export default function HomeComponent() {
         <Projects />
         <Experience />
         <Stack />
+        <GitHubContributions />
         <Credentials />
         <SayHi />
         <Playground />
