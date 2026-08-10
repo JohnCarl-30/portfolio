@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 import { ArrowLeft } from "lucide-react";
 
 import BlogPostFooter from "@/components/BlogPostFooter";
+import PagerNav from "@/components/PagerNav";
+import ReadingProgress from "@/components/ReadingProgress";
+import Reveal from "@/components/Reveal";
 import { getAllPosts, getPostBySlug } from "@/app/data/Blog";
 
 function formatDate(iso: string) {
@@ -61,8 +64,17 @@ export default async function BlogPostPage({
     notFound();
   }
 
+  const posts = getAllPosts();
+  const postIndex = posts.findIndex((entry) => entry.slug === slug);
+  const newerPost = postIndex > 0 ? posts[postIndex - 1] : undefined;
+  const olderPost =
+    postIndex >= 0 && postIndex < posts.length - 1
+      ? posts[postIndex + 1]
+      : undefined;
+
   return (
     <div className="flex min-h-screen flex-col pt-6 pb-20">
+      <ReadingProgress />
       <main className="page-shell mt-4 flex-1">
         <Link
           href="/blog"
@@ -73,6 +85,7 @@ export default async function BlogPostPage({
         </Link>
 
         <article className="mx-auto mt-10 max-w-3xl">
+          <Reveal>
           <header className="border-b border-border/60 pb-10">
             <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80">
               Blog
@@ -99,7 +112,9 @@ export default async function BlogPostPage({
               ))}
             </div>
           </header>
+          </Reveal>
 
+          <Reveal delay={0.08}>
           <div className="mt-10 space-y-6">
             {post.content.map((paragraph) => (
               <p
@@ -110,8 +125,26 @@ export default async function BlogPostPage({
               </p>
             ))}
           </div>
+          </Reveal>
 
           <BlogPostFooter title={post.title} slug={post.slug} />
+
+          <PagerNav
+            prev={
+              olderPost && {
+                href: `/blog/${olderPost.slug}`,
+                kicker: "Older post",
+                title: olderPost.title,
+              }
+            }
+            next={
+              newerPost && {
+                href: `/blog/${newerPost.slug}`,
+                kicker: "Newer post",
+                title: newerPost.title,
+              }
+            }
+          />
         </article>
       </main>
     </div>
