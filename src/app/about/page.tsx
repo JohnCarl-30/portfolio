@@ -79,13 +79,13 @@ const AboutPage = () => {
       <ParticlesBackground />
       <main className="relative z-10 page-shell max-w-5xl">
         {/* HERO STRIP */}
-        <section className="grid grid-cols-1 items-end gap-8 border-b border-border pt-24 pb-12 md:grid-cols-[1fr_auto]">
+        <section className="grid grid-cols-1 items-end gap-8 border-b border-slate-200 pt-24 pb-12 dark:border-white/10 md:grid-cols-[1fr_auto]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80 mb-6">
+            <p className="font-mono text-sm font-medium uppercase tracking-[0.2em] text-primary/80 mb-6">
               More about me
             </p>
             <h1 className="text-6xl font-semibold tracking-[-0.06em] leading-[0.9] mb-8 md:text-8xl">
@@ -93,9 +93,9 @@ const AboutPage = () => {
               <br />
               <span className="font-serif text-primary italic">Santos.</span>
             </h1>
-            <p className="max-w-lg text-lg leading-relaxed text-muted-foreground">
-              <strong className="font-semibold text-foreground">
-                Aspiring Software Engineer and AI enthusiast
+            <p className="max-w-xl text-xl leading-relaxed text-slate-600 dark:text-slate-300">
+              <strong className="font-semibold text-slate-950 dark:text-white">
+                AI Engineer and computer science student
               </strong>{" "}
               based in the Philippines. I work across Python and TypeScript,
               and I&apos;m currently learning Go.
@@ -108,14 +108,14 @@ const AboutPage = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="flex flex-col items-start gap-3 pb-2 md:items-end"
           >
-            <div className="flex items-center gap-2 rounded-full border border-border bg-accent/50 px-3 py-1.5">
+            <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50/50 px-3 py-1.5 dark:border-white/10 dark:bg-white/5">
               <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse" />
-              <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+              <span className="font-mono text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
                 open to remote roles
               </span>
             </div>
-            <div className="rounded-full border border-border px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">
-              📍 Philippines
+            <div className="rounded-full border border-slate-200 px-3 py-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-slate-500 dark:border-white/10 dark:text-slate-400">
+              Philippines
             </div>
           </motion.div>
         </section>
@@ -126,10 +126,10 @@ const AboutPage = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="grid grid-cols-1 gap-12 border-b border-border py-16 md:grid-cols-[320px_1fr]"
+          className="grid grid-cols-1 gap-12 border-b border-slate-200 py-16 dark:border-white/10 md:grid-cols-[320px_1fr]"
         >
           <div className="space-y-4">
-            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-border/60 group">
+            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-slate-200/60 group dark:border-white/10">
               <Image
                 src="/img/pic2.jpeg"
                 alt="John Carl Santos"
@@ -137,36 +137,36 @@ const AboutPage = () => {
                 sizes="(min-width: 768px) 320px, 100vw"
                 className="object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-500"
               />
-              <div className="absolute bottom-4 left-4 right-4 bg-popover/90 backdrop-blur-md px-3 py-2 rounded-lg border border-border text-[10px] text-muted-foreground text-center font-semibold">
+              <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md px-3 py-2.5 rounded-lg border border-slate-100 text-xs text-slate-600 text-center font-semibold dark:bg-black/80 dark:border-white/10 dark:text-slate-300">
                 John Carl Santos · 2024
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col justify-center divide-y divide-border">
+          <div className="flex flex-col justify-center divide-y divide-slate-100 dark:divide-white/10">
             {facts.map((fact, i) => (
               <div
                 key={i}
-                className="grid grid-cols-[120px_1fr] gap-6 py-4 items-start first:pt-0 last:pb-0"
+                className="grid grid-cols-[130px_1fr] gap-6 py-5 items-start first:pt-0 last:pb-0"
               >
-                <span className="pt-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">
+                <span className="pt-1 font-mono text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   {fact.key}
                 </span>
                 <div>
                   <p
-                    className={`text-sm ${fact.accent ? "font-semibold text-primary" : "text-foreground"}`}
+                    className={`text-base leading-relaxed ${fact.accent ? "font-semibold text-primary" : "text-slate-950 dark:text-white"}`}
                   >
                     {fact.val}
                   </p>
                   {fact.sub && (
-                    <p className="mt-1 text-xs text-muted-foreground/70">{fact.sub}</p>
+                    <p className="mt-1.5 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{fact.sub}</p>
                   )}
                   {fact.tags && (
                     <div className="flex flex-wrap gap-2 mt-2">
                       {fact.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-full border border-border bg-accent/50 px-2 py-0.5 text-[10px] font-semibold text-muted-foreground"
+                          className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
                         >
                           {tag}
                         </span>
@@ -180,7 +180,7 @@ const AboutPage = () => {
         </motion.section>
 
         {/* STORY SECTION */}
-        <section className="relative grid grid-cols-1 gap-16 border-b border-border py-20 lg:grid-cols-[200px_1fr]">
+        <section className="relative grid grid-cols-1 gap-16 border-b border-slate-200 py-20 dark:border-white/10 lg:grid-cols-[200px_1fr]">
           <aside className="hidden lg:block sticky top-24 self-start space-y-8 pt-2">
             <nav className="flex flex-col gap-3">
               {["Origin", "Approach", "Journey", "Outside Code"].map(
@@ -188,7 +188,7 @@ const AboutPage = () => {
                   <a
                     key={link}
                     href={`#${link.toLowerCase().replace(" ", "-")}`}
-                    className="font-mono text-[11px] text-muted-foreground/70 hover:text-primary border-l-2 border-transparent hover:border-primary pl-4 transition-all font-semibold"
+                    className="font-mono text-sm text-slate-500 hover:text-primary border-l-2 border-transparent hover:border-primary pl-4 transition-all font-semibold dark:text-slate-400"
                   >
                     {link}
                   </a>
@@ -205,17 +205,17 @@ const AboutPage = () => {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
               id="origin"
-              className="max-w-2xl"
+              className="max-w-3xl"
             >
               <div className="flex items-center gap-3 mb-6">
-                <span className="font-mono text-[10px] text-primary border border-primary/20 px-2 py-0.5 rounded">
+                <span className="font-mono text-xs font-semibold text-primary border border-primary/20 px-2.5 py-1 rounded">
                   01
                 </span>
-                <h2 className="text-2xl font-bold tracking-tight">
+                <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
                   Why I build what I build
                 </h2>
               </div>
-              <div className="space-y-6 text-muted-foreground leading-relaxed text-sm">
+              <div className="space-y-6 text-slate-600 leading-8 text-lg dark:text-slate-300">
                 <p>
                   I build practical systems around problems people face every
                   day: StudyAI turns documents into study material, Resumae
@@ -239,17 +239,17 @@ const AboutPage = () => {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
               id="approach"
-              className="max-w-2xl"
+              className="max-w-3xl"
             >
               <div className="flex items-center gap-3 mb-6">
-                <span className="font-mono text-[10px] text-primary border border-primary/20 px-2 py-0.5 rounded">
+                <span className="font-mono text-xs font-semibold text-primary border border-primary/20 px-2.5 py-1 rounded">
                   02
                 </span>
-                <h2 className="text-2xl font-bold tracking-tight">
+                <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
                   How I work
                 </h2>
               </div>
-              <div className="space-y-6 text-muted-foreground leading-relaxed text-sm">
+              <div className="space-y-6 text-slate-600 leading-8 text-lg dark:text-slate-300">
                 <p>
                   I learn by shipping and measuring. StudyAI pushed me to
                   benchmark retrieval latency and document throughput; Resumae
@@ -261,7 +261,7 @@ const AboutPage = () => {
                   I care deeply about the full picture: the AI layer, the
                   backend architecture, the DevOps, and the UI. I want to
                   understand{" "}
-                  <strong className="text-foreground font-semibold">why</strong>{" "}
+                  <strong className="text-slate-950 font-semibold dark:text-white">why</strong>{" "}
                   a system behaves the way it does, not just make it work.
                 </p>
               </div>
@@ -274,27 +274,27 @@ const AboutPage = () => {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
               id="journey"
-              className="max-w-2xl"
+              className="max-w-3xl"
             >
               <div className="flex items-center gap-3 mb-8">
-                <span className="font-mono text-[10px] text-primary border border-primary/20 px-2 py-0.5 rounded font-bold">
+                <span className="font-mono text-xs text-primary border border-primary/20 px-2.5 py-1 rounded font-bold">
                   03
                 </span>
-                <h2 className="text-2xl font-bold tracking-tight">
+                <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
                   How I got here
                 </h2>
               </div>
-              <div className="relative pl-8 border-l border-border space-y-12">
+              <div className="relative pl-8 border-l border-slate-100 space-y-12 dark:border-white/10">
                 {timeline.map((item, i) => (
                   <div key={i} className="relative">
-                    <div className="absolute -left-[37px] top-1 w-[11px] h-[11px] rounded-full bg-background border-2 border-primary" />
-                    <p className="font-mono text-[10px] text-primary uppercase tracking-wider mb-2 font-bold">
+                    <div className="absolute -left-[38px] top-1.5 w-[13px] h-[13px] rounded-full bg-background border-2 border-primary" />
+                    <p className="font-mono text-xs text-primary uppercase tracking-wider mb-2 font-bold">
                       {item.date}
                     </p>
-                    <h3 className="text-base font-bold text-foreground mb-2 tracking-tight">
+                    <h3 className="text-xl font-bold text-slate-950 mb-2 tracking-tight dark:text-white">
                       {item.title}
                     </h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed max-w-lg">
+                    <p className="text-base text-slate-600 leading-relaxed max-w-xl dark:text-slate-300">
                       {item.desc}
                     </p>
                   </div>
@@ -309,17 +309,17 @@ const AboutPage = () => {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
               id="outside-code"
-              className="max-w-2xl"
+              className="max-w-3xl"
             >
               <div className="flex items-center gap-3 mb-6">
-                <span className="font-mono text-[10px] text-primary border border-primary/20 px-2 py-0.5 rounded">
+                <span className="font-mono text-xs font-semibold text-primary border border-primary/20 px-2.5 py-1 rounded">
                   04
                 </span>
-                <h2 className="text-2xl font-bold tracking-tight">
+                <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
                   Outside the terminal
                 </h2>
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-8">
+              <p className="text-lg text-slate-600 leading-8 mb-8 dark:text-slate-300">
                 I play Mobile Legends and COD when I need to turn my brain off.
                 Billiards and basketball when I need to move. I go to the gym
                 and run.
@@ -328,9 +328,9 @@ const AboutPage = () => {
                 {hobbies.map((hobby, i) => (
                   <div
                     key={i}
-                    className="bg-accent/50 border border-border p-6 rounded-xl text-center group hover:border-primary/30 transition-all cursor-default"
+                    className="bg-slate-50 border border-slate-100 p-6 rounded-xl text-center group hover:border-primary/30 transition-all cursor-default dark:bg-white/5 dark:border-white/10"
                   >
-                    <span className="font-mono text-[10px] text-slate-400 uppercase tracking-wider font-bold dark:text-slate-500">
+                    <span className="font-mono text-sm text-slate-600 uppercase tracking-wider font-bold dark:text-slate-300">
                       {hobby.name}
                     </span>
                   </div>
