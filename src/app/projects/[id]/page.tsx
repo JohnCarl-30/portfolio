@@ -1,23 +1,10 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/providers/RouteTransition";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Calendar,
-  CheckCircle2,
-  ExternalLink,
-  UserCircle,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 
 import { projectsData } from "@/app/data/Projects";
-
-const placeholderStyles = [
-  "from-sky-500/30 via-blue-500/15 to-slate-900/80",
-  "from-emerald-500/25 via-cyan-500/15 to-slate-900/80",
-  "from-violet-500/25 via-indigo-500/15 to-slate-900/80",
-];
 
 export function generateStaticParams() {
   return projectsData.map((project) => ({
@@ -54,231 +41,124 @@ export default async function ProjectDetail({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const projectIndex = projectsData.findIndex((project) => project.id === id);
-  const project = projectsData[projectIndex];
+  const project = projectsData.find((item) => item.id === id);
 
   if (!project) {
     notFound();
   }
 
-  const placeholderTone =
-    placeholderStyles[
-      (projectIndex >= 0 ? projectIndex : 0) % placeholderStyles.length
-    ];
+  const facts = [
+    { key: "role", value: project.role || "Developer" },
+    { key: "timeline", value: project.timeline || "—" },
+    { key: "category", value: project.category.toLowerCase() },
+  ];
 
   return (
-    <div className="flex min-h-screen flex-col pt-6 pb-20">
-      <main className="page-shell mt-4 flex-1">
+    <main className="shell flex-1 pb-20 pt-10">
+      <Link
+        href="/projects"
+        className="group/back focus-ring inline-flex items-center gap-1.5 text-[0.78rem] text-[var(--dim)] transition-colors hover:text-[var(--ink)]"
+      >
+        <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-200 group-hover/back:-translate-x-0.5" />
+        all projects
+      </Link>
+
+      <article className="mt-8">
+        <header className="max-w-[42rem] border-b border-[var(--line)] pb-7">
+          <h1 className="text-[1.5rem] font-bold leading-[1.22] tracking-[-0.028em] sm:text-[1.9rem]">
+            {project.name}
+          </h1>
+          <p className="row-desc mt-3">{project.desc}</p>
+
+          <div className="mt-4 flex flex-wrap items-center gap-1.5">
+            {project.tech.map((tech) => (
+              <span key={tech} className="chip">
+                {tech.toLowerCase()}
+              </span>
+            ))}
+          </div>
+
+          {project.liveDemoUrl ? (
+            <a
+              href={project.liveDemoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="focus-ring mt-5 inline-flex items-center gap-1.5 rounded-full border border-[var(--line-strong)] px-3.5 py-1.5 text-[0.8rem] transition-colors hover:border-[var(--signal)] hover:text-[var(--signal)]"
+            >
+              live demo
+              <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          ) : null}
+        </header>
+
+        {project.url ? (
+          <div className="relative mt-8 aspect-[16/10] w-full overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--panel-soft)]">
+            <Image
+              src={project.url}
+              alt={project.name}
+              fill
+              priority
+              sizes="(min-width: 1024px) 62rem, 100vw"
+              className="object-cover object-top"
+            />
+          </div>
+        ) : null}
+
+        <dl className="mt-8 grid grid-cols-1 divide-y divide-[var(--line)] border-y border-[var(--line)] sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+          {facts.map((fact) => (
+            <div key={fact.key} className="px-0 py-3 sm:px-4 sm:first:pl-0">
+              <dt className="meta">{fact.key}</dt>
+              <dd className="row-title mt-1">{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <div className="mt-9 max-w-[42rem] space-y-4">
+          {project.longDescription.split("\n\n").map((paragraph) => (
+            <p
+              key={paragraph.slice(0, 48)}
+              className="text-[0.925rem] leading-[1.72] text-[var(--muted-ink)]"
+            >
+              {paragraph}
+            </p>
+          ))}
+        </div>
+
+        {project.highlights?.length ? (
+          <section className="mt-10 max-w-[42rem]">
+            <p className="section-label pb-3">highlights</p>
+            <ul className="divide-y divide-[var(--line)]">
+              {project.highlights.map((highlight) => (
+                <li key={highlight} className="row-desc py-2.5">
+                  {highlight}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
+        {project.keyFeatures.length ? (
+          <section className="mt-10 max-w-[42rem]">
+            <p className="section-label pb-3">key features</p>
+            <ul className="divide-y divide-[var(--line)]">
+              {project.keyFeatures.map((feature) => (
+                <li key={feature.title} className="py-3">
+                  <h2 className="row-title">{feature.title}</h2>
+                  <p className="row-desc mt-1">{feature.description}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
         <Link
           href="/projects"
-          className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+          className="group/more focus-ring mt-10 inline-flex items-center gap-1.5 text-[0.82rem] text-[var(--muted-ink)] transition-colors hover:text-[var(--ink)]"
         >
-          <ArrowLeft className="h-4 w-4" />
-          Back to projects
+          more projects
+          <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover/more:translate-x-0.5" />
         </Link>
-
-        <section className="mt-8 grid gap-12 lg:grid-cols-[minmax(0,1.02fr)_minmax(320px,0.98fr)] lg:items-center">
-          <div className="glass-panel overflow-hidden rounded-[2rem]">
-            <div className="relative aspect-[4/3]">
-              {project.url ? (
-                <Image
-                  src={project.url}
-                  alt={project.name}
-                  fill
-                  priority
-                  sizes="(min-width: 1024px) 52vw, 100vw"
-                  className="object-cover"
-                />
-              ) : (
-                <div
-                  className={`flex h-full w-full flex-col justify-between bg-gradient-to-br ${placeholderTone} p-8 text-white`}
-                >
-                  <div className="flex items-center justify-between text-[10px] font-semibold uppercase tracking-[0.24em] text-white/70">
-                    <span>{project.category}</span>
-                    <span>{project.timeline}</span>
-                  </div>
-                  <div>
-                    <p className="text-4xl font-semibold tracking-[-0.06em]">
-                      {project.name}
-                    </p>
-                    <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/80">
-                      {project.desc}
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <div className="section-kicker">
-              <span className="section-rule" />
-              {project.category}
-            </div>
-            <h1 className="text-4xl font-semibold tracking-[-0.06em] text-slate-950 dark:text-white md:text-5xl">
-              {project.name}
-            </h1>
-
-            <div className="mt-6 space-y-4 text-base leading-relaxed soft-text">
-              {project.longDescription.split("\n\n").map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
-            </div>
-
-            {project.highlights && project.highlights.length > 0 && (
-              <div className="mt-8 rounded-2xl border border-slate-200/70 bg-white/60 p-5 dark:border-white/10 dark:bg-white/5">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-primary/80">
-                  Build highlights
-                </p>
-                <ul className="mt-4 space-y-3">
-                  {project.highlights.map((highlight) => (
-                    <li
-                      key={highlight}
-                      className="flex gap-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300"
-                    >
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                      <span>{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              {project.tech.map((tech) => (
-                <span
-                  key={tech}
-                  className="rounded-full border border-slate-200/80 bg-white/75 px-3 py-1.5 text-xs font-medium text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-
-            <div className="mt-8">
-              {project.liveDemoUrl ? (
-                <a
-                  href={project.liveDemoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-sm font-medium text-white transition-transform hover:-translate-y-0.5 dark:bg-white dark:text-slate-950"
-                >
-                  Live demo
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-              ) : (
-                <span className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/75 px-6 py-3 text-sm font-medium text-slate-500 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
-                  Live demo coming soon
-                </span>
-              )}
-            </div>
-          </div>
-        </section>
-
-        <section className="mt-16 grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-          <aside className="space-y-8">
-            <div className="glass-panel rounded-[1.75rem] p-6">
-              <h2 className="text-xl font-semibold tracking-[-0.04em] text-slate-950 dark:text-white">
-                Project details
-              </h2>
-
-              <div className="mt-6 space-y-5">
-                <div className="flex items-start gap-4">
-                  <div className="rounded-full bg-slate-950/5 p-3 text-slate-600 dark:bg-white/10 dark:text-slate-200">
-                    <UserCircle className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-400 dark:text-slate-500">
-                      Role
-                    </p>
-                    <p className="mt-2 text-sm font-medium text-slate-800 dark:text-slate-100">
-                      {project.role || "Developer"}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="rounded-full bg-slate-950/5 p-3 text-slate-600 dark:bg-white/10 dark:text-slate-200">
-                    <Calendar className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-400 dark:text-slate-500">
-                      Timeline
-                    </p>
-                    <p className="mt-2 text-sm font-medium text-slate-800 dark:text-slate-100">
-                      {project.timeline || "N/A"}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </aside>
-
-          <div>
-            <div className="section-kicker">
-              <span className="section-rule" />
-              Key features
-            </div>
-
-            {project.keyFeatures.length > 0 ? (
-              <div className="grid gap-6 sm:grid-cols-2">
-                {project.keyFeatures.map((feature, index) => (
-                  <article
-                    key={feature.title}
-                    className="glass-panel overflow-hidden rounded-[1.5rem]"
-                  >
-                    <div className="relative aspect-[4/3]">
-                      {feature.image ? (
-                        <Image
-                          src={feature.image}
-                          alt={feature.title}
-                          fill
-                          sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"
-                          className="object-cover"
-                        />
-                      ) : (
-                        <div
-                          className={`flex h-full w-full items-end bg-gradient-to-br ${
-                            placeholderStyles[index % placeholderStyles.length]
-                          } p-5 text-white`}
-                        >
-                          <p className="text-2xl font-semibold tracking-[-0.05em]">
-                            {feature.title}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                    <div className="p-5">
-                      <h3 className="text-lg font-semibold tracking-[-0.03em] text-slate-950 dark:text-white">
-                        {feature.title}
-                      </h3>
-                      <p className="mt-2 text-sm leading-relaxed soft-text">
-                        {feature.description}
-                      </p>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            ) : (
-              <div className="glass-panel rounded-[1.75rem] px-6 py-10 text-center">
-                <p className="text-sm soft-text">
-                  Key features details are coming soon.
-                </p>
-              </div>
-            )}
-
-            <div className="mt-10">
-              <Link
-                href="/projects"
-                className="inline-flex items-center gap-2 text-sm font-medium text-slate-800 transition-colors hover:text-primary dark:text-slate-100 dark:hover:text-primary"
-              >
-                Explore more projects
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
+      </article>
+    </main>
   );
 }
