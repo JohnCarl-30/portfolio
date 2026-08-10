@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 import { projectsData } from "@/app/data/Projects";
+import { getProjectImage } from "@/lib/projectImages";
 
 const placeholderStyles = [
   "from-sky-500/30 via-blue-500/15 to-slate-900/80",
@@ -75,9 +76,12 @@ const FeaturedProjects = () => {
                   <div className="relative aspect-[4/3]">
                     {project.url ? (
                       <Image
-                        src={project.url}
+                        src={getProjectImage(project.url) ?? project.url}
                         alt={project.name}
                         fill
+                        placeholder={
+                          getProjectImage(project.url) ? "blur" : undefined
+                        }
                         sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                       />
