@@ -5,6 +5,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
+import pic2 from "../../public/img/pic2.jpeg";
+
 const About = () => {
   return (
     <section id="about" className="section-band section-band--paper">
@@ -19,9 +21,10 @@ const About = () => {
             <div className="relative overflow-hidden rounded-2xl border border-slate-200/60 dark:border-white/10">
               <div className="relative aspect-[4/5]">
                 <Image
-                  src="/img/pic2.jpeg"
+                  src={pic2}
                   alt="John Carl Santos portrait"
                   fill
+                  placeholder="blur"
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   className="object-cover"
                 />
