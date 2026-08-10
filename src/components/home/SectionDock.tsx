@@ -126,7 +126,7 @@ export default function SectionDock() {
               className="focus-ring flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[var(--dim)] transition-colors hover:bg-[var(--hover)] hover:text-[var(--ink)]"
             >
               <Search className="h-3.5 w-3.5" />
-              <kbd className="hidden font-mono text-[0.66rem] sm:inline">⌘K</kbd>
+              <kbd className="hidden font-mono text-[0.72rem] sm:inline">⌘K</kbd>
             </button>
           </div>
         </motion.nav>
