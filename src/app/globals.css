@@ -30,11 +30,6 @@
     --color-border: var(--border);
     --color-input: var(--input);
     --color-ring: var(--ring);
-    --color-chart-1: var(--chart-1);
-    --color-chart-2: var(--chart-2);
-    --color-chart-3: var(--chart-3);
-    --color-chart-4: var(--chart-4);
-    --color-chart-5: var(--chart-5);
     --color-sidebar: var(--sidebar);
     --color-sidebar-foreground: var(--sidebar-foreground);
     --color-sidebar-primary: var(--sidebar-primary);
@@ -43,307 +38,453 @@
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
-    --font-sans: var(--font-outfit);
-    --font-serif: var(--font-cormorant);
-    --font-mono: var(--font-fira-code);
+    --color-ink: var(--ink);
+    --color-dim: var(--dim);
+    --color-paper: var(--paper);
+    --color-panel: var(--panel);
+    --color-line: var(--line);
+    --color-line-strong: var(--line-strong);
+    --color-signal: var(--signal);
+    --font-sans: var(--font-geist);
+    --font-mono: var(--font-geist-mono);
 }
 
+/* ---------------------------------------------------------------
+   Palette. Paper + ink, hairline rules, one restrained signal hue.
+   The shadcn contract (--background, --primary, ...) is preserved so
+   src/components/ui/* keeps working; the values are re-pointed.
+   --------------------------------------------------------------- */
+
 :root {
-    --radius: 0.625rem;
-    --background: oklch(0.984 0.006 95);
-    --foreground: oklch(0.215 0.024 260);
-    --card: oklch(0.995 0.004 95);
-    --card-foreground: oklch(0.215 0.024 260);
-    --popover: oklch(0.995 0.004 95);
-    --popover-foreground: oklch(0.215 0.024 260);
-    --primary: oklch(0.49 0.13 255);
-    --primary-foreground: oklch(0.985 0.004 95);
-    --secondary: oklch(0.954 0.01 95);
-    --secondary-foreground: oklch(0.24 0.024 260);
-    --muted: oklch(0.958 0.008 95);
-    --muted-foreground: oklch(0.46 0.024 260);
-    --accent: oklch(0.944 0.02 248);
-    --accent-foreground: oklch(0.24 0.024 260);
+    --radius: 0.5rem;
+
+    --paper: #f8f8f6;
+    --panel: #fffffc;
+    --panel-soft: #efefeb;
+    --ink: #111418;
+    --muted-ink: #5f6266;
+    --dim: #8d9093;
+    --line: rgb(17 20 24 / 0.075);
+    --line-strong: rgb(17 20 24 / 0.15);
+    --dot: rgb(17 20 24 / 0.11);
+    --dot-lit: rgb(17 20 24 / 0.42);
+    --signal: #1d7d74;
+    --signal-soft: rgb(29 125 116 / 0.12);
+    --hover: rgb(17 20 24 / 0.045);
+    --shadow-soft: 0 18px 52px rgb(17 20 24 / 0.09);
+    --shadow-lift: 0 22px 60px rgb(17 20 24 / 0.16);
+
+    --dot-size: 18px;
+    --content-max: 62rem;
+    --page-gutter: clamp(1.25rem, 5vw, 4rem);
+    --section-y: 3.25rem;
+
+    --background: var(--paper);
+    --foreground: var(--ink);
+    --card: var(--panel);
+    --card-foreground: var(--ink);
+    --popover: var(--panel);
+    --popover-foreground: var(--ink);
+    --primary: var(--signal);
+    --primary-foreground: #fbfbf9;
+    --secondary: var(--panel-soft);
+    --secondary-foreground: var(--ink);
+    --muted: var(--panel-soft);
+    --muted-foreground: var(--muted-ink);
+    --accent: var(--hover);
+    --accent-foreground: var(--ink);
     --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.89 0.014 250);
-    --input: oklch(0.93 0.01 248);
-    --ring: oklch(0.62 0.11 250);
-    --chart-1: oklch(0.646 0.222 41.116);
-    --chart-2: oklch(0.6 0.118 184.704);
-    --chart-3: oklch(0.398 0.07 227.392);
-    --chart-4: oklch(0.828 0.189 84.429);
-    --chart-5: oklch(0.769 0.188 70.08);
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
-    --footer-bg: oklch(0.2 0.028 258);
-    --footer-foreground: oklch(0.97 0.008 95);
-    --footer-muted: oklch(0.79 0.02 252);
-    --footer-border: oklch(0.35 0.03 258);
-    --footer-hover: oklch(0.93 0.04 248);
+    --border: var(--line);
+    --input: var(--line-strong);
+    --ring: rgb(29 125 116 / 0.45);
+    --sidebar: var(--panel);
+    --sidebar-foreground: var(--ink);
+    --sidebar-primary: var(--signal);
+    --sidebar-primary-foreground: var(--paper);
+    --sidebar-accent: var(--hover);
+    --sidebar-accent-foreground: var(--ink);
+    --sidebar-border: var(--line);
+    --sidebar-ring: var(--ring);
+    --footer-bg: transparent;
+    --footer-foreground: var(--ink);
+    --footer-muted: var(--muted-ink);
+    --footer-border: var(--line);
+    --footer-hover: var(--ink);
 }
 
 .dark {
-    --background: oklch(0.17 0.02 258);
-    --foreground: oklch(0.968 0.008 95);
-    --card: oklch(0.21 0.018 258);
-    --card-foreground: oklch(0.968 0.008 95);
-    --popover: oklch(0.21 0.018 258);
-    --popover-foreground: oklch(0.968 0.008 95);
-    --primary: oklch(0.78 0.1 245);
-    --primary-foreground: oklch(0.18 0.02 258);
-    --secondary: oklch(0.25 0.016 258);
-    --secondary-foreground: oklch(0.968 0.008 95);
-    --muted: oklch(0.235 0.016 258);
-    --muted-foreground: oklch(0.76 0.022 248);
-    --accent: oklch(0.28 0.02 255);
-    --accent-foreground: oklch(0.968 0.008 95);
+    --paper: #0e1013;
+    --panel: #14171b;
+    --panel-soft: #1a1e23;
+    --ink: #eceeec;
+    --muted-ink: #969ba1;
+    --dim: #6c7278;
+    --line: rgb(255 255 255 / 0.085);
+    --line-strong: rgb(255 255 255 / 0.17);
+    --dot: rgb(255 255 255 / 0.085);
+    --dot-lit: rgb(255 255 255 / 0.38);
+    --signal: #4ec4b4;
+    --signal-soft: rgb(78 196 180 / 0.14);
+    --hover: rgb(255 255 255 / 0.055);
+    --shadow-soft: 0 18px 52px rgb(0 0 0 / 0.5);
+    --shadow-lift: 0 22px 60px rgb(0 0 0 / 0.62);
+
+    --primary-foreground: #0e1013;
     --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 12%);
-    --input: oklch(1 0 0 / 14%);
-    --ring: oklch(0.72 0.09 245);
-    --chart-1: oklch(0.488 0.243 264.376);
-    --chart-2: oklch(0.696 0.17 162.48);
-    --chart-3: oklch(0.769 0.188 70.08);
-    --chart-4: oklch(0.627 0.265 303.9);
-    --chart-5: oklch(0.645 0.246 16.439);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
-    --footer-bg: oklch(0.14 0.02 258);
-    --footer-foreground: oklch(0.96 0.01 260);
-    --footer-muted: oklch(0.75 0.022 250);
-    --footer-border: oklch(1 0 0 / 10%);
-    --footer-hover: oklch(0.92 0.05 246);
+    --ring: rgb(78 196 180 / 0.45);
 }
 
 html[data-theme-selection="midnight"] {
-    --background: oklch(0.16 0.02 260);
-    --foreground: oklch(0.97 0.01 260);
-    --card: oklch(0.2 0.02 260);
-    --card-foreground: oklch(0.97 0.01 260);
-    --popover: oklch(0.2 0.02 260);
-    --popover-foreground: oklch(0.97 0.01 260);
-    --secondary: oklch(0.24 0.015 260);
-    --secondary-foreground: oklch(0.97 0.01 260);
-    --muted: oklch(0.22 0.015 260);
-    --muted-foreground: oklch(0.76 0.02 260);
-    --accent: oklch(0.28 0.02 260);
-    --accent-foreground: oklch(0.97 0.01 260);
-    --border: oklch(1 0 0 / 12%);
-    --input: oklch(1 0 0 / 18%);
-    --ring: oklch(0.77 0.16 88);
-    --footer-bg: oklch(0.18 0.03 260);
-    --footer-foreground: oklch(0.97 0.01 260);
-    --footer-muted: oklch(0.83 0.07 92);
-    --footer-border: oklch(1 0 0 / 12%);
-    --footer-hover: oklch(0.99 0.02 92);
-}
-
-html[data-theme-selection="midnight"] body {
-    background-image:
-        radial-gradient(circle at top, rgba(250, 204, 21, 0.08), transparent 32%),
-        radial-gradient(circle at 80% 20%, rgba(96, 165, 250, 0.12), transparent 22%);
+    --paper: #0a0c14;
+    --panel: #10131d;
+    --panel-soft: #161a26;
+    --ink: #e8eaf2;
+    --muted-ink: #949aad;
+    --dim: #6a7085;
+    --line: rgb(190 205 255 / 0.1);
+    --line-strong: rgb(190 205 255 / 0.19);
+    --dot: rgb(190 205 255 / 0.1);
+    --dot-lit: rgb(200 214 255 / 0.42);
+    --signal: #e0b055;
+    --signal-soft: rgb(224 176 85 / 0.14);
+    --hover: rgb(190 205 255 / 0.06);
+    --primary-foreground: #0a0c14;
+    --ring: rgb(224 176 85 / 0.45);
 }
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-    transition: background-color 0.2s ease, color 0.2s ease;
-  }
-  * {
-    @apply border-border outline-ring/50;
+    html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
     }
-  body {
-    @apply bg-background text-foreground transition-colors duration-200;
-    background-image:
-      radial-gradient(circle at top left, rgba(59, 130, 246, 0.12), transparent 25%),
-      radial-gradient(circle at 80% 10%, rgba(148, 163, 184, 0.18), transparent 24%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0.9));
-    background-attachment: fixed;
-    min-height: 100vh;
-    }
-}
 
-.dark body {
-  background-image:
-    radial-gradient(circle at top left, rgba(96, 165, 250, 0.12), transparent 25%),
-    radial-gradient(circle at 82% 14%, rgba(245, 158, 11, 0.08), transparent 22%),
-    linear-gradient(180deg, rgba(15, 23, 42, 0.55), rgba(2, 6, 23, 0.9));
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    body {
+        min-height: 100vh;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        color: var(--ink);
+        font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+        font-feature-settings: "ss01", "cv01";
+        letter-spacing: -0.005em;
+        background-color: var(--paper);
+        /* The static dot grid. DotField paints a lit halo on top of it,
+           phase-locked to the same 18px lattice. */
+        background-image: radial-gradient(circle, var(--dot) 0.8px, transparent 1.1px);
+        background-size: var(--dot-size) var(--dot-size);
+        background-position: 0 0;
+        background-attachment: fixed;
+        transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    ::selection {
+        background: var(--signal);
+        color: var(--primary-foreground);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        margin: 0;
+        font-weight: 700;
+        letter-spacing: -0.018em;
+    }
 }
 
 @layer components {
-  .page-shell {
-    @apply mx-auto w-full max-w-6xl px-6 lg:px-8;
-  }
+    /* Horizontal rhythm. Everything on the page sits in this column. */
+    .shell {
+        width: min(var(--content-max), calc(100% - (var(--page-gutter) * 2)));
+        margin-inline: auto;
+    }
 
-  .section-band {
-    @apply relative overflow-hidden py-28;
-  }
+    /* Legacy alias so the not-yet-reskinned routes keep their layout. */
+    .page-shell {
+        @apply mx-auto w-full max-w-6xl px-6 lg:px-8;
+    }
 
-  .section-band > .page-shell {
-    @apply relative z-10;
-  }
+    .rule {
+        height: 1px;
+        background: var(--line);
+        border: 0;
+    }
 
-  .section-kicker {
-    @apply mb-5 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-primary/80;
-  }
+    /* Small lowercase section label: "projects", "notes", ... */
+    .section-label {
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        color: var(--muted-ink);
+    }
 
-  .section-rule {
-    @apply h-px w-12 bg-primary/60;
-  }
+    .row-title {
+        font-size: 0.925rem;
+        font-weight: 650;
+        letter-spacing: -0.012em;
+        color: var(--ink);
+    }
 
-  .glass-panel {
-    @apply border border-white/70 bg-white/70 shadow-[0_28px_90px_-42px_rgba(15,23,42,0.38)] backdrop-blur-xl dark:border-white/10 dark:bg-white/5;
-  }
+    .row-desc {
+        font-size: 0.85rem;
+        line-height: 1.55;
+        color: var(--muted-ink);
+    }
 
-  .soft-text {
-    @apply text-slate-600 dark:text-slate-300;
-  }
+    .meta {
+        font-family: var(--font-mono), ui-monospace, monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.01em;
+        color: var(--dim);
+        font-variant-numeric: tabular-nums;
+    }
+
+    /* Tag chip. Reads as a lowercase keyword, not a button. */
+    .chip {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 0.115rem 0.5rem;
+        font-family: var(--font-mono), ui-monospace, monospace;
+        font-size: 0.66rem;
+        line-height: 1.45;
+        color: var(--dim);
+        background: var(--hover);
+        transition: color 160ms ease, border-color 160ms ease;
+    }
+
+    .group\/row:hover .chip {
+        color: var(--muted-ink);
+        border-color: var(--line-strong);
+    }
+
+    /* Inline link inside prose: underline grows from the left on hover. */
+    .ink-link {
+        color: var(--ink);
+        font-weight: 600;
+        text-decoration: none;
+        background-image: linear-gradient(var(--signal), var(--signal));
+        background-repeat: no-repeat;
+        background-position: 0 100%;
+        background-size: 0% 1px;
+        transition: background-size 260ms cubic-bezier(0.23, 1, 0.32, 1),
+            color 160ms ease;
+        padding-bottom: 1px;
+    }
+
+    .ink-link:hover,
+    .ink-link:focus-visible {
+        background-size: 100% 1px;
+        color: var(--signal);
+    }
 }
 
-.section-band--paper {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.86)),
-    radial-gradient(circle at top left, rgba(59, 130, 246, 0.06), transparent 28%);
-  border-top: 1px solid rgba(226, 232, 240, 0.9);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.9);
-}
+/* ---------------------------------------------------------------
+   Scroll reveals.
 
-.section-band--mist {
-  background:
-    linear-gradient(180deg, rgba(239, 246, 255, 0.72), rgba(248, 250, 252, 0.88)),
-    radial-gradient(circle at 78% 16%, rgba(56, 189, 248, 0.09), transparent 22%);
-  border-top: 1px solid rgba(191, 219, 254, 0.5);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.85);
-}
+   Content is visible by default, so a no-JS visitor (or a failed
+   IntersectionObserver) still sees the whole page. The `js` class is set by
+   the inline bootstrap in layout.tsx before first paint; only then does the
+   hidden state apply, and only until the element intersects.
+   --------------------------------------------------------------- */
 
-.section-band--sand {
-  background:
-    linear-gradient(180deg, rgba(250, 245, 237, 0.78), rgba(255, 252, 247, 0.9)),
-    radial-gradient(circle at 20% 18%, rgba(245, 158, 11, 0.08), transparent 24%);
-  border-top: 1px solid rgba(245, 235, 215, 0.9);
-  border-bottom: 1px solid rgba(245, 235, 215, 0.9);
-}
-
-.section-band--slate {
-  background:
-    linear-gradient(180deg, rgba(241, 245, 249, 0.74), rgba(248, 250, 252, 0.9)),
-    radial-gradient(circle at 82% 14%, rgba(100, 116, 139, 0.08), transparent 24%);
-  border-top: 1px solid rgba(203, 213, 225, 0.82);
-  border-bottom: 1px solid rgba(203, 213, 225, 0.82);
-}
-
-.dark .section-band--paper {
-  background:
-    linear-gradient(180deg, rgba(15, 23, 42, 0.18), rgba(15, 23, 42, 0.28)),
-    radial-gradient(circle at top left, rgba(96, 165, 250, 0.08), transparent 28%);
-  border-top-color: rgba(255, 255, 255, 0.08);
-  border-bottom-color: rgba(255, 255, 255, 0.08);
-}
-
-.dark .section-band--mist {
-  background:
-    linear-gradient(180deg, rgba(15, 23, 42, 0.26), rgba(15, 23, 42, 0.36)),
-    radial-gradient(circle at 78% 16%, rgba(56, 189, 248, 0.08), transparent 22%);
-  border-top-color: rgba(125, 211, 252, 0.12);
-  border-bottom-color: rgba(255, 255, 255, 0.08);
-}
-
-.dark .section-band--sand {
-  background:
-    linear-gradient(180deg, rgba(24, 24, 27, 0.22), rgba(24, 24, 27, 0.34)),
-    radial-gradient(circle at 20% 18%, rgba(245, 158, 11, 0.08), transparent 24%);
-  border-top-color: rgba(245, 158, 11, 0.12);
-  border-bottom-color: rgba(255, 255, 255, 0.08);
-}
-
-.dark .section-band--slate {
-  background:
-    linear-gradient(180deg, rgba(30, 41, 59, 0.34), rgba(15, 23, 42, 0.46)),
-    radial-gradient(circle at 82% 14%, rgba(148, 163, 184, 0.08), transparent 24%);
-  border-top-color: rgba(148, 163, 184, 0.14);
-  border-bottom-color: rgba(255, 255, 255, 0.08);
-}
-
-@keyframes moveUpInitial {
-  to { transform: translateY(-105%); }
-}
-
-@keyframes moveUpEnd {
-  0% { transform: translateY(100%); }
-  to { transform: translateY(0); }
-}
-
-@keyframes slide {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(calc(-100% - 32px)); }
-}
-
-@keyframes slideReverse {
-  0% { transform: translateX(calc(-100% - 32px)); }
-  100% { transform: translateX(0); }
-}
-
-@keyframes fade-up {
-  from {
+html.js .reveal {
     opacity: 0;
     transform: translateY(12px);
-  }
-  to {
+    filter: blur(5px);
+    will-change: opacity, transform, filter;
+}
+
+html.js .reveal.is-in {
     opacity: 1;
-    transform: translateY(0);
-  }
+    transform: none;
+    filter: none;
+    transition:
+        opacity 0.55s cubic-bezier(0.23, 1, 0.32, 1),
+        transform 0.55s cubic-bezier(0.23, 1, 0.32, 1),
+        filter 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: auto;
 }
 
-@keyframes floating {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-25px);
-  }
+/* Hairline that draws across the section head on entry. */
+html.js .rule-draw {
+    transform: scaleX(0);
+    transform-origin: left;
 }
 
-@layer utilities {
-  .animate-fade-up {
-    animation: fade-up 0.45s ease-out both;
-  }
-
-  .focus-ring {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
-  }
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .hover-lift {
-    transition: transform 200ms ease-out;
-  }
-  .hover-lift:hover {
-    transform: translateY(-3px);
-  }
+html.js .rule-draw.is-in {
+    transform: scaleX(1);
+    transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+    html.js .reveal,
+    html.js .rule-draw {
+        opacity: 1;
+        transform: none;
+        filter: none;
+    }
+}
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+/* Project screenshot shown inline where there is no hover to reveal it.
+   Hidden on fine pointers, which get the floating preview card instead.
+   Done in CSS so the server-rendered markup is correct for both. */
+.row-thumb {
+    display: block;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .row-thumb {
+        display: none;
+    }
+}
+
+@layer utilities {
+    .focus-ring {
+        @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+    }
+
+    .tnum {
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+/* ---------------------------------------------------------------
+   View transitions.
+
+   Two kinds share the root snapshot, so each is scoped by a
+   `data-transition` flag set just before the transition starts:
+
+   theme — snapshots are stacked, not cross-faded, so the circular clip
+           animated in AppUIProvider is the only visible effect.
+   route — a quick fade-through, keeping the site feeling like one document
+           instead of hard-cutting between pages.
+   --------------------------------------------------------------- */
+
+html[data-transition="theme"]::view-transition-old(root),
+html[data-transition="theme"]::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+html[data-transition="theme"]::view-transition-old(root) {
+    z-index: 0;
+}
+
+html[data-transition="theme"]::view-transition-new(root) {
+    z-index: 1;
+}
+
+html[data-transition="route"]::view-transition-old(root) {
+    animation: route-out 170ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+html[data-transition="route"]::view-transition-new(root) {
+    animation: route-in 280ms cubic-bezier(0.23, 1, 0.32, 1) 60ms both;
+}
+
+@keyframes route-out {
+    to {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+}
+
+@keyframes route-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
+
+/* Indeterminate bar, only mounted when a navigation outlives its budget. */
+@keyframes nav-progress {
+    0% {
+        transform: translateX(-100%) scaleX(0.4);
+    }
+    50% {
+        transform: translateX(0%) scaleX(0.7);
+    }
+    100% {
+        transform: translateX(100%) scaleX(0.4);
+    }
+}
+
+/* Colours that are not repainted by the view transition still ease, so a
+   fallback swap (Firefox) degrades to a soft fade rather than a hard cut. */
+html.js body,
+html.js .chip,
+html.js .row-title,
+html.js .row-desc,
+html.js .meta,
+html.js .section-label {
+    transition:
+        background-color 0.32s ease,
+        border-color 0.32s ease,
+        color 0.32s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+    }
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(calc(-50% - 1rem));
+    }
+}
+
+@keyframes pulse-dot {
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.45;
+        transform: scale(0.82);
+    }
+}
+
+.animate-fade-up {
+    animation: fade-up 0.45s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
