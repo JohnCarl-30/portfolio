@@ -12,6 +12,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   ChevronLeft,
   FolderKanban,
+  Hash,
   Home,
   MonitorCog,
   MoonStar,
@@ -28,12 +29,13 @@ import {
   type ThemePreference,
   useAppUI,
 } from "@/components/providers/AppUIProvider";
+import { DOCK_SECTIONS } from "@/components/home/SectionDock";
 import { getAllPosts } from "@/app/data/Blog";
 import { projectsData } from "@/app/data/Projects";
 import { Kbd } from "@/components/ui/kbd";
 
 type SearchView = "search" | "theme";
-type SearchGroup = "Site" | "Main Pages" | "Projects" | "Blog";
+type SearchGroup = "Site" | "Sections" | "Main Pages" | "Projects" | "Writing";
 
 type ThemeOption = {
   icon: LucideIcon;
@@ -60,6 +62,21 @@ type SearchEntry = {
       kind: "action";
     }
 );
+
+/**
+ * The home page is a single scroll, so its sections are addressable the same
+ * way routes are. Selecting one smooth-scrolls when already on "/".
+ */
+const SECTION_ITEMS: SearchEntry[] = DOCK_SECTIONS.map((section) => ({
+  id: `section-${section.id}`,
+  title: section.label,
+  description: `Jump to the ${section.label} section.`,
+  href: `/#${section.id}`,
+  group: "Sections",
+  icon: Hash,
+  keywords: ["section", "jump", "scroll", section.id],
+  kind: "route",
+}));
 
 const PAGE_ITEMS: SearchEntry[] = [
   {
@@ -94,12 +111,12 @@ const PAGE_ITEMS: SearchEntry[] = [
   },
   {
     id: "blog",
-    title: "Blog",
-    description: "Read notes on AI and full-stack shipping.",
+    title: "Writing",
+    description: "Notes on AI and full-stack shipping.",
     href: "/blog",
     group: "Main Pages",
     icon: Newspaper,
-    keywords: ["writing", "posts", "articles", "notes"],
+    keywords: ["writing", "posts", "articles", "notes", "blog"],
     kind: "route",
   },
 ];
@@ -120,7 +137,7 @@ const BLOG_ITEMS: SearchEntry[] = getAllPosts().map((post) => ({
   title: post.title,
   description: post.excerpt,
   href: `/blog/${post.slug}`,
-  group: "Blog",
+  group: "Writing",
   icon: Newspaper,
   keywords: [...post.tags, "blog", "post"],
   kind: "route",
@@ -154,7 +171,13 @@ const THEME_OPTIONS: ThemeOption[] = [
   },
 ];
 
-const GROUP_ORDER: SearchGroup[] = ["Site", "Main Pages", "Projects", "Blog"];
+const GROUP_ORDER: SearchGroup[] = [
+  "Site",
+  "Sections",
+  "Main Pages",
+  "Projects",
+  "Writing",
+];
 
 const getThemeLabel = (theme: ThemePreference) => {
   switch (theme) {
@@ -182,7 +205,7 @@ const createThemeEntry = (
   resolvedTheme: "light" | "dark",
 ): SearchEntry => ({
   id: "theme",
-  title: "Choose a Theme",
+  title: "Theme",
   description:
     themePreference === "system"
       ? `Follow your device. Currently ${resolvedTheme}.`
@@ -196,15 +219,38 @@ const createThemeEntry = (
   kind: "action",
 });
 
+/** Lowercase and reduce punctuation to spaces: "Next.js" -> "next js". */
+const normalize = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+
+/**
+ * Every whitespace-separated term in the query has to appear somewhere in the
+ * entry, matched against both the spaced and the punctuation-collapsed form.
+ * That makes "nextjs" find "Next.js", "type script" find "TypeScript", and
+ * "rag mongo" find "Building RAG Apps Using MongoDB" — none of which a plain
+ * substring test would catch.
+ */
 const matchesEntry = (entry: SearchEntry, query: string) => {
   if (!query) {
     return true;
   }
 
-  return [entry.title, entry.description, ...entry.keywords]
-    .join(" ")
-    .toLowerCase()
-    .includes(query);
+  const haystack = normalize(
+    [entry.title, entry.description, ...entry.keywords].join(" "),
+  );
+  const collapsed = haystack.replace(/ /g, "");
+  const terms = normalize(query).split(" ").filter(Boolean);
+
+  if (!terms.length) {
+    return true;
+  }
+
+  return terms.every(
+    (term) => haystack.includes(term) || collapsed.includes(term),
+  );
 };
 
 export default function SearchPalette() {
@@ -230,6 +276,7 @@ export default function SearchPalette() {
   const entries = useMemo(
     () => [
       createThemeEntry(themePreference, resolvedTheme),
+      ...SECTION_ITEMS,
       ...PAGE_ITEMS,
       ...PROJECT_ITEMS,
       ...BLOG_ITEMS,
@@ -242,7 +289,7 @@ export default function SearchPalette() {
       entries.filter((entry) => {
         if (
           !hasActiveQuery &&
-          (entry.group === "Projects" || entry.group === "Blog")
+          (entry.group === "Projects" || entry.group === "Writing")
         ) {
           return false;
         }
@@ -340,8 +387,14 @@ export default function SearchPalette() {
   );
 
   const chooseTheme = useCallback(
-    (theme: ThemePreference) => {
-      setTheme(theme);
+    (theme: ThemePreference, element?: HTMLElement | null) => {
+      const rect = element?.getBoundingClientRect();
+      setTheme(
+        theme,
+        rect
+          ? { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
+          : undefined,
+      );
     },
     [setTheme],
   );
@@ -386,7 +439,12 @@ export default function SearchPalette() {
 
         if (event.key === "Enter") {
           event.preventDefault();
-          chooseTheme(THEME_OPTIONS[themeIndex].id);
+          chooseTheme(
+            THEME_OPTIONS[themeIndex].id,
+            document.querySelector<HTMLElement>(
+              `[data-theme-option="${THEME_OPTIONS[themeIndex].id}"]`,
+            ),
+          );
         }
 
         return;
@@ -441,7 +499,8 @@ export default function SearchPalette() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] bg-slate-950/45 px-4 pt-[12vh] backdrop-blur-sm"
+          transition={{ duration: 0.15 }}
+          className="fixed inset-0 z-[100] bg-black/25 px-4 pt-[12vh] backdrop-blur-[3px]"
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) {
               closePalette();
@@ -449,36 +508,37 @@ export default function SearchPalette() {
           }}
         >
           <motion.div
-            initial={{ opacity: 0, y: 18, scale: 0.98 }}
+            initial={{ opacity: 0, y: 12, scale: 0.985 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 18, scale: 0.98 }}
-            transition={{ duration: 0.18, ease: "easeOut" }}
-            className="mx-auto w-full max-w-2xl overflow-hidden rounded-[1.2rem] border border-blue-500/60 bg-[#141110]/95 text-white shadow-[0_24px_90px_rgba(15,23,42,0.55)]"
+            exit={{ opacity: 0, y: 10, scale: 0.985 }}
+            transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
+            className="mx-auto w-full max-w-xl overflow-hidden rounded-xl border border-[var(--line-strong)] bg-[var(--panel)] text-[var(--ink)] shadow-[var(--shadow-lift)]"
           >
             {view === "search" ? (
               <>
-                <div className="flex items-center gap-3 border-b border-blue-500/70 px-4 py-3">
-                  <Search className="h-4 w-4 text-blue-400" />
+                <div className="flex items-center gap-2.5 border-b border-[var(--line)] px-3.5 py-2.5">
+                  <Search className="h-3.5 w-3.5 shrink-0 text-[var(--dim)]" />
                   <input
                     ref={inputRef}
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
-                    placeholder="Search pages or theme..."
-                    className="h-9 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-zinc-500"
+                    placeholder="search sections, projects, notes…"
+                    className="h-7 flex-1 bg-transparent text-[0.85rem] outline-none placeholder:text-[var(--dim)]"
                   />
-                  <div className="hidden items-center gap-2 md:flex">
-                    <Kbd className="bg-white/10 text-white/80">Esc</Kbd>
-                  </div>
+                  <Kbd className="hidden border-[var(--line)] bg-[var(--hover)] text-[var(--dim)] sm:inline-flex">
+                    esc
+                  </Kbd>
                 </div>
 
-                <div className="max-h-[54vh] overflow-y-auto px-2.5 py-2.5">
+                <div className="max-h-[52vh] overflow-y-auto p-1.5">
                   {groupedEntries.length ? (
                     groupedEntries.map((section) => (
-                      <div key={section.group} className="mb-2.5 last:mb-0">
-                        <p className="px-3 pb-1.5 text-[11px] font-semibold tracking-wide text-zinc-400">
+                      <div key={section.group} className="mb-1.5 last:mb-0">
+                        <p className="meta px-2.5 pb-1 pt-1.5 lowercase">
                           {section.group}
                         </p>
-                        <div className="space-y-1">
+
+                        <div className="space-y-0.5">
                           {section.items.map((entry) => {
                             const itemIndex = flatEntries.findIndex(
                               (item) => item.id === entry.id,
@@ -492,29 +552,36 @@ export default function SearchPalette() {
                                 type="button"
                                 onMouseEnter={() => setSearchIndex(itemIndex)}
                                 onClick={() => runEntry(entry)}
-                                className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                                  isActive
-                                    ? "bg-white/10 text-white"
-                                    : "text-zinc-100 hover:bg-white/6"
+                                className={`focus-ring relative flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left transition-colors duration-100 ${
+                                  isActive ? "bg-[var(--hover)]" : ""
                                 }`}
                               >
-                                <div
-                                  className={`flex h-9 w-9 items-center justify-center rounded-lg border ${
+                                {isActive ? (
+                                  <motion.span
+                                    layoutId="palette-cursor"
+                                    className="absolute inset-y-1 left-0 w-[2px] rounded-full bg-[var(--signal)]"
+                                    transition={{ duration: 0.16 }}
+                                  />
+                                ) : null}
+
+                                <span
+                                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md border transition-colors ${
                                     isActive
-                                      ? "border-blue-400/60 bg-blue-500/15 text-blue-300"
-                                      : "border-white/10 bg-white/5 text-zinc-300"
+                                      ? "border-[var(--signal)]/40 bg-[var(--signal-soft)] text-[var(--signal)]"
+                                      : "border-[var(--line)] bg-[var(--hover)] text-[var(--dim)]"
                                   }`}
                                 >
-                                  <Icon className="h-4 w-4" />
-                                </div>
-                                <div className="min-w-0 flex-1">
-                                  <p className="truncate text-sm font-medium">
+                                  <Icon className="h-3.5 w-3.5" />
+                                </span>
+
+                                <span className="min-w-0 flex-1">
+                                  <span className="block truncate text-[0.85rem] font-semibold">
                                     {entry.title}
-                                  </p>
-                                  <p className="truncate text-xs text-zinc-400">
+                                  </span>
+                                  <span className="block truncate text-[0.75rem] text-[var(--muted-ink)]">
                                     {entry.description}
-                                  </p>
-                                </div>
+                                  </span>
+                                </span>
                               </button>
                             );
                           })}
@@ -522,91 +589,86 @@ export default function SearchPalette() {
                       </div>
                     ))
                   ) : (
-                    <AnimatePresence>
-                      <motion.div
-                        key="no-results"
-                        initial={{ opacity: 0, scale: 0.97 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.18, ease: "easeOut" }}
-                        className="flex flex-col items-center justify-center px-6 py-16 text-center"
-                      >
-                        <Search className="mb-4 h-10 w-10 text-zinc-600" />
-                        <p className="text-lg font-medium text-white">
-                          No matches found
-                        </p>
-                        <p className="mt-2 max-w-sm text-sm text-zinc-400">
-                          Try searching for home, about, projects, or theme.
-                        </p>
-                      </motion.div>
-                    </AnimatePresence>
+                    <div className="flex flex-col items-center justify-center px-6 py-14 text-center">
+                      <Search className="mb-3 h-6 w-6 text-[var(--dim)]" />
+                      <p className="text-[0.9rem] font-semibold">No matches</p>
+                      <p className="row-desc mt-1 max-w-xs">
+                        Try projects, notes, stack, or theme.
+                      </p>
+                    </div>
                   )}
                 </div>
 
-                <div className="flex items-center justify-between border-t border-white/10 px-4 py-2.5 text-[11px] text-zinc-400">
-                  <span>Global search and appearance controls.</span>
-                  <div className="hidden items-center gap-2 md:flex">
-                    <Kbd className="bg-white/10 text-white/80">↑</Kbd>
-                    <Kbd className="bg-white/10 text-white/80">↓</Kbd>
-                    <Kbd className="bg-white/10 text-white/80">Enter</Kbd>
+                <div className="flex items-center justify-between border-t border-[var(--line)] px-3.5 py-2">
+                  <span className="meta">navigate anywhere</span>
+                  <div className="hidden items-center gap-1.5 sm:flex">
+                    <Kbd className="border-[var(--line)] bg-[var(--hover)] text-[var(--dim)]">
+                      ↑
+                    </Kbd>
+                    <Kbd className="border-[var(--line)] bg-[var(--hover)] text-[var(--dim)]">
+                      ↓
+                    </Kbd>
+                    <Kbd className="border-[var(--line)] bg-[var(--hover)] text-[var(--dim)]">
+                      ↵
+                    </Kbd>
                   </div>
                 </div>
               </>
             ) : (
               <>
-                <div className="flex items-center gap-3 px-5 pt-6 pb-3">
+                <div className="flex items-center gap-2 border-b border-[var(--line)] px-3 py-2.5">
                   <button
                     type="button"
                     onClick={() => setView("search")}
                     aria-label="Back to search"
-                    className="flex h-10 w-10 items-center justify-center rounded-xl text-zinc-300 transition-colors duration-150 hover:bg-white/6 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="focus-ring flex h-7 w-7 items-center justify-center rounded-md text-[var(--dim)] transition-colors hover:bg-[var(--hover)] hover:text-[var(--ink)]"
                   >
-                    <ChevronLeft className="h-5 w-5" />
+                    <ChevronLeft className="h-4 w-4" />
                   </button>
-                  <div className="flex items-center gap-3">
-                    <h2 className="text-[1.55rem] font-semibold tracking-tight text-white">
-                      Choose a Theme
-                    </h2>
-                    <span className="rounded-xl bg-white/8 px-2.5 py-1 text-xs font-semibold lowercase text-zinc-200">
-                      {getThemeLabel(themePreference)}
-                    </span>
-                  </div>
+                  <h2 className="text-[0.9rem] font-semibold">Theme</h2>
+                  <span className="meta">{getThemeLabel(themePreference)}</span>
                 </div>
 
-                <div className="px-5 pb-6">
-                  <div className="flex flex-wrap gap-3">
-                    {THEME_OPTIONS.map((option, index) => {
-                      const Icon = option.icon;
-                      const isSelected = themePreference === option.id;
-                      const isKeyboardTarget = themeIndex === index;
+                <div className="grid grid-cols-2 gap-1.5 p-2 sm:grid-cols-4">
+                  {THEME_OPTIONS.map((option, index) => {
+                    const Icon = option.icon;
+                    const isSelected = themePreference === option.id;
+                    const isKeyboardTarget = themeIndex === index;
 
-                      return (
-                        <button
-                          key={option.id}
-                          type="button"
-                          aria-label={`Use ${option.label} theme`}
-                          title={option.label}
-                          onMouseEnter={() => setThemeIndex(index)}
-                          onClick={() => chooseTheme(option.id)}
-                          className={`flex h-12 w-14 items-center justify-center rounded-2xl transition-[box-shadow,transform] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.98] ${
-                            option.swatchClassName
-                          } ${
-                            isSelected || isKeyboardTarget
-                              ? "ring-4 ring-blue-500/90 ring-offset-0"
-                              : "ring-1 ring-white/8 hover:ring-white/20"
+                    return (
+                      <button
+                        key={option.id}
+                        type="button"
+                        aria-label={`Use ${option.label} theme`}
+                        data-theme-option={option.id}
+                        onMouseEnter={() => setThemeIndex(index)}
+                        onClick={(event) =>
+                          chooseTheme(option.id, event.currentTarget)
+                        }
+                        className={`focus-ring flex flex-col items-center gap-1.5 rounded-lg border px-2 py-3 transition-colors ${
+                          isSelected || isKeyboardTarget
+                            ? "border-[var(--signal)]/45 bg-[var(--signal-soft)]"
+                            : "border-[var(--line)] hover:bg-[var(--hover)]"
+                        }`}
+                      >
+                        <Icon
+                          className={`h-4 w-4 ${
+                            isSelected
+                              ? "text-[var(--signal)]"
+                              : "text-[var(--muted-ink)]"
                           }`}
-                        >
-                          <Icon className="h-5 w-5" />
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  <p className="mt-4 text-xs text-zinc-400">
-                    Pick a theme and the preference will be saved globally for
-                    your portfolio.
-                  </p>
+                        />
+                        <span className="text-[0.72rem] lowercase text-[var(--muted-ink)]">
+                          {option.label}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
+
+                <p className="meta border-t border-[var(--line)] px-3.5 py-2">
+                  saved to this browser
+                </p>
               </>
             )}
           </motion.div>
