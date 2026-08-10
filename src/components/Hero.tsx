@@ -2,13 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { animate, motion, useInView, useReducedMotion } from "framer-motion";
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 import { FaReact } from "react-icons/fa";
 
 import FloatingCircle, { getContainerVariants } from "./floating_cirlce";
 import ParticlesBackground from "./particles-background";
+import personalImg from "../../public/personal.jpg";
 
 const socialLinks = [
   {
@@ -42,6 +43,45 @@ const proofPoints = [
     label: "web + backend",
   },
 ];
+
+const AnimatedStatValue = ({ value }: { value: string }) => {
+  const shouldReduceMotion = useReducedMotion();
+  const ref = useRef<HTMLParagraphElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-40px" });
+  const match = value.match(/^(\d+)(.*)$/);
+  const [display, setDisplay] = useState(match ? "0" : value);
+
+  useEffect(() => {
+    const parsed = value.match(/^(\d+)(.*)$/);
+    if (!parsed || !isInView) return;
+
+    const target = parseInt(parsed[1], 10);
+
+    if (shouldReduceMotion) {
+      setDisplay(String(target));
+      return;
+    }
+
+    const controls = animate(0, target, {
+      duration: 1.1,
+      ease: [0.16, 1, 0.3, 1],
+      onUpdate: (latest) => setDisplay(String(Math.round(latest))),
+    });
+
+    return () => controls.stop();
+  }, [isInView, shouldReduceMotion, value]);
+
+  return (
+    <p
+      ref={ref}
+      className="text-lg font-semibold tracking-[-0.03em] text-slate-950 dark:text-white"
+    >
+      {match ? `${display}${match[2]}` : value}
+    </p>
+  );
+};
+
+const headlineEase = [0.23, 1, 0.32, 1] as const;
 
 const Hero = () => {
   const shouldReduceMotion = useReducedMotion();
@@ -88,22 +128,57 @@ const Hero = () => {
         <div>
           <div className="max-w-xl space-y-10">
             <div className="space-y-6">
-              <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
+              <motion.p
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: headlineEase }}
+                className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500"
+              >
                 Aspiring AI Engineer
-              </p>
+              </motion.p>
 
               <h1 className="text-[clamp(3.5rem,8vw,6.5rem)] font-semibold leading-[0.9] tracking-[-0.06em] text-slate-950 dark:text-white">
-                John
-                <br />
-                <span className="font-serif text-primary italic">Carl</span>{" "}
-                Santos
+                <span className="-mb-[0.08em] block overflow-hidden pb-[0.08em]">
+                  <motion.span
+                    initial={shouldReduceMotion ? false : { y: "110%" }}
+                    animate={{ y: 0 }}
+                    transition={{
+                      duration: 0.8,
+                      ease: headlineEase,
+                      delay: 0.1,
+                    }}
+                    className="block"
+                  >
+                    John
+                  </motion.span>
+                </span>
+                <span className="-mb-[0.08em] block overflow-hidden pb-[0.08em]">
+                  <motion.span
+                    initial={shouldReduceMotion ? false : { y: "110%" }}
+                    animate={{ y: 0 }}
+                    transition={{
+                      duration: 0.8,
+                      ease: headlineEase,
+                      delay: 0.24,
+                    }}
+                    className="block"
+                  >
+                    <span className="font-serif text-primary italic">Carl</span>{" "}
+                    Santos
+                  </motion.span>
+                </span>
               </h1>
 
-              <p className="max-w-md text-base leading-relaxed text-slate-500 dark:text-slate-400">
+              <motion.p
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55, ease: headlineEase, delay: 0.45 }}
+                className="max-w-md text-base leading-relaxed text-slate-500 dark:text-slate-400"
+              >
                 I build AI-powered web apps, backend systems, and automation
                 tools with Next.js, Python, cloud infrastructure, and LLM
                 workflows.
-              </p>
+              </motion.p>
             </div>
 
             <div className="grid max-w-lg grid-cols-3 overflow-hidden rounded-2xl border border-slate-200/70 bg-white/55 backdrop-blur-md dark:border-white/10 dark:bg-white/5">
@@ -112,9 +187,7 @@ const Hero = () => {
                   key={point.label}
                   className="border-r border-slate-200/70 px-4 py-3 last:border-r-0 dark:border-white/10"
                 >
-                  <p className="text-lg font-semibold tracking-[-0.03em] text-slate-950 dark:text-white">
-                    {point.value}
-                  </p>
+                  <AnimatedStatValue value={point.value} />
                   <p className="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">
                     {point.label}
                   </p>
@@ -189,9 +262,10 @@ const Hero = () => {
                 }}
               >
                 <Image
-                  src="/personal.jpg"
+                  src={personalImg}
                   alt="John Carl Santos"
                   fill
+                  placeholder="blur"
                   sizes="(min-width: 1024px) 420px, 1px"
                   className="object-cover object-center"
                 />
