@@ -1,25 +1,36 @@
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Skills from "@/components/Skills";
-import Certifications from "@/components/Certifications";
-import FeaturedProjects from "@/components/FeaturedProjects";
-import FeaturedBlog from "@/components/FeaturedBlog";
-import SideNavbar from "@/app/section/side-navbar";
-import Contact from "@/components/Contact";
+"use client";
+
+import Credentials from "@/components/home/Credentials";
+import Experience from "@/components/home/Experience";
+import Identity from "@/components/home/Identity";
+import Intro from "@/components/home/Intro";
+import Notes from "@/components/home/Notes";
+import Playground from "@/components/home/Playground";
+import Projects from "@/components/home/Projects";
+import SayHi from "@/components/home/SayHi";
+import ScrollProgress from "@/components/home/ScrollProgress";
+import SectionDock from "@/components/home/SectionDock";
+import Stack from "@/components/home/Stack";
+import { PreviewProvider } from "@/components/home/HoverPreview";
 
 export default function HomeComponent() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <main className="flex-grow">
-        <Hero />
-        <About />
-        <FeaturedProjects />
-        <FeaturedBlog />
-        <Skills />
-        <Certifications />
-        <Contact />
+    <PreviewProvider>
+      <ScrollProgress />
+
+      <main className="shell flex-1 pb-4">
+        <Identity />
+        <Intro />
+        <Notes />
+        <Projects />
+        <Experience />
+        <Stack />
+        <Credentials />
+        <SayHi />
+        <Playground />
       </main>
-      <SideNavbar />
-    </div>
+
+      <SectionDock />
+    </PreviewProvider>
   );
 }

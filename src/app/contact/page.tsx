@@ -1,14 +1,18 @@
-'use client'
-import { useEffect } from 'react';
-import HomeComponent from "@/components/Home";
+"use client";
+
+import PageHeader from "@/components/home/PageHeader";
+import SayHi from "@/components/home/SayHi";
 
 export default function ContactPage() {
-  useEffect(() => {
-    const element = document.getElementById('contact');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, []);
+  return (
+    <main className="shell flex-1 pb-20">
+      <PageHeader
+        label="contact"
+        title="Say hi."
+        description="Open to conversations about AI engineering, retrieval systems, and products that need to work after the demo."
+      />
 
-  return <HomeComponent />;
+      <SayHi standalone />
+    </main>
+  );
 }

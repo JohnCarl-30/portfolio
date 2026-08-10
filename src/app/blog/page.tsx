@@ -1,11 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import Link from "@/components/providers/RouteTransition";
 
-import { getAllPosts, getBlogTags } from "@/app/data/Blog";
+import { getAllPosts, getBlogTags, type BlogPost } from "@/app/data/Blog";
+import FilterChips from "@/components/home/FilterChips";
+import PageHeader from "@/components/home/PageHeader";
+import Reveal from "@/components/home/Reveal";
+import {
+  PreviewProvider,
+  usePreviewHandlers,
+} from "@/components/home/HoverPreview";
 
 function formatDate(iso: string) {
   return new Intl.DateTimeFormat("en-US", {
@@ -15,134 +20,94 @@ function formatDate(iso: string) {
   }).format(new Date(iso));
 }
 
+function NoteRow({ post, index }: { post: BlogPost; index: number }) {
+  const handlers = usePreviewHandlers({
+    title: post.title,
+    body: post.excerpt,
+    meta: `${formatDate(post.date)} · ${post.readingTime}`,
+  });
+
+  return (
+    <Reveal as="li" delay={Math.min(index, 6) * 0.05}>
+      <Link
+        href={`/blog/${post.slug}`}
+        className="group/row focus-ring -mx-3 block rounded-lg px-3 py-3.5 transition-colors hover:bg-[var(--hover)]"
+        {...handlers}
+      >
+        <div className="flex items-baseline justify-between gap-4">
+          <h2 className="row-title transition-colors group-hover/row:text-[var(--signal)]">
+            {post.title}
+          </h2>
+          <span className="meta shrink-0">
+            {formatDate(post.date)} · {post.readingTime}
+          </span>
+        </div>
+
+        <p className="row-desc mt-1 max-w-[44rem]">{post.excerpt}</p>
+
+        <div className="mt-2 flex flex-wrap gap-1.5">
+          {post.tags.map((tag) => (
+            <span key={tag} className="chip">
+              {tag.toLowerCase()}
+            </span>
+          ))}
+        </div>
+      </Link>
+    </Reveal>
+  );
+}
+
 export default function BlogPage() {
   const posts = useMemo(() => getAllPosts(), []);
   const tags = useMemo(() => getBlogTags(), []);
   const [activeTag, setActiveTag] = useState("All");
 
-  const filteredPosts = useMemo(() => {
-    if (activeTag === "All") {
-      return posts;
-    }
-
-    return posts.filter((post) => post.tags.includes(activeTag));
-  }, [activeTag, posts]);
+  const filtered = useMemo(
+    () =>
+      activeTag === "All"
+        ? posts
+        : posts.filter((post) => post.tags.includes(activeTag)),
+    [activeTag, posts],
+  );
 
   return (
-    <div className="flex min-h-screen flex-col pt-6 pb-16">
-      <main className="page-shell mt-4 flex flex-1 flex-col">
-        <header className="max-w-3xl">
-          <p className="mb-6 font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80">
-            Blog
-          </p>
-          <h1 className="text-5xl font-semibold tracking-[-0.06em] text-foreground md:text-6xl">
-            Notes on shipping AI and full-stack work.
-          </h1>
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground">
-            Short writing on product decisions, LLM workflows, and the systems
-            behind the demos.
-          </p>
-        </header>
+    <PreviewProvider>
+      <main className="shell flex-1 pb-20">
+        <PageHeader
+          label="writing"
+          title="Working notes on shipping AI and full-stack work."
+          description="Short writing on product decisions, LLM workflows, and the systems behind the demos."
+        />
 
-        <div className="mt-10 flex flex-wrap gap-2">
-          {["All", ...tags].map((tag) => {
-            const isActive = activeTag === tag;
+        <Reveal className="pb-6">
+          <FilterChips
+            label="Filter by tag"
+            options={["All", ...tags]}
+            active={activeTag}
+            onChange={setActiveTag}
+          />
+        </Reveal>
 
-            return (
-              <button
-                key={tag}
-                type="button"
-                onClick={() => setActiveTag(tag)}
-                className={`min-h-11 rounded-full px-4 py-2 text-sm font-medium transition-[color,background-color,border-color,transform] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98] ${
-                  isActive
-                    ? "bg-primary text-primary-foreground"
-                    : "border border-border/70 bg-background text-muted-foreground hover:border-border hover:text-foreground"
-                }`}
-              >
-                {tag}
-              </button>
-            );
-          })}
-        </div>
-
-        <div className="mt-12 flex flex-col gap-0">
-          <AnimatePresence mode="popLayout">
-            {filteredPosts.map((post) => (
-              <motion.div
-                key={post.slug}
-                layout
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-              >
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="group border-t border-border/60 py-8 transition-colors duration-150 last:border-b focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                >
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
-                    <div className="min-w-0 flex-1">
-                      <p className="font-mono text-xs text-muted-foreground">
-                        {formatDate(post.date)}
-                        <span className="mx-2 text-border">·</span>
-                        {post.readingTime}
-                      </p>
-                      <h2 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-foreground transition-colors duration-150 group-hover:text-primary">
-                        {post.title}
-                      </h2>
-                      <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-                        {post.excerpt}
-                      </p>
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {post.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="rounded-full border border-border/60 px-3 py-1 text-xs font-medium text-muted-foreground"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <span className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-[color,transform] duration-150 group-hover:translate-x-0.5 group-hover:text-foreground">
-                      Read
-                      <ArrowRight className="h-4 w-4" />
-                    </span>
-                  </div>
-                </Link>
-              </motion.div>
+        {filtered.length ? (
+          <ul className="divide-y divide-[var(--line)]">
+            {filtered.map((post, index) => (
+              <NoteRow key={post.slug} post={post} index={index} />
             ))}
-          </AnimatePresence>
-
-          <AnimatePresence>
-            {filteredPosts.length === 0 && (
-              <motion.div
-                key="empty-state"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-                className="rounded-2xl border border-dashed border-border/70 bg-secondary/20 px-6 py-12 text-center"
-              >
-                <p className="text-sm font-medium text-foreground">
-                  No posts in this tag
-                </p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Try another tag or clear the filter to see every post.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setActiveTag("All")}
-                  className="mt-4 inline-flex min-h-11 items-center rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-[color,transform] duration-150 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98]"
-                >
-                  Clear filters
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+          </ul>
+        ) : (
+          <p className="row-desc py-10">
+            No posts under that tag yet.{" "}
+            <button
+              type="button"
+              onClick={() => setActiveTag("All")}
+              className="ink-link"
+            >
+              Show all
+            </button>
+            .
+          </p>
+        )}
       </main>
-    </div>
+    </PreviewProvider>
   );
 }

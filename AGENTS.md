@@ -3,33 +3,92 @@
 ## Stack & Versions
 - Next.js 15 (App Router) + React 19 + TypeScript
 - Tailwind CSS v4 (`@import "tailwindcss"` syntax in `globals.css`)
-- Framer Motion for animations
-- tsParticles for background effects
+- Framer Motion — used only for the dock, hover-preview card, palette, and
+  scroll-progress bar. Scroll reveals are **CSS**, not Framer (see below).
 - OpenAI API for chatbot (with offline fallback)
+- Geist + Geist Mono via `next/font/google` (siblings, so mono labels sit on the same skeleton as body text)
+
+## Design language
+The site is a minimal single-page document: paper background with an 18px dot
+lattice, ink text, hairline rules, deliberately small type (the `h1` is
+`1.05rem`), and lowercase section labels. Content is **text rows, not image
+cards**. Keep new work in that register — no big hero type, no gradient washes,
+no glass panels.
 
 ## Architecture
-- **Navbar is in root layout** (`src/app/layout.tsx`). Do **not** add `<Navbar />` to individual pages — it causes duplicate navbars and build errors.
-- **Navbar is sticky and has a mobile sheet.** The mobile menu is rendered as a sibling of `<nav>`, not inside it — the navbar's `backdrop-blur-md` creates a containing block that would trap a `fixed` overlay. Keep it outside if you refactor.
-- **Shared links live in `src/app/data/Social.ts`** (`socialLinks`, `EMAIL`, `RESUME_URL`). Import from there instead of redeclaring the arrays.
-- **Theme switching has two entry points**: `ThemeToggle.tsx` (visible, in the navbar and mobile sheet) and the ⌘K palette. Both call `setTheme` from `AppUIProvider`.
+- **`TopRail` is in the root layout** (`src/app/layout.tsx`) and renders
+  **nothing on `/`** — the home page loads with no chrome at all. Navigation
+  and search come from `SectionDock`, a floating top-centre bar that slides in
+  once you scroll past the intro. Do not add a navbar to individual pages.
+- **Home is one scroll**: `src/components/Home.tsx` composes the sections in
+  `src/components/home/`. Section anchor ids (`notes`, `projects`,
+  `experience`, `stack`, `certifications`, `contact`, `playground`) are shared
+  by `SectionDock.DOCK_SECTIONS` and the command palette. Ids track the
+  visible labels (`writing`, `projects`, `work`, `toolkit`, `credentials`,
+  `contact`, `sandbox`) — change a label and change its id with it, in
+  `SectionDock.tsx` **and** the section's own `<SectionHead id>`.
+- **Internal navigation goes through `@/components/providers/RouteTransition`**,
+  a drop-in `next/link` replacement that cross-fades routes with the View
+  Transitions API. Import `Link` from there, not `next/link`, for any in-app
+  href. Genuine `next/link` is still correct for `target="_blank"` and asset
+  links (the resume PDF).
 - **Client components** using Framer Motion (`motion`, `AnimatePresence`) must have `"use client"` at the top. Static generation fails without it.
-- **Data sources**: `src/app/data/Projects.ts` (projects), `src/app/data/Blog.ts` (blog posts), and `src/app/data/HeroIcons.ts` (skills, about text).
+- **Data sources**: `src/app/data/Profile.ts` (identity, socials, experience,
+  stack, intro glossary), `Projects.ts`, `Blog.ts`, `Certifications.ts`, and
+  `HeroIcons.tsx` (skill icons + `aboutText`, which the chat API prompt uses).
 - **Blog**: `/blog` listing + `/blog/[slug]` detail. Static TypeScript posts (no MDX). Giscus comments are optional and not wired by default.
 - **Theme system**: Custom light/dark/midnight via `localStorage` key `portfolio-theme`. The theme script runs inline in `layout.tsx` before React hydrates.
 
 ## Key Gotchas
+- **Scroll reveals must stay CSS-driven.** `Reveal` ships content *visible* and
+  the hidden state only applies under `html.js` (set by the inline bootstrap in
+  `layout.tsx` before first paint). An earlier version used Framer's
+  `whileInView`, which left every row stuck at `opacity: 0` whenever the
+  observer did not fire — and served a blank page to no-JS clients. `Reveal`
+  also carries a 2.5s failsafe that reveals regardless. Do not swap it back.
+- **`DotField`** (`components/home/DotField.tsx`) is a fixed, `pointer-events-none`
+  canvas at `-z-10`. It is phase-locked to the CSS dot lattice: the lattice is
+  `background-size: 18px` so each dot centres at `n*18 + 9`. If you change
+  `--dot-size`, change `GRID` in `DotField.tsx` and `CELL` in `LifeGrid.tsx` too.
+- Canvas components read theme colours from CSS custom properties and re-read
+  them via a `MutationObserver` on `documentElement`. New canvas work should do
+  the same rather than hard-coding colours.
+- **`DotField` parks its rAF loop** when the halo is static and wakes on
+  pointer input, resize, or theme change. If you add work to its `tick`, keep
+  the park/`wake()` contract — an always-on loop redraws a static page at 60fps.
+- **Two view transitions share the root snapshot**, so each sets
+  `documentElement.dataset.transition` (`"theme"` or `"route"`) before starting
+  and clears it on `finished`. The CSS in `globals.css` is scoped on that flag —
+  an unscoped `::view-transition-*` rule will break the other one.
+- **Theme switching goes through `setTheme(pref, origin)`** in `AppUIProvider`,
+  which runs a View Transitions circular reveal from `origin`. The DOM write is
+  synchronous inside the transition callback (with `flushSync` for React), so
+  the browser snapshots the new palette. Feature-detected; falls back to a
+  plain swap on Firefox and under reduced motion.
 - **Next.js `<Image>` does not handle SVGs well from `public/`**. Use conditional rendering: `.svg` → `<img>`, `.png`/`.jpg` → `<Image>`.
-- **Particles background** (`particles-background.tsx`) uses `position: fixed` covering the viewport. It **must** have `pointer-events-none` or it blocks clicks on everything below it (including navbar links).
-- **Navbar links** need `relative z-10` on the `<nav>` to stay above the particles layer.
-- **`page-shell`** class is the main container: `max-w-6xl px-6 lg:px-8 mx-auto`.
+- **`.shell`** is the container: `min(62rem, 100% - 2*gutter)`, centred.
+  `.page-shell` is the old wide container, kept only as a legacy alias.
+- The dock floats over content at `top-3`, so section heads carry
+  `scroll-mt-20` to clear it on anchor jumps. Keep that margin above the dock's
+  bottom edge (~46px) if you change its offset or height.
 
 ## Common Patterns
-- **Use design tokens, not raw Tailwind palette colors.** `text-foreground`, `text-muted-foreground`, `border-border`, `bg-card`, `bg-accent`, `bg-primary`/`text-primary-foreground`. These already adapt to light/dark/midnight, so a `dark:` twin is almost always wrong. Hardcoded `slate-*` remains only where it is deliberate: gradients painted over images, and `SearchPalette.tsx`, which is intentionally a dark command palette in every theme.
-- **Section layout**: `.section-band` + `.page-shell` wrapper. Variant classes: `.section-band--paper`, `.section-band--mist`, `.section-band--sand`, `.section-band--slate`. `.section-band` already carries responsive vertical padding — don't add your own `py-*`.
-- **Shared classes in `globals.css`**: `.section-eyebrow` (kicker above a heading), `.section-title` (the `Projects.` / `Tools.` h2 scale), `.card-surface` (bordered translucent card), `.focus-ring` (focus-visible ring — use instead of retyping the five `focus-visible:*` utilities), `.hover-lift`, `.reveal-on-hover` (hidden until the parent `.group` is hovered; stays visible on touch devices).
-- **Project images**: Drop screenshots in `public/projects/` (e.g., `public/projects/civireport.jpg`). Reference as `/projects/filename.jpg`.
-- **Skill icons**: Drop in `public/skills/`. Reference in `HeroIcons.ts`.
-- **Kicker labels**: Use the `.section-eyebrow` class.
+- **Section**: `<SectionHead id label viewAll />` then a `<ul className="divide-y divide-[var(--line)]">` of `<Reveal as="li" delay={i * 0.055}>` rows.
+- **Row anatomy**: `.row-title` + right-aligned `.meta`, then `.row-desc`, then `.chip` tags.
+- **Hover previews**: wrap the page in `<PreviewProvider>` and spread `usePreviewHandlers(payload)` onto the row. One shared card follows the cursor. It is **fine-pointer only** — anything shown solely in that card is invisible to touch, so pair it with a `.row-thumb` (hidden on fine pointers via CSS, not JS, to avoid a desktop flash) or another non-hover path.
+- **Glossary terms**: put prose in `<GlossaryParagraph>` and mark terms with `<GlossaryTerm>`. The definition renders *below* the paragraph, never inline after the term — a block mid-sentence pushes the rest of the clause onto its own line. The term is a real `<button aria-expanded aria-controls>` so keyboard, screen-reader, and touch users can reach the text the hover card cannot give them.
+- **Search matching** (`matchesEntry` in `SearchPalette.tsx`) normalizes punctuation and requires every query term to hit the spaced *or* collapsed haystack, so "nextjs" finds "Next.js". Keep new searchable fields flowing through `normalize`.
+- **Colours**: use the CSS variables (`var(--ink)`, `var(--muted-ink)`, `var(--dim)`, `var(--line)`, `var(--signal)`, `var(--hover)`, `var(--panel)`) — not Tailwind `slate-*`. They are redefined for light, dark, and midnight.
+- **Project images**: Drop screenshots in `public/projects/`. Reference as `/projects/filename.jpg`.
+- **Skill icons**: Drop in `public/skills/`. Reference in `HeroIcons.tsx`.
+
+## Rejected approaches
+- **TanStack Router**: incompatible with the App Router — adopting it means
+  leaving Next.js (Vite SPA or TanStack Start) and losing prerendered HTML and
+  per-page metadata, which a portfolio needs most.
+- **TanStack Query / SWR**: there is nothing to cache. All page content is
+  static TypeScript imported at build time and prerendered; the only network
+  call in the app is `Chatbot.tsx` POSTing to `/api/chat`, which is a mutation.
 
 ## Commands
 ```bash

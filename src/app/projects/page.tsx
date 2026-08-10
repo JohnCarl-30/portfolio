@@ -1,237 +1,149 @@
-'use client'
+"use client";
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowLeft, ArrowRight, ExternalLink, Search } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import Link from "@/components/providers/RouteTransition";
+import { ArrowUpRight, ExternalLink, Search } from "lucide-react";
 
-import { projectsButton, projectsData } from "@/app/data/Projects";
+import { projectsButton, projectsData, type ProjectItem } from "@/app/data/Projects";
+import FilterChips from "@/components/home/FilterChips";
+import PageHeader from "@/components/home/PageHeader";
+import Reveal from "@/components/home/Reveal";
+import {
+  PreviewProvider,
+  usePreviewHandlers,
+} from "@/components/home/HoverPreview";
 
-const placeholderStyles = [
-  "from-sky-500/30 via-blue-500/15 to-slate-900/80",
-  "from-emerald-500/25 via-cyan-500/15 to-slate-900/80",
-  "from-violet-500/25 via-indigo-500/15 to-slate-900/80",
-];
+function ProjectRow({ project, index }: { project: ProjectItem; index: number }) {
+  const handlers = usePreviewHandlers({
+    title: project.name,
+    body: project.desc,
+    image: project.url || undefined,
+    meta: `${project.role} · ${project.timeline}`,
+  });
+
+  return (
+    <Reveal as="li" delay={Math.min(index, 6) * 0.05}>
+      <div
+        className="group/row -mx-3 rounded-lg px-3 py-3.5 transition-colors hover:bg-[var(--hover)]"
+        {...handlers}
+      >
+        <div className="flex items-baseline justify-between gap-4">
+          <h2 className="row-title">
+            <Link
+              href={`/projects/${project.id}`}
+              className="focus-ring inline-flex items-center gap-1 transition-colors hover:text-[var(--signal)]"
+            >
+              {project.name}
+              <ArrowUpRight className="h-3 w-3 opacity-0 transition-all duration-200 group-hover/row:translate-x-px group-hover/row:-translate-y-px group-hover/row:opacity-100" />
+            </Link>
+          </h2>
+
+          <span className="meta shrink-0">
+            {project.category.toLowerCase()} · {project.timeline}
+          </span>
+        </div>
+
+        <p className="row-desc mt-1 max-w-[44rem]">{project.desc}</p>
+
+        {project.url ? (
+          <span className="row-thumb relative mt-3 aspect-[16/9] w-full overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--panel-soft)]">
+            <Image
+              src={project.url}
+              alt={`${project.name} screenshot`}
+              fill
+              loading="lazy"
+              sizes="(max-width: 640px) 100vw, 44rem"
+              className="object-cover object-top"
+            />
+          </span>
+        ) : null}
+
+        <div className="mt-2 flex flex-wrap items-center gap-1.5">
+          {project.tech.map((tech) => (
+            <span key={tech} className="chip">
+              {tech.toLowerCase()}
+            </span>
+          ))}
+
+          {project.liveDemoUrl ? (
+            <a
+              href={project.liveDemoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="focus-ring ml-1 inline-flex items-center gap-1 text-[0.72rem] text-[var(--dim)] transition-colors hover:text-[var(--signal)]"
+            >
+              live
+              <ExternalLink className="h-3 w-3" />
+            </a>
+          ) : null}
+        </div>
+      </div>
+    </Reveal>
+  );
+}
 
 export default function ProjectsPage() {
   const [activeTab, setActiveTab] = useState("All");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [query, setQuery] = useState("");
 
-  const filteredProjects = useMemo(() => {
+  const filtered = useMemo(() => {
+    const needle = query.trim().toLowerCase();
+
     return projectsData.filter((project) => {
-      const normalizedQuery = searchQuery.toLowerCase();
-      const matchesSearch =
-        project.name.toLowerCase().includes(normalizedQuery) ||
-        project.desc.toLowerCase().includes(normalizedQuery);
+      const matchesQuery =
+        !needle ||
+        project.name.toLowerCase().includes(needle) ||
+        project.desc.toLowerCase().includes(needle) ||
+        project.tech.some((tech) => tech.toLowerCase().includes(needle));
+
       const matchesTab = activeTab === "All" || project.category === activeTab;
 
-      return matchesSearch && matchesTab;
+      return matchesQuery && matchesTab;
     });
-  }, [activeTab, searchQuery]);
+  }, [activeTab, query]);
 
   return (
-    <div className="flex min-h-screen flex-col pt-6 pb-16">
-      <main className="page-shell mt-4 flex flex-1 flex-col">
-        <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr]">
-          <div>
-            <Link
-              href="/#featured-projects"
-              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to home
-            </Link>
+    <PreviewProvider>
+      <main className="shell flex-1 pb-20">
+        <PageHeader
+          label="projects"
+          title="Builds across AI, fintech, and civic tooling."
+          description="Each one shipped end to end — the model layer, the backend, and the interface on top."
+        />
 
-            <div className="mt-6">
-              <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80 mb-6">
-                Projects
-              </p>
-              <h1 className="text-5xl font-semibold tracking-[-0.06em] text-foreground md:text-6xl">
-                Selected builds across AI, fintech, and product design.
-              </h1>
-              <p className="mt-5 max-w-xl text-base leading-relaxed soft-text">
-                Explore the portfolio by category or search for a project by
-                name. Each one balances interface decisions with the system
-                underneath it.
-              </p>
-            </div>
-          </div>
+        <Reveal className="flex flex-col gap-3 pb-6 sm:flex-row sm:items-center sm:justify-between">
+          <FilterChips
+            label="Filter by category"
+            options={projectsButton}
+            active={activeTab}
+            onChange={setActiveTab}
+          />
 
-          <div className="glass-panel rounded-[2rem] p-6 md:p-7">
-            <div className="grid gap-5">
-              <label className="grid gap-2">
-                <span className="text-sm font-medium text-foreground">
-                  Search projects
-                </span>
-                <div className="relative">
-                  <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/70" />
-                  <input
-                    type="text"
-                    className="block h-12 w-full rounded-full border border-border/70 bg-card/60 py-3 pl-11 pr-4 text-sm text-foreground shadow-none outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-muted-foreground/70 focus:border-primary/40 focus:ring-4 focus:ring-primary/10"
-                    placeholder="Search by name or description"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </div>
-              </label>
+          <label className="flex items-center gap-2 rounded-full border border-[var(--line)] px-3 py-1.5 transition-colors focus-within:border-[var(--line-strong)] sm:w-56">
+            <Search className="h-3.5 w-3.5 shrink-0 text-[var(--dim)]" />
+            <input
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="search"
+              aria-label="Search projects"
+              className="w-full bg-transparent text-[0.8rem] outline-none placeholder:text-[var(--dim)]"
+            />
+          </label>
+        </Reveal>
 
-              <div className="flex flex-wrap gap-2">
-                {projectsButton.map((tab) => (
-                  <button
-                    key={tab}
-                    type="button"
-                    onClick={() => setActiveTab(tab)}
-                    className={`rounded-full px-4 py-2 text-sm font-medium transition-[color,background-color,border-color,transform] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98] ${
-                      activeTab === tab
-                        ? "bg-primary text-primary-foreground"
-                        : "border border-border/70 bg-card/60 text-muted-foreground hover:border-primary/40 hover:text-primary"
-                    }`}
-                  >
-                    {tab}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <motion.div
-          className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3"
-          layout
-        >
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, index) => {
-              const placeholderTone =
-                placeholderStyles[index % placeholderStyles.length];
-
-              return (
-                <motion.article
-                  key={project.id}
-                  layout
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 24 }}
-                  transition={{ duration: 0.22 }}
-                  className="glass-panel group overflow-hidden rounded-[1.75rem]"
-                >
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    {project.url ? (
-                      <Image
-                        src={project.url}
-                        alt={project.name}
-                        fill
-                        sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div
-                        className={`flex h-full w-full flex-col justify-between bg-gradient-to-br ${placeholderTone} p-6 text-white`}
-                      >
-                        <div className="flex items-center justify-between text-[10px] font-semibold uppercase tracking-[0.24em] text-white/70">
-                          <span>{project.category}</span>
-                          <span>{project.timeline}</span>
-                        </div>
-                        <div>
-                          <p className="text-3xl font-semibold tracking-[-0.05em]">
-                            {project.name}
-                          </p>
-                          <p className="mt-3 text-sm leading-relaxed text-white/80">
-                            {project.desc}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="p-6">
-                    <div className="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-primary/75">
-                      <span>{project.category}</span>
-                      <span className="h-px w-6 bg-primary/40" />
-                      <span>{project.timeline}</span>
-                    </div>
-
-                    <h2 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-foreground">
-                      {project.name}
-                    </h2>
-                    <p className="mt-3 text-sm leading-relaxed soft-text">
-                      {project.desc}
-                    </p>
-
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {project.tech.slice(0, 4).map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full border border-border/70 bg-card/60 px-3 py-1.5 text-xs font-medium text-muted-foreground"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                      {project.tech.length > 4 && (
-                        <span className="rounded-full border border-border/70 bg-card/60 px-3 py-1.5 text-xs font-medium text-muted-foreground">
-                          +{project.tech.length - 4}
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="mt-6 flex flex-wrap gap-4 text-sm font-medium">
-                      <Link
-                        href={`/projects/${project.id}`}
-                        className="inline-flex items-center gap-2 text-foreground transition-colors hover:text-primary"
-                      >
-                        View project
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-
-                      {project.liveDemoUrl && (
-                        <a
-                          href={project.liveDemoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-muted-foreground transition-colors hover:text-primary"
-                        >
-                          Live demo
-                          <ExternalLink className="h-4 w-4" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </motion.article>
-              );
-            })}
-          </AnimatePresence>
-
-          <AnimatePresence>
-            {filteredProjects.length === 0 && (
-              <motion.div
-                key="empty-state"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-                className="col-span-full rounded-2xl border border-dashed border-border/70 bg-secondary/20 px-6 py-12 text-center"
-              >
-                <p className="text-sm font-medium text-foreground">
-                  No projects match your search
-                </p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Try a different keyword or switch the category filter.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSearchQuery("");
-                    setActiveTab("All");
-                  }}
-                  className="mt-4 inline-flex items-center rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-[color,transform] duration-150 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98]"
-                >
-                  Clear filters
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
+        {filtered.length ? (
+          <ul className="divide-y divide-[var(--line)]">
+            {filtered.map((project, index) => (
+              <ProjectRow key={project.id} project={project} index={index} />
+            ))}
+          </ul>
+        ) : (
+          <p className="row-desc py-10">
+            Nothing matches that. Try a different category or keyword.
+          </p>
+        )}
       </main>
-    </div>
+    </PreviewProvider>
   );
 }
