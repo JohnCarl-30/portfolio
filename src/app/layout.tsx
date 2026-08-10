@@ -1,13 +1,15 @@
-import { Cormorant_Garamond, Outfit, Fira_Code } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "remixicon/fonts/remixicon.css";
 import { Toaster } from "react-hot-toast";
 
+import DotField from "@/components/home/DotField";
 import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
+import TopRail from "@/components/TopRail";
 import SearchPalette from "@/components/SearchPalette";
 import Chatbot from "@/components/Chatbot";
 import { AppUIProvider } from "@/components/providers/AppUIProvider";
+import { RouteTransitionProvider } from "@/components/providers/RouteTransition";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
@@ -15,23 +17,18 @@ const siteUrl =
     ? `https://${process.env.VERCEL_URL}`
     : "http://localhost:3000");
 
-const outfit = Outfit({
-  variable: "--font-outfit",
+// Geist and Geist Mono are siblings, so the meta/mono labels sit on the same
+// skeleton as the body text instead of reading as a second voice.
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
 });
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-});
-
-const firaCode = Fira_Code({
-  variable: "--font-fira-code",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata = {
@@ -108,6 +105,7 @@ export const metadata = {
 
 const themeScript = `
 (() => {
+  document.documentElement.classList.add("js");
   try {
     const storageKey = "portfolio-theme";
     const storedTheme = window.localStorage.getItem(storageKey);
@@ -148,18 +146,21 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${outfit.variable} ${cormorant.variable} ${firaCode.variable} flex min-h-screen flex-col bg-background text-foreground`}
+        className={`${geist.variable} ${geistMono.variable} flex min-h-screen flex-col bg-background text-foreground`}
       >
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <AppUIProvider>
-          <Navbar />
-          <div className="flex-grow flex flex-col">
-            {children}
-          </div>
-          <Footer />
-          <Chatbot />
-          <SearchPalette />
-          <Toaster />
+          <RouteTransitionProvider>
+            <DotField />
+            <TopRail />
+            <div className="flex flex-grow flex-col">
+              {children}
+            </div>
+            <Footer />
+            <Chatbot />
+            <SearchPalette />
+            <Toaster />
+          </RouteTransitionProvider>
         </AppUIProvider>
       </body>
     </html>
