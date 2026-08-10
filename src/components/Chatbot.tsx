@@ -60,9 +60,12 @@ const Chatbot = () => {
 
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      scrollRef.current.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior: shouldReduceMotion ? "auto" : "smooth",
+      });
     }
-  }, [messages, isLoading]);
+  }, [messages, isLoading, shouldReduceMotion]);
 
   const handleSend = async (text?: string) => {
     const messageText = text?.trim() || input.trim();
@@ -106,7 +109,24 @@ const Chatbot = () => {
         title={isOpen ? "Close assistant" : "Ask about my work"}
         className="focus-ring fixed bottom-4 right-4 z-50 flex h-9 w-9 items-center justify-center rounded-full border border-[var(--line-strong)] bg-[var(--panel)]/85 text-[var(--muted-ink)] shadow-[var(--shadow-soft)] backdrop-blur-xl transition-colors duration-150 hover:text-[var(--ink)] active:scale-[0.98]"
       >
-        {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={isOpen ? "close" : "open"}
+            initial={
+              shouldReduceMotion ? false : { rotate: -90, opacity: 0, scale: 0.7 }
+            }
+            animate={{ rotate: 0, opacity: 1, scale: 1 }}
+            exit={
+              shouldReduceMotion
+                ? undefined
+                : { rotate: 90, opacity: 0, scale: 0.7 }
+            }
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            className="flex h-6 w-6 items-center justify-center"
+          >
+            {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
+          </motion.span>
+        </AnimatePresence>
       </button>
 
       {/* Chat Window */}
@@ -131,6 +151,7 @@ const Chatbot = () => {
                     height={40}
                     className="rounded-full w-10 h-10 object-cover"
                   />
+                  <span className="absolute bottom-0 right-0 h-3 w-3 animate-ping rounded-full bg-green-500/60" />
                   <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-zinc-900"></div>
                 </div>
                 <div>
@@ -151,7 +172,15 @@ const Chatbot = () => {
             {/* Messages */}
             <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-white dark:bg-zinc-900">
               {messages.map((msg, i) => (
-                <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <motion.div
+                  key={i}
+                  initial={
+                    shouldReduceMotion ? false : { opacity: 0, y: 8, scale: 0.98 }
+                  }
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                >
                   <div className={`flex gap-2 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
                     {msg.role === 'user' ? (
                       <div className="p-2 rounded-full h-8 w-8 flex items-center justify-center shrink-0 bg-slate-100 text-slate-600 dark:bg-zinc-800 dark:text-zinc-300">
@@ -185,7 +214,7 @@ const Chatbot = () => {
                       )}
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
 
               {/* Quick Replies */}
@@ -225,22 +254,49 @@ const Chatbot = () => {
                 )}
               </AnimatePresence>
 
-              {isLoading && (
-                <div className="flex justify-start">
-                  <div className="flex gap-2 max-w-[85%]">
-                    <Image
-                      src="/img/pic2.jpeg"
-                      alt="Bot"
-                      width={32}
-                      height={32}
-                      className="rounded-full w-8 h-8 object-cover"
-                    />
-                    <div className="p-3 rounded-2xl text-sm bg-slate-100 dark:bg-zinc-800 text-slate-800 dark:text-gray-200">
-                      <Loader2 size={16} className="animate-spin text-slate-500 dark:text-zinc-400" />
+              <AnimatePresence>
+                {isLoading && (
+                  <motion.div
+                    key="typing-indicator"
+                    initial={
+                      shouldReduceMotion ? false : { opacity: 0, y: 8 }
+                    }
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={shouldReduceMotion ? undefined : { opacity: 0 }}
+                    transition={{ duration: 0.15, ease: "easeOut" }}
+                    className="flex justify-start"
+                  >
+                    <div className="flex gap-2 max-w-[85%]">
+                      <Image
+                        src="/img/pic2.jpeg"
+                        alt="Bot"
+                        width={32}
+                        height={32}
+                        className="rounded-full w-8 h-8 object-cover"
+                      />
+                      <div className="flex items-center gap-1 rounded-2xl bg-slate-100 p-3 dark:bg-zinc-800">
+                        {[0, 1, 2].map((dot) => (
+                          <motion.span
+                            key={dot}
+                            className="h-1.5 w-1.5 rounded-full bg-slate-400 dark:bg-zinc-500"
+                            animate={
+                              shouldReduceMotion
+                                ? undefined
+                                : { y: [0, -4, 0], opacity: [0.4, 1, 0.4] }
+                            }
+                            transition={{
+                              repeat: Infinity,
+                              duration: 0.9,
+                              delay: dot * 0.15,
+                              ease: "easeInOut",
+                            }}
+                          />
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                </div>
-              )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Input */}
