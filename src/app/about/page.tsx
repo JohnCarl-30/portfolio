@@ -5,6 +5,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import ParticlesBackground from "@/components/particles-background";
 
+import pic2 from "../../../public/img/pic2.jpeg";
+
 const AboutPage = () => {
   const facts = [
     {
@@ -131,9 +133,10 @@ const AboutPage = () => {
           <div className="space-y-4">
             <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-slate-200/60 group dark:border-white/10">
               <Image
-                src="/img/pic2.jpeg"
+                src={pic2}
                 alt="John Carl Santos"
                 fill
+                placeholder="blur"
                 sizes="(min-width: 768px) 320px, 100vw"
                 className="object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-500"
               />
