@@ -104,7 +104,7 @@ const Chatbot = () => {
         aria-label={isOpen ? "Close portfolio assistant" : "Open portfolio assistant"}
         aria-expanded={isOpen}
         title={isOpen ? "Close assistant" : "Ask about my work"}
-        className="fixed bottom-6 right-6 z-50 rounded-full bg-slate-950 p-4 text-white shadow-lg transition-[color,transform] duration-150 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98] dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
+        className="focus-ring fixed bottom-4 right-4 z-50 flex h-9 w-9 items-center justify-center rounded-full border border-[var(--line-strong)] bg-[var(--panel)]/85 text-[var(--muted-ink)] shadow-[var(--shadow-soft)] backdrop-blur-xl transition-colors duration-150 hover:text-[var(--ink)] active:scale-[0.98]"
       >
         {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
       </button>
@@ -118,7 +118,7 @@ const Chatbot = () => {
             exit={shouldReduceMotion ? undefined : { opacity: 0, y: 20, scale: 0.95 }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.25, ease: "easeOut" }}
             style={{ transformOrigin: "bottom right" }}
-            className="fixed bottom-24 right-6 z-50 flex h-[70vh] max-h-[500px] w-[350px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl dark:border-zinc-800 dark:bg-zinc-900"
+            className="fixed bottom-16 right-4 z-50 flex h-[70vh] max-h-[500px] w-[350px] flex-col overflow-hidden rounded-xl border border-[var(--line-strong)] bg-[var(--panel)] shadow-[var(--shadow-lift)]"
           >
             {/* Header */}
             <div className="p-4 bg-white dark:bg-zinc-900 border-b border-slate-100 dark:border-zinc-800 flex items-center justify-between">
