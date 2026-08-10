@@ -63,7 +63,7 @@
     --panel-soft: #efefeb;
     --ink: #111418;
     --muted-ink: #5f6266;
-    --dim: #8d9093;
+    --dim: #74777b;
     --line: rgb(17 20 24 / 0.075);
     --line-strong: rgb(17 20 24 / 0.15);
     --dot: rgb(17 20 24 / 0.11);
@@ -118,7 +118,7 @@
     --panel-soft: #1a1e23;
     --ink: #eceeec;
     --muted-ink: #969ba1;
-    --dim: #6c7278;
+    --dim: #868c93;
     --line: rgb(255 255 255 / 0.085);
     --line-strong: rgb(255 255 255 / 0.17);
     --dot: rgb(255 255 255 / 0.085);
@@ -140,7 +140,7 @@ html[data-theme-selection="midnight"] {
     --panel-soft: #161a26;
     --ink: #e8eaf2;
     --muted-ink: #949aad;
-    --dim: #6a7085;
+    --dim: #838aa0;
     --line: rgb(190 205 255 / 0.1);
     --line-strong: rgb(190 205 255 / 0.19);
     --dot: rgb(190 205 255 / 0.1);
@@ -154,6 +154,8 @@ html[data-theme-selection="midnight"] {
 
 @layer base {
     html {
+        /* 17px base: every rem-sized style scales up ~6% for readability. */
+        font-size: 106.25%;
         scroll-behavior: smooth;
         -webkit-text-size-adjust: 100%;
     }
@@ -224,21 +226,21 @@ html[data-theme-selection="midnight"] {
     }
 
     .row-title {
-        font-size: 0.925rem;
+        font-size: 0.95rem;
         font-weight: 650;
         letter-spacing: -0.012em;
         color: var(--ink);
     }
 
     .row-desc {
-        font-size: 0.85rem;
-        line-height: 1.55;
+        font-size: 0.875rem;
+        line-height: 1.6;
         color: var(--muted-ink);
     }
 
     .meta {
         font-family: var(--font-mono), ui-monospace, monospace;
-        font-size: 0.68rem;
+        font-size: 0.75rem;
         letter-spacing: 0.01em;
         color: var(--dim);
         font-variant-numeric: tabular-nums;
@@ -252,7 +254,7 @@ html[data-theme-selection="midnight"] {
         border-radius: 999px;
         padding: 0.115rem 0.5rem;
         font-family: var(--font-mono), ui-monospace, monospace;
-        font-size: 0.66rem;
+        font-size: 0.72rem;
         line-height: 1.45;
         color: var(--dim);
         background: var(--hover);

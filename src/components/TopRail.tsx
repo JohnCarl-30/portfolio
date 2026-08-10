@@ -36,7 +36,7 @@ export default function TopRail() {
           className="focus-ring flex items-center gap-1.5 rounded-full px-2 py-1 text-[var(--dim)] transition-colors hover:bg-[var(--hover)] hover:text-[var(--ink)]"
         >
           <Search className="h-3.5 w-3.5" />
-          <kbd className="hidden font-mono text-[0.68rem] sm:inline">⌘K</kbd>
+          <kbd className="hidden font-mono text-[0.72rem] sm:inline">⌘K</kbd>
         </button>
       </div>
     </div>

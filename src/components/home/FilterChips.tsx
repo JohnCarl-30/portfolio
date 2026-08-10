@@ -25,7 +25,7 @@ export default function FilterChips({
             type="button"
             onClick={() => onChange(option)}
             aria-pressed={isActive}
-            className={`focus-ring rounded-full border px-2.5 py-1 font-mono text-[0.68rem] lowercase transition-colors duration-150 ${
+            className={`focus-ring rounded-full border px-2.5 py-1 font-mono text-[0.75rem] lowercase transition-colors duration-150 ${
               isActive
                 ? "border-[var(--signal)]/45 bg-[var(--signal-soft)] text-[var(--signal)]"
                 : "border-[var(--line)] text-[var(--dim)] hover:border-[var(--line-strong)] hover:text-[var(--muted-ink)]"
