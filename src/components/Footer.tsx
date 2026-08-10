@@ -1,56 +1,33 @@
-'use client'
+import Link from "@/components/providers/RouteTransition";
 
-import Link from "next/link";
-import { motion } from "framer-motion";
+import { profile } from "@/app/data/Profile";
+
+const links = [
+  { href: "/projects", label: "projects" },
+  { href: "/blog", label: "writing" },
+  { href: "/about", label: "about" },
+  { href: "/certifications", label: "credentials" },
+];
 
 const Footer = () => {
   return (
-    <footer className="relative z-10 site-footer mt-auto w-full border-t border-[var(--footer-border)] bg-[var(--footer-bg)] py-10 text-[var(--footer-foreground)] transition-colors duration-200">
-      <div className="page-shell flex flex-col gap-8">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.35 }}
-          className="flex flex-col items-center justify-center gap-6"
-        >
-          <div className="flex flex-row gap-6 items-center">
-            <Link
-              href="/#hero"
-              className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
-            >
-              Home
-            </Link>
-            <Link
-              href="/about"
-              className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
-            >
-              About
-            </Link>
-            <Link
-              href="/#skills"
-              className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
-            >
-              Skills
-            </Link>
-            <Link
-              href="/blog"
-              className="text-sm font-medium text-[var(--footer-foreground)] transition-colors hover:text-[var(--footer-hover)]"
-            >
-              Blog
-            </Link>
-          </div>
-        </motion.div>
+    <footer className="mt-auto w-full border-t border-[var(--line)] py-6">
+      <div className="shell flex flex-col-reverse items-start justify-between gap-4 sm:flex-row sm:items-center">
+        <p className="meta">
+          © {new Date().getFullYear()} {profile.name}
+        </p>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.35, delay: 0.1 }}
-          className="flex justify-center items-center gap-3 border-t border-[var(--footer-border)] pt-6 text-xs text-[var(--footer-muted)]"
-        >
-          <p>Copyright © {new Date().getFullYear()} John Carl Santos.</p>
-        </motion.div>
+        <nav className="flex flex-wrap gap-x-5 gap-y-2">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="focus-ring text-[0.78rem] text-[var(--dim)] transition-colors hover:text-[var(--ink)]"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
       </div>
     </footer>
   );
