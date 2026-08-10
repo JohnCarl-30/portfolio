@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Search } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 
 import { useAppUI } from "@/components/providers/AppUIProvider";
 import { Kbd } from "@/components/ui/kbd";
@@ -46,11 +47,15 @@ const Navbar = () => {
                   }`}
                 >
                 {link.label}
-                <span
-                  className={`absolute -bottom-1 left-0 h-px w-full origin-left bg-slate-950 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] dark:bg-white ${
-                    isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-                  }`}
-                />
+                {isActive ? (
+                  <motion.span
+                    layoutId="nav-active-indicator"
+                    className="absolute -bottom-1 left-0 h-px w-full bg-slate-950 dark:bg-white"
+                    transition={{ type: "spring", stiffness: 500, damping: 40 }}
+                  />
+                ) : (
+                  <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-slate-950 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-x-100 dark:bg-white" />
+                )}
                 </Link>
               );
             })}
