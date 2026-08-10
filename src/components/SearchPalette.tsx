@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   ChevronLeft,
   FolderKanban,
@@ -19,6 +19,7 @@ import {
   Rocket,
   Search,
   SunMedium,
+  Terminal,
   UserRound,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -31,8 +32,9 @@ import {
 import { getAllPosts } from "@/app/data/Blog";
 import { projectsData } from "@/app/data/Projects";
 import { Kbd } from "@/components/ui/kbd";
+import TerminalView from "@/components/TerminalView";
 
-type SearchView = "search" | "theme";
+type SearchView = "search" | "theme" | "terminal";
 type SearchGroup = "Site" | "Main Pages" | "Projects" | "Blog";
 
 type ThemeOption = {
@@ -55,11 +57,22 @@ type SearchEntry = {
       kind: "route";
     }
   | {
-      action: "open-theme-picker";
+      action: "open-theme-picker" | "open-terminal";
       href?: never;
       kind: "action";
     }
 );
+
+const TERMINAL_ENTRY: SearchEntry = {
+  id: "terminal",
+  title: "Terminal",
+  description: "Open the hidden portfolio shell.",
+  group: "Site",
+  icon: Terminal,
+  keywords: ["terminal", "console", "shell", "cli", "command"],
+  action: "open-terminal",
+  kind: "action",
+};
 
 const PAGE_ITEMS: SearchEntry[] = [
   {
@@ -208,6 +221,7 @@ const matchesEntry = (entry: SearchEntry, query: string) => {
 };
 
 export default function SearchPalette() {
+  const shouldReduceMotion = useReducedMotion();
   const router = useRouter();
   const pathname = usePathname();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -230,6 +244,7 @@ export default function SearchPalette() {
   const entries = useMemo(
     () => [
       createThemeEntry(themePreference, resolvedTheme),
+      TERMINAL_ENTRY,
       ...PAGE_ITEMS,
       ...PROJECT_ITEMS,
       ...BLOG_ITEMS,
@@ -242,7 +257,9 @@ export default function SearchPalette() {
       entries.filter((entry) => {
         if (
           !hasActiveQuery &&
-          (entry.group === "Projects" || entry.group === "Blog")
+          (entry.group === "Projects" ||
+            entry.group === "Blog" ||
+            entry.id === "terminal")
         ) {
           return false;
         }
@@ -273,6 +290,13 @@ export default function SearchPalette() {
   useEffect(() => {
     setThemeIndex(getThemeOptionIndex(themePreference));
   }, [themePreference]);
+
+  useEffect(() => {
+    if (query.trim() === ">") {
+      setQuery("");
+      setView("terminal");
+    }
+  }, [query]);
 
   useEffect(() => {
     if (!isSearchOpen) {
@@ -313,6 +337,12 @@ export default function SearchPalette() {
   const runEntry = useCallback(
     (entry: SearchEntry) => {
       if (entry.kind === "action") {
+        if (entry.action === "open-terminal") {
+          setQuery("");
+          setView("terminal");
+          return;
+        }
+
         setView("theme");
         setThemeIndex(getThemeOptionIndex(themePreference));
         return;
@@ -355,6 +385,15 @@ export default function SearchPalette() {
       }
 
       if (!isSearchOpen) {
+        return;
+      }
+
+      if (view === "terminal") {
+        if (event.key === "Escape") {
+          event.preventDefault();
+          setView("search");
+        }
+
         return;
       }
 
@@ -455,8 +494,15 @@ export default function SearchPalette() {
             transition={{ duration: 0.18, ease: "easeOut" }}
             className="mx-auto w-full max-w-2xl overflow-hidden rounded-[1.2rem] border border-blue-500/60 bg-[#141110]/95 text-white shadow-[0_24px_90px_rgba(15,23,42,0.55)]"
           >
+            <AnimatePresence mode="wait" initial={false}>
             {view === "search" ? (
-              <>
+              <motion.div
+                key="view-search"
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={shouldReduceMotion ? undefined : { opacity: 0, y: -6 }}
+                transition={{ duration: 0.12, ease: "easeOut" }}
+              >
                 <div className="flex items-center gap-3 border-b border-blue-500/70 px-4 py-3">
                   <Search className="h-4 w-4 text-blue-400" />
                   <input
@@ -492,14 +538,26 @@ export default function SearchPalette() {
                                 type="button"
                                 onMouseEnter={() => setSearchIndex(itemIndex)}
                                 onClick={() => runEntry(entry)}
-                                className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                                  isActive
-                                    ? "bg-white/10 text-white"
-                                    : "text-zinc-100 hover:bg-white/6"
+                                className={`relative flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                                  isActive ? "text-white" : "text-zinc-100"
                                 }`}
                               >
+                                {isActive && (
+                                  <motion.span
+                                    layoutId="palette-active-row"
+                                    className="absolute inset-0 rounded-xl bg-white/10"
+                                    transition={
+                                      shouldReduceMotion
+                                        ? { duration: 0 }
+                                        : {
+                                            duration: 0.15,
+                                            ease: [0.23, 1, 0.32, 1],
+                                          }
+                                    }
+                                  />
+                                )}
                                 <div
-                                  className={`flex h-9 w-9 items-center justify-center rounded-lg border ${
+                                  className={`relative z-10 flex h-9 w-9 items-center justify-center rounded-lg border ${
                                     isActive
                                       ? "border-blue-400/60 bg-blue-500/15 text-blue-300"
                                       : "border-white/10 bg-white/5 text-zinc-300"
@@ -507,7 +565,7 @@ export default function SearchPalette() {
                                 >
                                   <Icon className="h-4 w-4" />
                                 </div>
-                                <div className="min-w-0 flex-1">
+                                <div className="relative z-10 min-w-0 flex-1">
                                   <p className="truncate text-sm font-medium">
                                     {entry.title}
                                   </p>
@@ -551,9 +609,15 @@ export default function SearchPalette() {
                     <Kbd className="bg-white/10 text-white/80">Enter</Kbd>
                   </div>
                 </div>
-              </>
-            ) : (
-              <>
+              </motion.div>
+            ) : view === "theme" ? (
+              <motion.div
+                key="view-theme"
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={shouldReduceMotion ? undefined : { opacity: 0, y: -6 }}
+                transition={{ duration: 0.12, ease: "easeOut" }}
+              >
                 <div className="flex items-center gap-3 px-5 pt-6 pb-3">
                   <button
                     type="button"
@@ -607,8 +671,40 @@ export default function SearchPalette() {
                     your portfolio.
                   </p>
                 </div>
-              </>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="view-terminal"
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={shouldReduceMotion ? undefined : { opacity: 0, y: -6 }}
+                transition={{ duration: 0.12, ease: "easeOut" }}
+              >
+                <div className="flex items-center gap-3 border-b border-white/10 px-4 py-3">
+                  <button
+                    type="button"
+                    onClick={() => setView("search")}
+                    aria-label="Back to search"
+                    className="flex h-8 w-8 items-center justify-center rounded-lg text-zinc-300 transition-colors duration-150 hover:bg-white/6 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </button>
+                  <Terminal className="h-4 w-4 text-emerald-400" />
+                  <p className="text-sm font-medium text-white">
+                    portfolio shell
+                  </p>
+                </div>
+                <TerminalView
+                  onExit={() => setView("search")}
+                  onNavigate={(href) => {
+                    closePalette();
+                    router.push(href);
+                  }}
+                  onSetTheme={setTheme}
+                />
+              </motion.div>
             )}
+            </AnimatePresence>
           </motion.div>
         </motion.div>
       )}
