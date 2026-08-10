@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight, ExternalLink, Search } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { projectsButton, projectsData } from "@/app/data/Projects";
+import { getProjectImage } from "@/lib/projectImages";
 
 const placeholderStyles = [
   "from-sky-500/30 via-blue-500/15 to-slate-900/80",
@@ -118,9 +119,12 @@ export default function ProjectsPage() {
                   <div className="relative aspect-[4/3] overflow-hidden">
                     {project.url ? (
                       <Image
-                        src={project.url}
+                        src={getProjectImage(project.url) ?? project.url}
                         alt={project.name}
                         fill
+                        placeholder={
+                          getProjectImage(project.url) ? "blur" : undefined
+                        }
                         sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                       />
