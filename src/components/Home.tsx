@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
+import GitHubContributions from "@/components/GitHubContributions";
 import Certifications from "@/components/Certifications";
 import FeaturedProjects from "@/components/FeaturedProjects";
 import FeaturedBlog from "@/components/FeaturedBlog";
@@ -16,6 +17,7 @@ export default function HomeComponent() {
         <FeaturedProjects />
         <FeaturedBlog />
         <Skills />
+        <GitHubContributions />
         <Certifications />
         <Contact />
       </main>
