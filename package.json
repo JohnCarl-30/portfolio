@@ -9,8 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@tsparticles/react": "^3.0.0",
-    "@tsparticles/slim": "^3.9.1",
+    "@tailwindcss/postcss": "^4.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.34.3",
@@ -25,9 +24,8 @@
     "remixicon": "^4.9.1",
     "remixicon-react": "^1.0.0",
     "tailwind-merge": "^3.5.0",
-    "tech-stack-icons": "^3.7.1",
-    "@tailwindcss/postcss": "^4.0.0",
-    "tailwindcss": "^4.0.0"
+    "tailwindcss": "^4.0.0",
+    "tech-stack-icons": "^3.7.1"
   },
   "devDependencies": {
     "@types/node": "^20",

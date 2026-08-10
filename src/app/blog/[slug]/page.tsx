@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/providers/RouteTransition";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ArrowLeft } from "lucide-react";
@@ -62,58 +62,46 @@ export default async function BlogPostPage({
   }
 
   return (
-    <div className="flex min-h-screen flex-col pt-6 pb-20">
-      <main className="page-shell mt-4 flex-1">
-        <Link
-          href="/blog"
-          className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-muted-foreground transition-colors duration-150 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to blog
-        </Link>
+    <main className="shell flex-1 pb-20 pt-10">
+      <Link
+        href="/blog"
+        className="group/back focus-ring inline-flex items-center gap-1.5 text-[0.78rem] text-[var(--dim)] transition-colors hover:text-[var(--ink)]"
+      >
+        <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-200 group-hover/back:-translate-x-0.5" />
+        all notes
+      </Link>
 
-        <article className="mx-auto mt-10 max-w-3xl">
-          <header className="border-b border-border/60 pb-10">
-            <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary/80">
-              Blog
-            </p>
-            <p className="mt-4 font-mono text-xs text-muted-foreground">
-              {formatDate(post.date)}
-              <span className="mx-2 text-border">·</span>
-              {post.readingTime}
-            </p>
-            <h1 className="mt-6 text-4xl font-semibold tracking-[-0.05em] text-foreground md:text-5xl">
-              {post.title}
-            </h1>
-            <p className="mt-5 text-base leading-relaxed text-muted-foreground">
-              {post.excerpt}
-            </p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-border/60 px-3 py-1 text-xs font-medium text-muted-foreground"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </header>
-
-          <div className="mt-10 space-y-6">
-            {post.content.map((paragraph) => (
-              <p
-                key={paragraph.slice(0, 48)}
-                className="text-base leading-relaxed text-foreground/90"
-              >
-                {paragraph}
-              </p>
+      <article className="mt-8 max-w-[42rem]">
+        <header className="border-b border-[var(--line)] pb-7">
+          <p className="meta">
+            {formatDate(post.date)} · {post.readingTime}
+          </p>
+          <h1 className="mt-2.5 text-[1.5rem] font-bold leading-[1.22] tracking-[-0.028em] sm:text-[1.9rem]">
+            {post.title}
+          </h1>
+          <p className="row-desc mt-3">{post.excerpt}</p>
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {post.tags.map((tag) => (
+              <span key={tag} className="chip">
+                {tag.toLowerCase()}
+              </span>
             ))}
           </div>
+        </header>
 
-          <BlogPostFooter title={post.title} slug={post.slug} />
-        </article>
-      </main>
-    </div>
+        <div className="mt-7 space-y-4">
+          {post.content.map((paragraph) => (
+            <p
+              key={paragraph.slice(0, 48)}
+              className="text-[0.925rem] leading-[1.72] text-[var(--muted-ink)]"
+            >
+              {paragraph}
+            </p>
+          ))}
+        </div>
+
+        <BlogPostFooter title={post.title} slug={post.slug} />
+      </article>
+    </main>
   );
 }

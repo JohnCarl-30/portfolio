@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/components/providers/RouteTransition";
 import { Check, Link2, Linkedin } from "lucide-react";
 
 type BlogPostFooterProps = {
