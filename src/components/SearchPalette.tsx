@@ -12,7 +12,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   ChevronLeft,
   FolderKanban,
-  Hash,
   Home,
   MonitorCog,
   MoonStar,
@@ -86,7 +85,7 @@ const SECTION_ITEMS: SearchEntry[] = DOCK_SECTIONS.map((section) => ({
   description: `Jump to the ${section.label} section.`,
   href: `/#${section.id}`,
   group: "Sections",
-  icon: Hash,
+  icon: section.icon,
   keywords: ["section", "jump", "scroll", section.id],
   kind: "route",
 }));

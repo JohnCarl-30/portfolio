@@ -6,6 +6,8 @@ import { ArrowUpRight } from "lucide-react";
 import { useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
+import { AnimatePresence, motion } from "framer-motion";
+
 import Reveal from "./Reveal";
 import { profile } from "@/app/data/Profile";
 
@@ -53,23 +55,52 @@ function useDecodedText(text: string, enabled: boolean) {
 export default function Identity() {
   const calm = useReducedMotion();
   const role = useDecodedText(profile.role, !calm);
+  const [waving, setWaving] = useState(false);
 
   return (
     <header className="pt-14 pb-10 sm:pt-20">
       <Reveal className="flex items-start justify-between gap-6">
         <div className="flex min-w-0 items-center gap-3.5">
           <span
-            aria-hidden="true"
-            className="relative h-[52px] w-[52px] shrink-0 overflow-hidden rounded-full border border-[var(--line-strong)] bg-[var(--panel-soft)]"
+            className="relative shrink-0"
+            onMouseEnter={() => setWaving(true)}
+            onMouseLeave={() => setWaving(false)}
           >
-            <Image
-              src={profile.photo}
-              alt=""
-              fill
-              sizes="52px"
-              priority
-              className="object-cover"
-            />
+            <AnimatePresence>
+              {waving && (
+                <motion.span
+                  key="wave"
+                  initial={{ opacity: 0, y: 6, scale: 0.85 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 4, scale: 0.9 }}
+                  transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
+                  className="pointer-events-none absolute -top-10 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-lg border border-[var(--line)] bg-[var(--panel)] px-3 py-1.5 text-[0.8rem] font-semibold text-[var(--ink)] shadow-[var(--shadow-soft)]"
+                >
+                  hi there{" "}
+                  <span className="inline-block origin-[70%_70%] [animation:wave-hand_0.9s_ease-in-out_infinite]">
+                    👋
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 border-b border-r border-[var(--line)] bg-[var(--panel)]"
+                  />
+                </motion.span>
+              )}
+            </AnimatePresence>
+
+            <span
+              aria-hidden="true"
+              className="relative block h-[76px] w-[76px] overflow-hidden rounded-full border border-[var(--line-strong)] bg-[var(--panel-soft)] transition-transform duration-200 hover:scale-[1.04]"
+            >
+              <Image
+                src={profile.photo}
+                alt=""
+                fill
+                sizes="76px"
+                priority
+                className="object-cover"
+              />
+            </span>
           </span>
 
           <div className="min-w-0">

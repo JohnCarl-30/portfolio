@@ -1,20 +1,31 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Search } from "lucide-react";
+import {
+  BadgeCheck,
+  Briefcase,
+  FlaskConical,
+  FolderKanban,
+  Github,
+  Mail,
+  PenLine,
+  Search,
+  Wrench,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { useAppUI } from "@/components/providers/AppUIProvider";
 
-export const DOCK_SECTIONS = [
-  { id: "writing", label: "writing" },
-  { id: "projects", label: "projects" },
-  { id: "work", label: "work" },
-  { id: "toolkit", label: "toolkit" },
-  { id: "github", label: "github" },
-  { id: "credentials", label: "credentials" },
-  { id: "contact", label: "contact" },
-  { id: "sandbox", label: "sandbox" },
+export const DOCK_SECTIONS: { id: string; label: string; icon: LucideIcon }[] = [
+  { id: "writing", label: "writing", icon: PenLine },
+  { id: "projects", label: "projects", icon: FolderKanban },
+  { id: "work", label: "work", icon: Briefcase },
+  { id: "toolkit", label: "toolkit", icon: Wrench },
+  { id: "github", label: "github", icon: Github },
+  { id: "credentials", label: "credentials", icon: BadgeCheck },
+  { id: "contact", label: "contact", icon: Mail },
+  { id: "sandbox", label: "sandbox", icon: FlaskConical },
 ];
 
 /**
@@ -106,12 +117,17 @@ export default function SectionDock() {
                     />
                   ) : null}
                   <span
-                    className={`relative ${
+                    className={`relative inline-flex items-center gap-1.5 ${
                       isActive
                         ? "font-semibold text-[var(--ink)]"
                         : "text-[var(--muted-ink)] hover:text-[var(--ink)]"
                     }`}
                   >
+                    <section.icon
+                      className={`h-3.5 w-3.5 ${
+                        isActive ? "text-[var(--signal)]" : "text-[var(--dim)]"
+                      }`}
+                    />
                     {section.label}
                   </span>
                 </button>
