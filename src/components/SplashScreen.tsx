@@ -18,7 +18,7 @@ export default function SplashScreen() {
   useEffect(() => {
     const timeout = window.setTimeout(
       () => setShow(false),
-      shouldReduceMotion ? 250 : 1400,
+      shouldReduceMotion ? 250 : 1700,
     );
     return () => window.clearTimeout(timeout);
   }, [shouldReduceMotion]);
@@ -40,14 +40,25 @@ export default function SplashScreen() {
                 "radial-gradient(circle at 50% 50%, var(--hover) 0%, transparent 55%)",
             }}
           />
-          <motion.span
-            initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.92, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.7, ease }}
-            className="relative select-none font-[family-name:var(--font-script)] text-[4.5rem] leading-none text-[var(--ink)]"
+          <svg
+            viewBox="0 0 160 110"
+            className="relative h-28 w-auto select-none"
+            aria-hidden="true"
           >
-            jc
-          </motion.span>
+            <text
+              x="80"
+              y="76"
+              textAnchor="middle"
+              className="splash-mark"
+              style={{
+                fontFamily: "var(--font-script), cursive",
+                fontSize: "82px",
+                fontWeight: 600,
+              }}
+            >
+              jc
+            </text>
+          </svg>
         </motion.div>
       )}
     </AnimatePresence>
