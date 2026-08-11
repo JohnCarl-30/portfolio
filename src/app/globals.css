@@ -315,6 +315,55 @@ html:not(.js) .splash-screen {
     display: none;
 }
 
+/* Splash monogram: the letterforms trace themselves like a signature being
+   written, then the ink fills in and the whole mark settles upward. */
+.splash-mark {
+    fill: var(--ink);
+    stroke: var(--ink);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+html.js .splash-mark {
+    fill-opacity: 0;
+    stroke-dasharray: 320;
+    stroke-dashoffset: 320;
+    animation:
+        splash-draw 1s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards,
+        splash-fill 0.45s ease-out 0.9s forwards,
+        splash-settle 1.5s cubic-bezier(0.23, 1, 0.32, 1) 0.1s forwards;
+}
+
+@keyframes splash-draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes splash-fill {
+    to {
+        fill-opacity: 1;
+    }
+}
+
+@keyframes splash-settle {
+    from {
+        transform: translateY(8px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html.js .splash-mark {
+        animation: none;
+        fill-opacity: 1;
+        stroke-dashoffset: 0;
+    }
+}
+
 /* Hairline that draws across the section head on entry. */
 html.js .rule-draw {
     transform: scaleX(0);
