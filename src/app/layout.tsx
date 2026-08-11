@@ -100,14 +100,6 @@ export const metadata = {
     title: "John Carl Santos — AI Full Stack Engineer",
     description:
       "Portfolio of John Carl Santos — aspiring AI engineer building RAG systems, full-stack web apps, and automation tools.",
-    images: [
-      {
-        url: "/personal.jpg",
-        width: 1200,
-        height: 630,
-        alt: "John Carl Santos",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -115,7 +107,6 @@ export const metadata = {
     title: "John Carl Santos — AI Full Stack Engineer",
     description:
       "Portfolio of John Carl Santos — aspiring AI engineer building RAG systems, full-stack web apps, and automation tools.",
-    images: ["/personal.jpg"],
     creator: "@dyeyyyccc",
   },
 };
