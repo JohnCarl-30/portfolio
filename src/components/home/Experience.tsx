@@ -6,8 +6,8 @@ import Reveal from "./Reveal";
 
 export default function Experience() {
   return (
-    <section className="pb-12">
-      <SectionHead id="work" label="work" />
+    <section className="pb-16">
+      <SectionHead id="work" label="work" count={experience.length} />
 
       <ol className="divide-y divide-[var(--line)]">
         {experience.map((item, index) => (

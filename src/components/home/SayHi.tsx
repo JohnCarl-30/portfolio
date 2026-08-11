@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, Check, Copy } from "lucide-react";
+import { Check, Copy } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
-import { profile, socials } from "@/app/data/Profile";
+import { profile } from "@/app/data/Profile";
 import SectionHead from "./SectionHead";
 import Reveal from "./Reveal";
 
@@ -31,7 +31,7 @@ export default function SayHi({ standalone = false }: { standalone?: boolean }) 
   }, [copied]);
 
   return (
-    <section className="pb-12">
+    <section className="pb-16">
       {standalone ? null : <SectionHead id="contact" label="contact" />}
 
       <Reveal className="max-w-[44rem]">
@@ -69,26 +69,6 @@ export default function SayHi({ standalone = false }: { standalone?: boolean }) 
             </motion.span>
           </button>
         </div>
-      </Reveal>
-
-      <Reveal className="mt-8" delay={0.05}>
-        <p className="section-label mb-3">links</p>
-
-        <ul className="flex flex-wrap gap-x-5 gap-y-2">
-          {socials.map((social) => (
-            <li key={social.label}>
-              <a
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group/link focus-ring inline-flex items-center gap-1 text-[0.85rem] text-[var(--muted-ink)] transition-colors hover:text-[var(--ink)]"
-              >
-                {social.label}
-                <ArrowUpRight className="h-3 w-3 opacity-0 transition-all duration-200 group-hover/link:translate-x-px group-hover/link:-translate-y-px group-hover/link:opacity-100" />
-              </a>
-            </li>
-          ))}
-        </ul>
       </Reveal>
     </section>
   );

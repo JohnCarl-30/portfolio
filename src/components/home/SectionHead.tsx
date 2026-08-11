@@ -10,6 +10,8 @@ type SectionHeadProps = {
   label: string;
   /** Scroll anchor id, also used by SectionDock and the command palette. */
   id: string;
+  /** Total items in the section, shown as a zero-padded index mark. */
+  count?: number;
   viewAll?: { href: string; label?: string };
 };
 
@@ -17,10 +19,16 @@ type SectionHeadProps = {
  * Lowercase section label with a hairline that draws itself across the
  * remaining width when the section scrolls into view.
  */
-export default function SectionHead({ label, id, viewAll }: SectionHeadProps) {
+export default function SectionHead({ label, id, count, viewAll }: SectionHeadProps) {
   return (
     <div id={id} className="flex scroll-mt-20 items-center gap-4 pb-4">
       <h2 className="section-label shrink-0">{label}</h2>
+
+      {typeof count === "number" ? (
+        <span aria-hidden="true" className="meta -ml-2 shrink-0">
+          {String(count).padStart(2, "0")}
+        </span>
+      ) : null}
 
       <Reveal
         as="span"

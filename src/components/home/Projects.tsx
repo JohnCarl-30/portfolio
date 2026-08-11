@@ -63,8 +63,8 @@ export default function Projects() {
   const featured = projectsData.slice(0, 4);
 
   return (
-    <section className="pb-12">
-      <SectionHead id="projects" label="projects" viewAll={{ href: "/projects" }} />
+    <section className="pb-16">
+      <SectionHead id="projects" label="projects" count={projectsData.length} viewAll={{ href: "/projects" }} />
 
       <ul className="divide-y divide-[var(--line)]">
         {featured.map((project, index) => (
