@@ -1,10 +1,10 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Caveat, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "remixicon/fonts/remixicon.css";
 import { Toaster } from "react-hot-toast";
 
-import DotField from "@/components/home/DotField";
 import Footer from "@/components/Footer";
+import SplashScreen from "@/components/SplashScreen";
 import TopRail from "@/components/TopRail";
 import SearchPalette from "@/components/SearchPalette";
 import Chatbot from "@/components/Chatbot";
@@ -28,6 +28,14 @@ const geist = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
+});
+
+// Handwritten script, used only for the splash-screen monogram.
+const caveat = Caveat({
+  variable: "--font-script",
+  subsets: ["latin"],
+  weight: "600",
   display: "swap",
 });
 
@@ -146,12 +154,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geist.variable} ${geistMono.variable} flex min-h-screen flex-col bg-background text-foreground`}
+        className={`${geist.variable} ${geistMono.variable} ${caveat.variable} flex min-h-screen flex-col bg-background text-foreground`}
       >
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <AppUIProvider>
           <RouteTransitionProvider>
-            <DotField />
+            <SplashScreen />
             <TopRail />
             <div className="flex flex-grow flex-col">
               {children}
