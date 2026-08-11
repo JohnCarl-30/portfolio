@@ -1,7 +1,7 @@
 import { Github, Linkedin, Mail } from "lucide-react";
 
 export const EMAIL = "johncarlsantos30@gmail.com";
-export const RESUME_URL = "/JohnCarlSantos(2).pdf";
+export const RESUME_URL = "/JohnCarl_Santoss_Resume%20(2).pdf";
 
 /** Single source of truth for the social links repeated across hero, contact,
  *  footer, and the mobile menu. */
