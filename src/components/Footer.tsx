@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 
 import Link from "@/components/providers/RouteTransition";
+import LocalTime from "@/components/LocalTime";
 import { profile, socials } from "@/app/data/Profile";
 
 const links = [
@@ -12,8 +13,8 @@ const links = [
 
 const Footer = () => {
   return (
-    <footer className="mt-auto w-full border-t border-[var(--line)] py-8">
-      <div className="shell flex flex-col gap-6">
+    <footer className="mt-auto w-full border-t border-[var(--line)] py-14 sm:py-16">
+      <div className="shell flex flex-col gap-8">
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <p className="text-[0.85rem] font-semibold text-[var(--ink)]">
             {profile.name.toLowerCase()}
@@ -38,9 +39,12 @@ const Footer = () => {
         <div className="rule" />
 
         <div className="flex flex-col-reverse items-start justify-between gap-4 sm:flex-row sm:items-center">
-          <p className="meta">
-            © {new Date().getFullYear()} {profile.name}
-          </p>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <p className="meta">
+              © {new Date().getFullYear()} {profile.name}
+            </p>
+            <LocalTime />
+          </div>
 
           <nav aria-label="Social links" className="flex flex-wrap gap-x-4 gap-y-2">
             {socials.map((social) => (

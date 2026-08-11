@@ -135,7 +135,7 @@ const GitHubContributions = () => {
   if (failed) return null;
 
   return (
-    <section className="pb-12">
+    <section className="pb-16">
       <SectionHead id="github" label="github" />
 
       <div className="flex items-baseline justify-between gap-4 pb-4">

@@ -14,7 +14,7 @@ export default function Stack() {
   const [focused, setFocused] = useState<string | null>(null);
 
   return (
-    <section className="pb-12">
+    <section className="pb-16">
       <SectionHead
         id="toolkit"
         label="toolkit"

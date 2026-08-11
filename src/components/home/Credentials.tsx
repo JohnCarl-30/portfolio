@@ -10,10 +10,11 @@ export default function Credentials() {
   const featured = certifications.slice(0, 5);
 
   return (
-    <section className="pb-12">
+    <section className="pb-16">
       <SectionHead
         id="credentials"
         label="credentials"
+        count={certifications.length}
         viewAll={{ href: "/certifications" }}
       />
 
