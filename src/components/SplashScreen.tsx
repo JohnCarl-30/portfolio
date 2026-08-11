@@ -18,7 +18,7 @@ export default function SplashScreen() {
   useEffect(() => {
     const timeout = window.setTimeout(
       () => setShow(false),
-      shouldReduceMotion ? 250 : 1700,
+      shouldReduceMotion ? 250 : 2700,
     );
     return () => window.clearTimeout(timeout);
   }, [shouldReduceMotion]);
