@@ -145,7 +145,7 @@ const Chatbot = () => {
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <Image
-                    src="/img/pic2.jpeg"
+                    src="/img/cutout.png"
                     alt="John Carl Santos"
                     width={40}
                     height={40}
@@ -188,7 +188,7 @@ const Chatbot = () => {
                       </div>
                     ) : (
                       <Image
-                        src="/img/pic2.jpeg"
+                        src="/img/cutout.png"
                         alt="Bot"
                         width={32}
                         height={32}
@@ -268,7 +268,7 @@ const Chatbot = () => {
                   >
                     <div className="flex gap-2 max-w-[85%]">
                       <Image
-                        src="/img/pic2.jpeg"
+                        src="/img/cutout.png"
                         alt="Bot"
                         width={32}
                         height={32}
