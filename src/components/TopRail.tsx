@@ -23,7 +23,7 @@ export default function TopRail() {
       <div className="shell flex h-12 items-center justify-between">
         <Link
           href="/"
-          className="group/back focus-ring inline-flex items-center gap-1.5 text-[0.8rem] text-[var(--muted-ink)] transition-colors hover:text-[var(--ink)]"
+          className="group/back focus-ring inline-flex items-center gap-1.5 text-[0.875rem] font-medium text-[var(--muted-ink)] transition-colors hover:text-[var(--ink)]"
         >
           <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-200 group-hover/back:-translate-x-0.5" />
           {profile.name.toLowerCase()}
@@ -33,9 +33,9 @@ export default function TopRail() {
           type="button"
           onClick={openSearch}
           aria-label="Open search"
-          className="focus-ring flex items-center gap-1.5 rounded-full px-2 py-1 text-[var(--dim)] transition-colors hover:bg-[var(--hover)] hover:text-[var(--ink)]"
+          className="focus-ring flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-[var(--muted-ink)] transition-colors hover:bg-[var(--hover)] hover:text-[var(--ink)]"
         >
-          <Search className="h-3.5 w-3.5" />
+          <Search className="h-4 w-4" />
           <kbd className="hidden font-mono text-[0.72rem] sm:inline">⌘K</kbd>
         </button>
       </div>
