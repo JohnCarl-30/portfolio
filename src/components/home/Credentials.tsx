@@ -14,6 +14,7 @@ export default function Credentials() {
       <SectionHead
         id="credentials"
         label="credentials"
+        num="06"
         count={certifications.length}
         viewAll={{ href: "/certifications" }}
       />

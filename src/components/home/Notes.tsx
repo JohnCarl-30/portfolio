@@ -47,7 +47,7 @@ export default function Notes() {
 
   return (
     <section className="pb-16">
-      <SectionHead id="writing" label="writing" count={getAllPosts().length} viewAll={{ href: "/blog" }} />
+      <SectionHead id="writing" label="writing" num="01" count={getAllPosts().length} viewAll={{ href: "/blog" }} />
 
       <ul className="divide-y divide-[var(--line)]">
         {posts.map((post, index) => (

@@ -32,7 +32,7 @@ export default function SayHi({ standalone = false }: { standalone?: boolean }) 
 
   return (
     <section className="pb-16">
-      {standalone ? null : <SectionHead id="contact" label="contact" />}
+      {standalone ? null : <SectionHead id="contact" label="contact" num="07" />}
 
       <Reveal className="max-w-[44rem]">
         <p className="row-desc">

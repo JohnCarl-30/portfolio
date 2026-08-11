@@ -1,4 +1,4 @@
-import { Caveat, Geist, Geist_Mono } from "next/font/google";
+import { Caveat, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import "remixicon/fonts/remixicon.css";
 import { Toaster } from "react-hot-toast";
@@ -36,6 +36,15 @@ const caveat = Caveat({
   variable: "--font-script",
   subsets: ["latin"],
   weight: "600",
+  display: "swap",
+});
+
+// Italic serif accent — a second typographic voice, used one word at a time.
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-serif-accent",
+  subsets: ["latin"],
+  weight: "400",
+  style: "italic",
   display: "swap",
 });
 
@@ -154,7 +163,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geist.variable} ${geistMono.variable} ${caveat.variable} flex min-h-screen flex-col bg-background text-foreground`}
+        className={`${geist.variable} ${geistMono.variable} ${caveat.variable} ${instrumentSerif.variable} flex min-h-screen flex-col bg-background text-foreground`}
       >
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <AppUIProvider>

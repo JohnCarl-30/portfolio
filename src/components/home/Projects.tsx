@@ -64,7 +64,7 @@ export default function Projects() {
 
   return (
     <section className="pb-16">
-      <SectionHead id="projects" label="projects" count={projectsData.length} viewAll={{ href: "/projects" }} />
+      <SectionHead id="projects" label="projects" num="02" count={projectsData.length} viewAll={{ href: "/projects" }} />
 
       <ul className="divide-y divide-[var(--line)]">
         {featured.map((project, index) => (

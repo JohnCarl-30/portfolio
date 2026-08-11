@@ -15,6 +15,13 @@ const Footer = () => {
   return (
     <footer className="mt-auto w-full border-t border-[var(--line)] py-14 sm:py-16">
       <div className="shell flex flex-col gap-8">
+        <p
+          aria-hidden="true"
+          className="select-none font-[family-name:var(--font-script)] text-[2.4rem] leading-none text-[var(--ink)]"
+        >
+          jc
+        </p>
+
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <p className="text-[0.85rem] font-semibold text-[var(--ink)]">
             {profile.name.toLowerCase()}

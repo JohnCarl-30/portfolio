@@ -18,6 +18,7 @@ export default function Stack() {
       <SectionHead
         id="toolkit"
         label="toolkit"
+        num="04"
         viewAll={{ href: "/skills", label: "all tools" }}
       />
 
