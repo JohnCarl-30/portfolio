@@ -14,9 +14,11 @@ import {
   FolderKanban,
   Github,
   Mail,
+  Menu,
   PenLine,
   Search,
   Wrench,
+  X,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -96,7 +98,26 @@ export default function SectionDock() {
   const calm = useReducedMotion();
   const [active, setActive] = useState<string | null>(null);
   const [shown, setShown] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
+
+  // Body scroll lock + Escape while the mobile menu is open.
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     const onScroll = () => setShown(window.scrollY > 260);
@@ -149,11 +170,21 @@ export default function SectionDock() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -16 }}
           transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-          className="fixed inset-x-0 top-3 z-40 flex justify-center px-4"
+          className="fixed inset-x-0 top-3 z-40 flex justify-end px-4 sm:justify-center"
         >
+          <button
+            type="button"
+            onClick={() => setMenuOpen(true)}
+            aria-label="Open menu"
+            className="focus-ring pointer-events-auto flex h-12 items-center gap-2 rounded-full border border-[var(--line-strong)] bg-[var(--panel)]/85 px-4 text-[0.95rem] font-semibold text-[var(--ink)] shadow-[var(--shadow-soft)] backdrop-blur-xl sm:hidden"
+          >
+            <Menu className="h-5 w-5" />
+            menu
+          </button>
+
           <div
             ref={listRef}
-            className="pointer-events-auto flex max-w-full items-center gap-1 overflow-x-auto rounded-full border border-[var(--line-strong)] bg-[var(--panel)]/85 p-1 shadow-[var(--shadow-soft)] backdrop-blur-xl">
+            className="pointer-events-auto hidden max-w-full items-center gap-1 overflow-x-auto rounded-full border border-[var(--line-strong)] bg-[var(--panel)]/85 p-1 shadow-[var(--shadow-soft)] backdrop-blur-xl sm:flex">
             {DOCK_SECTIONS.map((section) => {
               const isActive = active === section.id;
 
@@ -204,6 +235,81 @@ export default function SectionDock() {
             </MagneticButton>
           </div>
         </motion.nav>
+      ) : null}
+
+      {menuOpen ? (
+        <motion.div
+          key="mobile-menu"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-[95] flex flex-col bg-[var(--paper)] px-6 pb-8 pt-5 sm:hidden"
+        >
+          <div className="flex items-center justify-between">
+            <span className="section-label">menu</span>
+            <button
+              type="button"
+              onClick={() => setMenuOpen(false)}
+              aria-label="Close menu"
+              className="focus-ring flex h-11 w-11 items-center justify-center rounded-full border border-[var(--line)] text-[var(--muted-ink)] transition-colors hover:text-[var(--ink)]"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+
+          <ul className="mt-6 flex flex-1 flex-col gap-1 overflow-y-auto">
+            {DOCK_SECTIONS.map((section, index) => {
+              const isActive = active === section.id;
+
+              return (
+                <li key={section.id}>
+                  <motion.button
+                    type="button"
+                    initial={calm ? false : { opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.3,
+                      ease: [0.23, 1, 0.32, 1],
+                      delay: calm ? 0 : 0.04 + index * 0.045,
+                    }}
+                    onClick={() => {
+                      setMenuOpen(false);
+                      jump(section.id);
+                    }}
+                    className={`focus-ring flex w-full items-center gap-4 rounded-xl px-3 py-3.5 text-left text-[1.35rem] font-semibold transition-colors ${
+                      isActive
+                        ? "bg-[var(--hover)] text-[var(--ink)]"
+                        : "text-[var(--ink)] hover:bg-[var(--hover)]"
+                    }`}
+                  >
+                    <section.icon
+                      className={`h-5 w-5 ${
+                        isActive ? "text-[var(--signal)]" : "text-[var(--dim)]"
+                      }`}
+                    />
+                    {section.label}
+                    <span className="meta ml-auto">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </motion.button>
+                </li>
+              );
+            })}
+          </ul>
+
+          <button
+            type="button"
+            onClick={() => {
+              setMenuOpen(false);
+              openSearch();
+            }}
+            className="focus-ring mt-4 flex w-full items-center justify-center gap-2.5 rounded-xl border border-[var(--line-strong)] py-3.5 text-[1.05rem] font-semibold text-[var(--ink)] transition-colors hover:bg-[var(--hover)]"
+          >
+            <Search className="h-4.5 w-4.5" />
+            search
+          </button>
+        </motion.div>
       ) : null}
     </AnimatePresence>
   );
