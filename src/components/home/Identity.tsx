@@ -118,15 +118,15 @@ export default function Identity() {
 
             <span
               aria-hidden="true"
-              className="relative block h-[76px] w-[76px] overflow-hidden rounded-full border border-[var(--line-strong)] bg-[var(--panel-soft)] transition-transform duration-200 hover:scale-[1.04]"
+              className="relative block h-[104px] w-[96px] overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--panel-soft)] transition-transform duration-200 hover:scale-[1.03]"
             >
               <Image
                 src={profile.photo}
                 alt=""
                 fill
-                sizes="76px"
+                sizes="96px"
                 priority
-                className="object-cover"
+                className="object-cover object-top"
               />
             </span>
           </span>

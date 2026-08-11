@@ -20,7 +20,7 @@ export const profile = {
   location: "Philippines",
   email: "johncarlsantos30@gmail.com",
   resumeHref: "/JohnCarl_Santoss_Resume%20(2).pdf",
-  photo: "/img/pic2.jpeg",
+  photo: "/img/cutout.png",
   availability: "open to remote roles",
 };
 

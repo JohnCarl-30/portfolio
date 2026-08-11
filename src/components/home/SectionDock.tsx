@@ -162,6 +162,16 @@ export default function SectionDock() {
   };
 
   return (
+    <>
+      <button
+        type="button"
+        onClick={() => setMenuOpen(true)}
+        aria-label="Open menu"
+        className="focus-ring fixed right-4 top-3 z-40 flex h-12 w-12 items-center justify-center rounded-full border border-[var(--line-strong)] bg-[var(--panel)]/85 text-[var(--ink)] shadow-[var(--shadow-soft)] backdrop-blur-xl sm:hidden"
+      >
+        <Menu className="h-5 w-5" />
+      </button>
+
     <AnimatePresence>
       {shown ? (
         <motion.nav
@@ -170,18 +180,8 @@ export default function SectionDock() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -16 }}
           transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-          className="fixed inset-x-0 top-3 z-40 flex justify-end px-4 sm:justify-center"
+          className="pointer-events-none fixed inset-x-0 top-3 z-40 hidden justify-center px-4 sm:flex"
         >
-          <button
-            type="button"
-            onClick={() => setMenuOpen(true)}
-            aria-label="Open menu"
-            className="focus-ring pointer-events-auto flex h-12 items-center gap-2 rounded-full border border-[var(--line-strong)] bg-[var(--panel)]/85 px-4 text-[0.95rem] font-semibold text-[var(--ink)] shadow-[var(--shadow-soft)] backdrop-blur-xl sm:hidden"
-          >
-            <Menu className="h-5 w-5" />
-            menu
-          </button>
-
           <div
             ref={listRef}
             className="pointer-events-auto hidden max-w-full items-center gap-1 overflow-x-auto rounded-full border border-[var(--line-strong)] bg-[var(--panel)]/85 p-1 shadow-[var(--shadow-soft)] backdrop-blur-xl sm:flex">
@@ -312,5 +312,6 @@ export default function SectionDock() {
         </motion.div>
       ) : null}
     </AnimatePresence>
+    </>
   );
 }
