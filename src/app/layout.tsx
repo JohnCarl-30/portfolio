@@ -11,11 +11,15 @@ import Chatbot from "@/components/Chatbot";
 import { AppUIProvider } from "@/components/providers/AppUIProvider";
 import { RouteTransitionProvider } from "@/components/providers/RouteTransition";
 
+// Canonical origin for og:url and absolute metadata URLs. VERCEL_URL is
+// deliberately not used — it resolves to the deployment's *.vercel.app
+// address, which link previews (Messenger, LinkedIn) would then display
+// instead of the real domain.
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000");
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "https://www.dyeyc.dev");
 
 // Geist and Geist Mono are siblings, so the meta/mono labels sit on the same
 // skeleton as the body text instead of reading as a second voice.
