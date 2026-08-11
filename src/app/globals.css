@@ -252,12 +252,32 @@ html[data-theme-selection="midnight"] {
         line-height: 1.45;
         color: var(--dim);
         background: var(--hover);
-        transition: color 160ms ease, border-color 160ms ease;
+        transition:
+            color 160ms ease,
+            border-color 160ms ease,
+            background-color 160ms ease,
+            transform 160ms ease;
     }
 
     .group\/row:hover .chip {
-        color: var(--muted-ink);
-        border-color: var(--line-strong);
+        color: var(--signal);
+        border-color: color-mix(in srgb, var(--signal) 30%, transparent);
+        background: var(--signal-soft);
+    }
+
+    .chip:hover {
+        color: var(--signal);
+        border-color: color-mix(in srgb, var(--signal) 40%, transparent);
+        background: var(--signal-soft);
+        transform: translateY(-1px);
+    }
+
+    /* Italic serif accent voice — one word at a time, never whole paragraphs. */
+    .font-serif-accent {
+        font-family: var(--font-serif-accent), Georgia, serif;
+        font-style: italic;
+        font-weight: 400;
+        letter-spacing: -0.01em;
     }
 
     /* Inline link inside prose: underline grows from the left on hover. */

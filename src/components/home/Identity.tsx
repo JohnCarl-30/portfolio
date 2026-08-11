@@ -52,13 +52,41 @@ function useDecodedText(text: string, enabled: boolean) {
   return output;
 }
 
+function useGreeting() {
+  const [greeting, setGreeting] = useState("");
+
+  useEffect(() => {
+    const hour = new Date().getHours();
+    setGreeting(
+      hour < 5
+        ? "up late?"
+        : hour < 12
+          ? "good morning"
+          : hour < 18
+            ? "good afternoon"
+            : "good evening",
+    );
+  }, []);
+
+  return greeting;
+}
+
 export default function Identity() {
   const calm = useReducedMotion();
   const role = useDecodedText(profile.role, !calm);
   const [waving, setWaving] = useState(false);
+  const greeting = useGreeting();
 
   return (
     <header className="pt-14 pb-10 sm:pt-20">
+      <p
+        className={`meta mb-3 h-[1.1rem] transition-opacity duration-500 ${
+          greeting ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        {greeting ? `${greeting}, you found me.` : " "}
+      </p>
+
       <Reveal className="flex items-start justify-between gap-6">
         <div className="flex min-w-0 items-center gap-3.5">
           <span

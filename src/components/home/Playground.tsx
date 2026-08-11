@@ -7,7 +7,7 @@ import LifeGrid from "./LifeGrid";
 export default function Playground() {
   return (
     <section className="pb-20">
-      <SectionHead id="sandbox" label="sandbox" />
+      <SectionHead id="sandbox" label="sandbox" num="08" />
 
       <Reveal>
         <p className="row-desc mb-4 max-w-[44rem]">

@@ -1,6 +1,12 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+} from "framer-motion";
 import {
   BadgeCheck,
   Briefcase,
@@ -27,6 +33,57 @@ export const DOCK_SECTIONS: { id: string; label: string; icon: LucideIcon }[] = 
   { id: "contact", label: "contact", icon: Mail },
   { id: "sandbox", label: "sandbox", icon: FlaskConical },
 ];
+
+/**
+ * Dock pill that leans a few pixels toward the cursor and springs back.
+ * Purely decorative, so it sits out entirely for reduced-motion users.
+ */
+function MagneticButton({
+  calm,
+  className,
+  children,
+  onClick,
+  dataSection,
+  ariaCurrent,
+  ariaLabel,
+}: {
+  calm: boolean;
+  className: string;
+  children: React.ReactNode;
+  onClick: () => void;
+  dataSection?: string;
+  ariaCurrent?: "location";
+  ariaLabel?: string;
+}) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const springX = useSpring(x, { stiffness: 320, damping: 22 });
+  const springY = useSpring(y, { stiffness: 320, damping: 22 });
+
+  return (
+    <motion.button
+      type="button"
+      onClick={onClick}
+      data-section={dataSection}
+      aria-current={ariaCurrent}
+      aria-label={ariaLabel}
+      className={className}
+      style={{ x: springX, y: springY }}
+      onMouseMove={(event) => {
+        if (calm) return;
+        const rect = event.currentTarget.getBoundingClientRect();
+        x.set((event.clientX - rect.left - rect.width / 2) * 0.22);
+        y.set((event.clientY - rect.top - rect.height / 2) * 0.4);
+      }}
+      onMouseLeave={() => {
+        x.set(0);
+        y.set(0);
+      }}
+    >
+      {children}
+    </motion.button>
+  );
+}
 
 /**
  * Floating dock, top centre. The page loads with no chrome at all — the
@@ -101,12 +158,12 @@ export default function SectionDock() {
               const isActive = active === section.id;
 
               return (
-                <button
+                <MagneticButton
                   key={section.id}
-                  type="button"
+                  calm={Boolean(calm)}
                   onClick={() => jump(section.id)}
-                  data-section={section.id}
-                  aria-current={isActive ? "location" : undefined}
+                  dataSection={section.id}
+                  ariaCurrent={isActive ? "location" : undefined}
                   className="focus-ring relative shrink-0 rounded-full px-3 py-1.5 text-[0.8rem] transition-colors"
                 >
                   {isActive ? (
@@ -130,21 +187,21 @@ export default function SectionDock() {
                     />
                     {section.label}
                   </span>
-                </button>
+                </MagneticButton>
               );
             })}
 
             <span aria-hidden="true" className="mx-1 h-4 w-px bg-[var(--line)]" />
 
-            <button
-              type="button"
+            <MagneticButton
+              calm={Boolean(calm)}
               onClick={openSearch}
-              aria-label="Open search"
+              ariaLabel="Open search"
               className="focus-ring flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-[var(--muted-ink)] transition-colors hover:bg-[var(--hover)] hover:text-[var(--ink)]"
             >
               <Search className="h-3.5 w-3.5" />
               <kbd className="hidden font-mono text-[0.75rem] sm:inline">⌘K</kbd>
-            </button>
+            </MagneticButton>
           </div>
         </motion.nav>
       ) : null}

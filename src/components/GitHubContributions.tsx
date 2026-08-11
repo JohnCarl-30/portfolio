@@ -136,7 +136,7 @@ const GitHubContributions = () => {
 
   return (
     <section className="pb-16">
-      <SectionHead id="github" label="github" />
+      <SectionHead id="github" label="github" num="05" />
 
       <div className="flex items-baseline justify-between gap-4 pb-4">
         <p className="row-desc">
