@@ -42,7 +42,7 @@ const caveat = Caveat({
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "John Carl Santos — AI & Full-Stack Engineer",
+    default: "John Carl Santos — AI Full Stack Engineer",
     template: "%s | John Carl Santos",
   },
   description:
@@ -88,7 +88,7 @@ export const metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName: "John Carl Santos",
-    title: "John Carl Santos — AI & Full-Stack Engineer",
+    title: "John Carl Santos — AI Full Stack Engineer",
     description:
       "Portfolio of John Carl Santos — aspiring AI engineer building RAG systems, full-stack web apps, and automation tools.",
     images: [
@@ -103,7 +103,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     site: "@dyeyyyccc",
-    title: "John Carl Santos — AI & Full-Stack Engineer",
+    title: "John Carl Santos — AI Full Stack Engineer",
     description:
       "Portfolio of John Carl Santos — aspiring AI engineer building RAG systems, full-stack web apps, and automation tools.",
     images: ["/personal.jpg"],

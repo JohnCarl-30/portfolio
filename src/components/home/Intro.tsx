@@ -32,12 +32,6 @@ export default function Intro() {
         , while finishing computer science at Philippine Christian University as
         a consistent Dean&apos;s Lister.
       </GlossaryParagraph>
-
-      <GlossaryParagraph className="text-[0.95rem] leading-[1.65] text-[var(--muted-ink)]">
-        Along the way I led Sociatech, a social learning platform, shipped
-        smaller tools end to end, and earned AI certifications from Oracle,
-        AWS, and MongoDB.
-      </GlossaryParagraph>
     </Reveal>
   );
 }

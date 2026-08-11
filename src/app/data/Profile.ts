@@ -16,10 +16,10 @@ export type ExperienceItem = {
 
 export const profile = {
   name: "John Carl Santos",
-  role: "AI Engineer",
+  role: "AI Full Stack Engineer",
   location: "Philippines",
   email: "johncarlsantos30@gmail.com",
-  resumeHref: "/JohnCarlSantos(2).pdf",
+  resumeHref: "/JohnCarl_Santoss_Resume%20(2).pdf",
   photo: "/img/pic2.jpeg",
   availability: "open to remote roles",
 };
