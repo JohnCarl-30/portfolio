@@ -96,7 +96,7 @@ export default function SectionDock() {
                   onClick={() => jump(section.id)}
                   data-section={section.id}
                   aria-current={isActive ? "location" : undefined}
-                  className="focus-ring relative shrink-0 rounded-full px-2.5 py-1 text-[0.72rem] transition-colors"
+                  className="focus-ring relative shrink-0 rounded-full px-3 py-1.5 text-[0.8rem] transition-colors"
                 >
                   {isActive ? (
                     <motion.span
@@ -109,7 +109,7 @@ export default function SectionDock() {
                     className={`relative ${
                       isActive
                         ? "font-semibold text-[var(--ink)]"
-                        : "text-[var(--dim)] hover:text-[var(--muted-ink)]"
+                        : "text-[var(--muted-ink)] hover:text-[var(--ink)]"
                     }`}
                   >
                     {section.label}
@@ -124,10 +124,10 @@ export default function SectionDock() {
               type="button"
               onClick={openSearch}
               aria-label="Open search"
-              className="focus-ring flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[var(--dim)] transition-colors hover:bg-[var(--hover)] hover:text-[var(--ink)]"
+              className="focus-ring flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-[var(--muted-ink)] transition-colors hover:bg-[var(--hover)] hover:text-[var(--ink)]"
             >
               <Search className="h-3.5 w-3.5" />
-              <kbd className="hidden font-mono text-[0.72rem] sm:inline">⌘K</kbd>
+              <kbd className="hidden font-mono text-[0.75rem] sm:inline">⌘K</kbd>
             </button>
           </div>
         </motion.nav>

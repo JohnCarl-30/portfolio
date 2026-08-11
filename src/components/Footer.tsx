@@ -1,6 +1,7 @@
-import Link from "@/components/providers/RouteTransition";
+import { ArrowUpRight } from "lucide-react";
 
-import { profile } from "@/app/data/Profile";
+import Link from "@/components/providers/RouteTransition";
+import { profile, socials } from "@/app/data/Profile";
 
 const links = [
   { href: "/projects", label: "projects" },
@@ -11,23 +12,58 @@ const links = [
 
 const Footer = () => {
   return (
-    <footer className="mt-auto w-full border-t border-[var(--line)] py-6">
-      <div className="shell flex flex-col-reverse items-start justify-between gap-4 sm:flex-row sm:items-center">
-        <p className="meta">
-          © {new Date().getFullYear()} {profile.name}
-        </p>
+    <footer className="mt-auto w-full border-t border-[var(--line)] py-8">
+      <div className="shell flex flex-col gap-6">
+        <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+          <p className="text-[0.85rem] font-semibold text-[var(--ink)]">
+            {profile.name.toLowerCase()}
+            <span className="ml-2 font-normal text-[var(--muted-ink)]">
+              {profile.role.toLowerCase()} · {profile.location.toLowerCase()}
+            </span>
+          </p>
 
-        <nav className="flex flex-wrap gap-x-5 gap-y-2">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="focus-ring text-[0.78rem] text-[var(--dim)] transition-colors hover:text-[var(--ink)]"
+          <nav aria-label="Site" className="flex flex-wrap gap-x-5 gap-y-2">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="focus-ring text-[0.85rem] text-[var(--muted-ink)] transition-colors hover:text-[var(--ink)]"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        <div className="rule" />
+
+        <div className="flex flex-col-reverse items-start justify-between gap-4 sm:flex-row sm:items-center">
+          <p className="meta">
+            © {new Date().getFullYear()} {profile.name}
+          </p>
+
+          <nav aria-label="Social links" className="flex flex-wrap gap-x-4 gap-y-2">
+            {socials.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group/social focus-ring inline-flex items-center gap-0.5 text-[0.85rem] text-[var(--muted-ink)] transition-colors hover:text-[var(--ink)]"
+              >
+                {social.label}
+                <ArrowUpRight className="h-3 w-3 text-[var(--dim)] transition-transform duration-200 group-hover/social:-translate-y-px group-hover/social:translate-x-px" />
+              </a>
+            ))}
+            <a
+              href={`mailto:${profile.email}`}
+              className="group/social focus-ring inline-flex items-center gap-0.5 text-[0.85rem] text-[var(--muted-ink)] transition-colors hover:text-[var(--ink)]"
             >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+              email
+              <ArrowUpRight className="h-3 w-3 text-[var(--dim)] transition-transform duration-200 group-hover/social:-translate-y-px group-hover/social:translate-x-px" />
+            </a>
+          </nav>
+        </div>
       </div>
     </footer>
   );
