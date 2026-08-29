@@ -31,7 +31,7 @@ export const HERO_ICONS: HeroIcon[] = [
   },
 ]
 
-export const aboutText: string = "I am a passionate software developer who enjoys building practical and user-focused applications. I specialize in creating full-stack systems, including POS solutions, database-driven applications, and modern web interfaces. With experience in Java, MySQL, and React-based frameworks, I focus on writing clean, efficient, and maintainable code. I am continuously learning new technologies and improving my problem-solving skills, aiming to develop systems that make everyday tasks easier and more efficient.";
+export const aboutText: string = "I'm John Carl Santos, an AI full-stack engineer and computer science student at Philippine Christian University (consistent Dean's Lister). I work at SOFI AI Tech Solutions on training data and LLM evaluation, and I interned as a backend engineer at FlyRank AI and a software engineer at Alphaexplora. I build full-stack products with AI inside: StudyAI turns documents into flashcards over a RAG pipeline, Resumae analyzes resumes against job posts, and CiviReport handles barangay complaints. My stack is Python, TypeScript, FastAPI, Laravel, React, Next.js, PostgreSQL, and LangChain. I care about systems that keep working after the demo.";
 
 interface Skill {
   name: string;
