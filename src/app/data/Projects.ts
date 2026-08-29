@@ -58,8 +58,8 @@ export const projectsData: ProjectItem[] = [
     id: "alphaexplora",
     name: "Alphaexplora",
     category: "Web",
-    desc: "A fintech workflow platform empowering modern fintech teams to scale with confidence through real-time visibility and automated multi-entity control.",
-    longDescription: "Alphaexplora is a premium fintech workflow platform designed to build trust from the first scroll. It presents a finance-grade product story with confident positioning, clear pricing paths, and crisp interface sections for compliance-heavy teams.\n\nThe build focuses on fast landing-page performance, responsive presentation, and a polished visual system that feels credible for fintech buyers.",
+    desc: "A fintech workflow platform for teams that run several legal entities, with live dashboards and automated controls.",
+    longDescription: "Alphaexplora is a workflow platform for fintech teams that manage several legal entities at once. The site walks through the product, pricing paths, and interface sections that compliance-heavy teams ask about.\n\nThe build itself came down to fast landing-page loads, layouts that hold up on any screen, and a visual system consistent enough for a finance buyer to take seriously.",
     url: "/projects/alphaexplora.png",
     tech: ["NextJS", "TypeScript", "TailwindCSS", "Framer Motion", "Vercel"],
     role: "Web Developer",
@@ -72,17 +72,17 @@ export const projectsData: ProjectItem[] = [
     keyFeatures: [
       {
         title: "Real-time Visibility",
-        description: "Monitor fintech operations across multiple entities with live dashboards and instant updates.",
+        description: "Live dashboards show operations across every entity as they happen.",
         image: "/projects/alphaexplora.png",
       },
       {
         title: "Automated Multi-Entity Control",
-        description: "Streamline workflow management across your entire fintech infrastructure with advanced automation.",
+        description: "Automation rules handle repeated workflow steps across entities.",
         image: "/projects/alphaexplora.png",
       },
       {
         title: "Enterprise-Grade Security",
-        description: "Built with financial-grade security standards to protect sensitive transaction data.",
+        description: "Transaction data sits behind role-based access and audit logging.",
         image: "/projects/alphaexplora.png",
       }
     ],
@@ -92,8 +92,8 @@ export const projectsData: ProjectItem[] = [
     id: "study-ai",
     name: "StudyAI (autocards.app)",
     category: "Web",
-    desc: "An AI-powered study platform that automatically generates flashcards and summaries from study materials to enhance learning efficiency.",
-    longDescription: "StudyAI (autocards.app) is an advanced educational platform designed to streamline the learning process. By leveraging AI, it transforms complex study materials, notes, and PDFs into interactive flashcards and concise summaries. The platform features a sophisticated study workspace, OCR capabilities for image-based notes, and personalized study sessions to maximize information retention.",
+    desc: "A study platform that turns notes and PDFs into flashcards and summaries.",
+    longDescription: "StudyAI (autocards.app) turns study materials into flashcards and short summaries. Upload notes or a PDF and an LLM splits the content into question-and-answer cards; photos of handwritten notes go through OCR first.\n\nA study workspace keeps decks, progress, and recent sessions in one place, and study sessions adapt to which cards a user keeps missing.",
     url: "/projects/autocards.png",
     tech: ["NextJS", "TypeScript", "OpenAI API", "TailwindCSS", "Framer Motion", "Supabase", "Docker", "Digital Ocean", "Redis", "Celery", "pgvector"],
     role: "Lead Developer",
@@ -106,7 +106,7 @@ export const projectsData: ProjectItem[] = [
     keyFeatures: [
       {
         title: "AI Flashcard Generation",
-        description: "Automatically transform any text or PDF into structured flashcards using advanced LLMs.",
+        description: "An LLM splits any text or PDF into structured question-and-answer cards.",
         image: "/projects/autocards.png",
       },
       {
@@ -116,7 +116,7 @@ export const projectsData: ProjectItem[] = [
       },
       {
         title: "OCR Integration",
-        description: "Capture handwritten or printed notes and convert them into digital study materials instantly.",
+        description: "Photograph handwritten or printed notes and OCR turns them into study material.",
         image: "/projects/autocards.png",
       }
     ],
@@ -126,8 +126,8 @@ export const projectsData: ProjectItem[] = [
     id: "taskspay",
     name: "TasksPay",
     category: "Web",
-    desc: "A blockchain-based task payment platform built on the Stellar network, enabling secure and instant payments for completed tasks using smart contracts.",
-    longDescription: "TasksPay is a decentralized task marketplace powered by the Stellar blockchain. It leverages Soroban smart contracts for secure task execution and payment settlement. Users can post tasks, complete assignments, and receive instant payments in stablecoins on the Stellar network. The platform combines modern web frontend with blockchain technology to create a trustless peer-to-peer task economy.",
+    desc: "A task marketplace on the Stellar network where finished tasks pay out instantly in stablecoins.",
+    longDescription: "TasksPay is a task marketplace on Stellar. A Soroban smart contract holds the payment while a task is open and releases it once the work is verified, so poster and worker never have to trust each other.\n\nUsers post tasks, pick up someone else's, and get paid in stablecoins the moment the contract settles.",
     url: "/projects/taskspay.png",
     tech: ["React", "JavaScript", "Soroban SDK", "Stellar", "Rust", "TailwindCSS"],
     role: "Full-stack Developer",
@@ -140,17 +140,17 @@ export const projectsData: ProjectItem[] = [
     keyFeatures: [
       {
         title: "Stellar Blockchain Integration",
-        description: "Leverages the Stellar network for fast, low-cost transactions and cryptocurrency payments.",
+        description: "Payments run over the Stellar network, so transactions settle in seconds for fractions of a cent.",
         image: "/projects/taskspay.png",
       },
       {
         title: "Smart Contract Execution",
-        description: "Uses Soroban smart contracts to ensure secure and automated task completion verification and payment settlement.",
+        description: "Soroban smart contracts verify task completion and settle payment without a middleman.",
         image: "/projects/taskspay.png",
       },
       {
         title: "Decentralized Task Marketplace",
-        description: "A trustless peer-to-peer platform where users can post tasks and earn cryptocurrency upon completion.",
+        description: "Post a task, or finish someone else's and earn cryptocurrency.",
         image: "/projects/taskspay.png",
       }
     ],
@@ -161,7 +161,7 @@ export const projectsData: ProjectItem[] = [
     name: "SociaTech",
     category: "Web",
     desc: "A social learning platform connecting students and educators with real-time collaboration tools, resource sharing, and interactive study groups.",
-    longDescription: "SociaTech is a social learning platform designed to bridge the gap between students and educators. It features real-time collaboration tools, resource sharing, interactive study groups, and Firebase authentication with Google Sign-In for seamless access.",
+    longDescription: "SociaTech is a social learning platform where students and educators share resources, run study groups, and collaborate in real time. Sign-in works with email and password or Google, backed by Firebase.",
     url: "",
     tech: ["React", "PHP", "Firebase", "XAMPP", "phpMyAdmin"],
     role: "Project Lead & Backend Developer",
@@ -194,7 +194,7 @@ export const projectsData: ProjectItem[] = [
     name: "CiviReport",
     category: "Mobile",
     desc: "A barangay issue tracking mobile app that enables citizens to file complaints, track their status, and send emergency alerts to local officials.",
-    longDescription: "CiviReport is a civic engagement mobile application designed to bridge the gap between citizens and their local barangay officials. The app provides an intuitive interface for filing complaints, tracking their resolution progress, and sending emergency alerts with automatic location sharing for immediate response.",
+    longDescription: "CiviReport is a mobile app for barangay governance. Residents file complaints, follow the status as officials act on them, and send emergency alerts that attach their location automatically.",
     url: "",
     tech: ["Java", "FastAPI", "Firebase"],
     role: "Mobile Developer",
@@ -207,7 +207,7 @@ export const projectsData: ProjectItem[] = [
     keyFeatures: [
       {
         title: "File a Complaint",
-        description: "Submit new reports directly through the app with an easy-to-use complaint filing system.",
+        description: "File a complaint from the app in a few taps.",
         image: "",
       },
       {
