@@ -155,13 +155,7 @@ export default function Identity() {
         delay={0.12}
         className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2"
       >
-        <span className="inline-flex items-center gap-1.5">
-          <span
-            aria-hidden="true"
-            className="h-1.5 w-1.5 rounded-full bg-[var(--signal)] [animation:pulse-dot_2.4s_ease-in-out_infinite]"
-          />
-          <span className="meta">{profile.availability}</span>
-        </span>
+        <span className="meta">{profile.availability}</span>
         <span className="meta">{profile.location}</span>
       </Reveal>
     </header>
