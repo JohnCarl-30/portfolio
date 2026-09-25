@@ -1,36 +1,3 @@
-import { ReactElement } from 'react'
-import InstagramLineIcon from 'remixicon-react/InstagramLineIcon'
-import FacebookCircleLineIcon from 'remixicon-react/FacebookCircleLineIcon'
-import GithubLineIcon from 'remixicon-react/GithubLineIcon'
-
-// 1. Rename the interface to follow standard naming conventions (PascalCase)
-interface HeroIcon {
-  name: string;
-  href: string;
-  icon: ReactElement;
-}
-
-// 2. Use the interface to type the array of objects
-export const HERO_ICONS: HeroIcon[] = [
-  {
-    name: 'Instagram',
-    href: 'https://instagram.com/santosjohncarl',
-    icon: <InstagramLineIcon size={40} />,
-  },
-  {
-    name: 'Facebook',
-    href: 'https://facebook.com/santosjohncarl',
-    icon: <FacebookCircleLineIcon size={40} />,
-  },
-
-
-  {
-    name: 'GitHub',
-    href: 'https://github.com/JohnCarl-30',
-    icon: <GithubLineIcon size={40} />,
-  },
-]
-
 export const aboutText: string = "I'm John Carl Santos, an AI full-stack engineer and computer science student at Philippine Christian University (consistent Dean's Lister). I work at SOFI AI Tech Solutions on training data and LLM evaluation, and I interned as a backend engineer at FlyRank AI and a software engineer at Alphaexplora. I build full-stack products with AI inside: StudyAI turns documents into flashcards over a RAG pipeline, Resumae analyzes resumes against job posts, and CiviReport handles barangay complaints. My stack is Python, TypeScript, FastAPI, Laravel, React, Next.js, PostgreSQL, and LangChain. I care about systems that keep working after the demo.";
 
 interface Skill {

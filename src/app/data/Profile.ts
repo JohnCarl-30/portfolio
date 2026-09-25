@@ -19,7 +19,7 @@ export const profile = {
   role: "AI Full Stack Engineer",
   location: "Philippines",
   email: "johncarlsantos30@gmail.com",
-  resumeHref: "/JohnCarl_Santoss_Resume%20(2).pdf",
+  resumeHref: "/john-carl-santos-resume.pdf",
   photo: "/img/cutout.png",
   availability: "open to remote roles",
 };

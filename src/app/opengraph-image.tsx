@@ -41,6 +41,7 @@ export default async function OpenGraphImage() {
         {/* portrait, bottom-right sticker */}
         <img
           src={photoSrc}
+          alt=""
           width={505}
           height={436}
           style={{

@@ -67,19 +67,47 @@ const GUARDRAIL_KEYWORDS = [
   "solve this coding", "do my homework", "do my assignment", "cheat",
 ];
 
-const containsGuardrailViolation = (message: string): boolean => {
-  const lower = message.toLowerCase();
-  return GUARDRAIL_KEYWORDS.some((kw) => lower.includes(kw));
-};
+// Whole-word match (plus plain inflections) so "skills" doesn't trip "kill"
+// and "hackathon" doesn't trip "hack".
+const GUARDRAIL_PATTERN = new RegExp(
+  `\\b(?:${GUARDRAIL_KEYWORDS.join("|")})(?:s|es|ed|ing|er|ers)?\\b`,
+  "i",
+);
 
-const getErrorDetails = (error: unknown) => {
-  if (typeof error !== "object" || error === null || !("response" in error)) {
-    return null;
+const containsGuardrailViolation = (message: string): boolean =>
+  GUARDRAIL_PATTERN.test(message);
+
+const MAX_MESSAGE_LENGTH = 1000;
+const MAX_REPLY_TOKENS = 400;
+
+// Best-effort per-IP limit. State lives in the serverless instance, so it
+// resets on cold start and isn't shared across instances — enough to stop a
+// single client looping on the endpoint, not a substitute for a real store.
+const RATE_LIMIT = 10;
+const RATE_WINDOW_MS = 60_000;
+const hits = new Map<string, number[]>();
+
+const isRateLimited = (ip: string): boolean => {
+  const now = Date.now();
+  const recent = (hits.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
+  if (recent.length >= RATE_LIMIT) {
+    hits.set(ip, recent);
+    return true;
   }
-
-  const response = (error as { response?: { data?: unknown } }).response;
-  return response?.data ?? null;
+  recent.push(now);
+  hits.set(ip, recent);
+  if (hits.size > 5000) {
+    for (const [key, times] of hits) {
+      if (times.every((t) => now - t >= RATE_WINDOW_MS)) hits.delete(key);
+    }
+  }
+  return false;
 };
+
+const getClientIp = (req: Request) =>
+  req.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
+  req.headers.get("x-real-ip") ||
+  "unknown";
 
 const normalizeMessage = (value: unknown) =>
   typeof value === "string" ? value.trim() : "";
@@ -178,6 +206,20 @@ export async function POST(req: Request) {
       );
     }
 
+    if (message.length > MAX_MESSAGE_LENGTH) {
+      return Response.json(
+        { error: `Please keep messages under ${MAX_MESSAGE_LENGTH} characters.` },
+        { status: 400 },
+      );
+    }
+
+    if (isRateLimited(getClientIp(req))) {
+      return Response.json(
+        { error: "Too many messages — try again in a minute." },
+        { status: 429 },
+      );
+    }
+
     if (containsGuardrailViolation(message)) {
       return Response.json({
         reply: "I can't help with that. I'm here to answer questions about CJ's background, skills, projects, and career growth.",
@@ -195,6 +237,7 @@ export async function POST(req: Request) {
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
+      max_tokens: MAX_REPLY_TOKENS,
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
         { role: "user", content: message },
@@ -218,7 +261,6 @@ export async function POST(req: Request) {
       {
         reply: fallbackReply,
         source: "fallback",
-        details: getErrorDetails(error),
       },
       { status: 200 },
     );

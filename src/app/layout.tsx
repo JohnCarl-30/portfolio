@@ -1,6 +1,5 @@
 import { Caveat, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
-import "remixicon/fonts/remixicon.css";
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/react";
 
