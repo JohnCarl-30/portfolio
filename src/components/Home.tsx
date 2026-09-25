@@ -1,5 +1,3 @@
-"use client";
-
 import Credentials from "@/components/home/Credentials";
 import Experience from "@/components/home/Experience";
 import Identity from "@/components/home/Identity";

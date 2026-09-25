@@ -1,5 +1,3 @@
-"use client";
-
 import SectionHead from "./SectionHead";
 import Reveal from "./Reveal";
 import LifeGrid from "./LifeGrid";

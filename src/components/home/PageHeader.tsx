@@ -1,5 +1,3 @@
-"use client";
-
 import Reveal from "./Reveal";
 
 /** Shared header for the "view all" pages so they read as the same document. */

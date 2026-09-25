@@ -123,7 +123,7 @@ export default function TerminalView({
         return pushLines("output", HELP_LINES);
       case "whoami":
         return pushLines("output", [
-          "John Carl Santos — aspiring AI engineer & full-stack developer.",
+          "John Carl Santos — AI full-stack engineer.",
           "Builds AI-powered web apps, backend systems, and automation tools.",
         ]);
       case "projects":

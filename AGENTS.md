@@ -7,6 +7,10 @@
   scroll-progress bar. Scroll reveals are **CSS**, not Framer (see below).
 - OpenAI API for chatbot (with offline fallback)
 - Geist + Geist Mono via `next/font/google` (siblings, so mono labels sit on the same skeleton as body text)
+- Two accent faces, each with one job: Instrument Serif italic
+  (`.font-serif-accent`) for single words in the intro, and Caveat
+  (`--font-script`) for the splash monogram and footer signature. Don't spread
+  them further.
 
 ## Design language
 The site is a minimal single-page document: paper background with an 18px dot
@@ -21,12 +25,17 @@ no glass panels.
   and search come from `SectionDock`, a floating top-centre bar that slides in
   once you scroll past the intro. Do not add a navbar to individual pages.
 - **Home is one scroll**: `src/components/Home.tsx` composes the sections in
-  `src/components/home/`. Section anchor ids (`notes`, `projects`,
-  `experience`, `stack`, `certifications`, `contact`, `playground`) are shared
-  by `SectionDock.DOCK_SECTIONS` and the command palette. Ids track the
-  visible labels (`writing`, `projects`, `work`, `toolkit`, `credentials`,
-  `contact`, `sandbox`) — change a label and change its id with it, in
-  `SectionDock.tsx` **and** the section's own `<SectionHead id>`.
+  `src/components/home/`. Section anchor ids (`writing`, `projects`, `work`,
+  `toolkit`, `github`, `credentials`, `contact`, `sandbox`) are shared by
+  `SectionDock.DOCK_SECTIONS` and the command palette, and match the visible
+  labels — change a label and change its id with it, in `SectionDock.tsx`
+  **and** the section's own `<SectionHead id>`.
+- **`Home.tsx` is a server component.** So are the static sections
+  (`Experience`, `Credentials`, `Playground`, `SectionHead`, `PageHeader`):
+  they render client leaves (`Reveal`, `Link`, `LifeGrid`) with plain props.
+  Only add `"use client"` to a file that itself uses hooks, handlers, or
+  Framer — and never pass a function or component as a prop across that
+  boundary.
 - **Internal navigation goes through `@/components/providers/RouteTransition`**,
   a drop-in `next/link` replacement that cross-fades routes with the View
   Transitions API. Import `Link` from there, not `next/link`, for any in-app
@@ -46,16 +55,12 @@ no glass panels.
   `whileInView`, which left every row stuck at `opacity: 0` whenever the
   observer did not fire — and served a blank page to no-JS clients. `Reveal`
   also carries a 2.5s failsafe that reveals regardless. Do not swap it back.
-- **`DotField`** (`components/home/DotField.tsx`) is a fixed, `pointer-events-none`
-  canvas at `-z-10`. It is phase-locked to the CSS dot lattice: the lattice is
-  `background-size: 18px` so each dot centres at `n*18 + 9`. If you change
-  `--dot-size`, change `GRID` in `DotField.tsx` and `CELL` in `LifeGrid.tsx` too.
+- **The dot lattice is CSS only** (`--dot-size: 18px` in `globals.css`, so
+  each dot centres at `n*18 + 9`). `LifeGrid` draws on the same lattice; if
+  you change `--dot-size`, change `CELL` in `LifeGrid.tsx` too.
 - Canvas components read theme colours from CSS custom properties and re-read
   them via a `MutationObserver` on `documentElement`. New canvas work should do
   the same rather than hard-coding colours.
-- **`DotField` parks its rAF loop** when the halo is static and wakes on
-  pointer input, resize, or theme change. If you add work to its `tick`, keep
-  the park/`wake()` contract — an always-on loop redraws a static page at 60fps.
 - **Two view transitions share the root snapshot**, so each sets
   `documentElement.dataset.transition` (`"theme"` or `"route"`) before starting
   and clears it on `finished`. The CSS in `globals.css` is scoped on that flag —
@@ -98,12 +103,23 @@ npx tsc --noEmit # type check only
 npm run lint     # ESLint
 ```
 - **No test suite** in this project.
+- **CI** (`.github/workflows/ci.yml`) runs `tsc --noEmit`, `lint`, and
+  `build` on every push and PR. Run the same three locally before pushing.
 - **Build order**: `npx tsc --noEmit` → `npm run build`. TypeScript errors will block the build.
 
 ## Chatbot API (`src/app/api/chat/route.ts`)
 - Uses OpenAI `gpt-4o-mini` if `OPENAI_API_KEY` is set.
 - Falls back to `getOfflineReply()` if no API key or on error.
-- Guardrails block requests containing harmful keywords + code generation requests.
+- Guardrails block harmful keywords + code generation requests. Matching is
+  **whole-word** (plus -s/-ed/-ing endings) — a plain substring check blocked
+  "skills" (kill) and "hackathon" (hack).
+- `SYSTEM_PROMPT` is built from `Profile.ts` (education, experience, stack),
+  `Certifications.ts`, and `Projects.ts`. Update the data file, not the prompt;
+  only facts with no data file behind them are written inline.
+- Multi-turn: `Chatbot.tsx` sends the last 8 turns as `history`; the route
+  keeps only `user`/`assistant` roles and caps count and length.
+- Limits: 1000-char messages (matches the input's `MAX_CHARACTERS`), 400
+  reply tokens, and a best-effort in-memory 10 req/min per IP.
 
 ## Environment Variables
 - `OPENAI_API_KEY` — optional, enables AI chatbot. Without it, chatbot uses offline replies.

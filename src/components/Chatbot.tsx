@@ -57,6 +57,7 @@ const Chatbot = () => {
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const MAX_CHARACTERS = 1000;
+  const HISTORY_TURNS = 8;
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -72,6 +73,17 @@ const Chatbot = () => {
     if (!messageText || isLoading) return;
 
     setInput('');
+    // Earlier turns give the model context for follow-ups ("tell me more
+    // about that one"). The greeting and error bubbles aren't real turns.
+    const history = messages
+      .slice(1)
+      .filter((msg) => !msg.isError)
+      .slice(-HISTORY_TURNS)
+      .map((msg) => ({
+        role: msg.role === 'bot' ? 'assistant' : 'user',
+        content: msg.content,
+      }));
+
     setMessages(prev => [...prev, { role: 'user', content: messageText }]);
     setIsLoading(true);
 
@@ -79,7 +91,7 @@ const Chatbot = () => {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: messageText }),
+        body: JSON.stringify({ message: messageText, history }),
       });
 
       const data = await parseApiResponse(response);

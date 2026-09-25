@@ -1,37 +1,37 @@
 import OpenAI from "openai";
 import { aboutText } from "@/app/data/HeroIcons";
 import { projectsData } from "@/app/data/Projects";
+import { experience, stack } from "@/app/data/Profile";
+import { certifications } from "@/app/data/Certifications";
+
+// Built from the same data files the site renders, so the assistant can't
+// drift from the page. Only facts with no data file behind them are inline.
+const education = experience.filter((item) => item.kind === "education");
+const work = experience.filter((item) => item.kind === "work");
 
 const SYSTEM_PROMPT = `
-You are an AI assistant for John Carl Santos (who also goes by "CJ"), an aspiring software engineer and AI-focused developer.
+You are an AI assistant for John Carl Santos (who also goes by "CJ"), an AI full-stack engineer and computer science student.
 Your goal is to answer questions about CJ's skills, projects, background, and practical career growth based on the provided information.
 If asked for his name or what to call him, you can mention that he goes by "CJ".
 You can also answer general knowledge questions unrelated to CJ. Just be helpful, clear, and concise.
 
 Education:
-- Philippine Christian University: Bachelor of Science in Computer Science (Expected 2027)
-- Consistent Dean's Lister (GWA: 1.15)
-- Relevant Coursework: Data Structures & Algorithms, Linear Algebra, AWS S3, Software Engineering
+${education.map((e) => `- ${e.org}: ${e.role} (${e.period}). ${e.summary}`).join("\n")}
 
-Technical Skills (Detailed):
-- Languages: Python, Java, JavaScript, TypeScript, PHP
-- Frameworks & Libraries: FastAPI, Flask, TensorFlow, Scikit-learn, Pandas, NumPy, LangChain, RAG, ReactJS, Laravel
-- Database: Postgresql, Supabase, Firebase, SQLAlchemy, MySql
-- Tools: Git, Docker (Basic), Jupyter, VS Code, Render, Vercel, Google Colab, UiPath (RPA), Xampp, Postman
-- Concepts: Machine Learning, REST APIs, LLMs
+Experience:
+${work.map((e) => `- ${e.role} @ ${e.org} (${e.period}): ${e.summary}`).join("\n")}
+
+Technical Skills:
+${stack.map((g) => `- ${g.group}: ${g.items.join(", ")}`).join("\n")}
 
 Resume Projects:
 - Point of Sale (POS) System: Desktop POS using Java Swing, Apache POI for Excel integration.
 - Mini Score Predictor: Predictive model estimating scores based on study hours (Python, Docker).
-- Sociatech - Social Learning Platform: Project Lead & Backend Developer. Full-stack platform using Firebase Auth, REST API, JWT.
 
-Certifications & Awards:
-- Introduction to Cloud 101 (AWS)
-- Building RAG Apps Using MongoDB (MongoDB)
-- Oracle Cloud Infrastructure 2025 AI Foundations Associate
-- Oracle Cloud Infrastructure 2025 Certified Generative AI Professional
-- Machine Learning Foundations (AWS)
-- Generative AI Fundamentals (DataBricks)
+Certifications:
+${certifications.map((c) => `- ${c.title} (${c.issuer}, ${c.issueDate})`).join("\n")}
+
+Awards:
 - 3rd Place Hackathon — Java Problem Solving Competition
 
 About John
@@ -43,7 +43,7 @@ ${projectsData.map(p => `- ${p.name}: ${p.desc} (Tech: ${p.tech.join(", ")})`).j
 Guidelines:
 - Answer as John's professional representative.
 - Be concise, helpful, warm, and professional.
-- Use details from the Education, Skills, Resume Projects, and Certifications sections.
+- Use details from the Education, Experience, Skills, Resume Projects, Certifications, and Awards sections.
 - For questions about becoming a better developer, learning faster, choosing projects, building skills, job readiness, or career growth:
   - Give practical, step-by-step advice.
   - Ground the answer in CJ's path when relevant: shipping projects, AI/backend learning, internships, and building real portfolio work.
@@ -112,20 +112,39 @@ const getClientIp = (req: Request) =>
 const normalizeMessage = (value: unknown) =>
   typeof value === "string" ? value.trim() : "";
 
+const MAX_HISTORY_TURNS = 8;
+const MAX_HISTORY_TURN_LENGTH = 2000;
+
+type Turn = { role: "user" | "assistant"; content: string };
+
+// Client-supplied, so treat as untrusted: keep only well-formed user/assistant
+// turns (never "system"), bounded in count and length.
+const normalizeHistory = (value: unknown): Turn[] => {
+  if (!Array.isArray(value)) return [];
+  return value
+    .filter(
+      (turn): turn is Turn =>
+        typeof turn === "object" &&
+        turn !== null &&
+        (turn.role === "user" || turn.role === "assistant") &&
+        typeof turn.content === "string" &&
+        turn.content.trim().length > 0,
+    )
+    .slice(-MAX_HISTORY_TURNS)
+    .map((turn) => ({
+      role: turn.role,
+      content: turn.content.slice(0, MAX_HISTORY_TURN_LENGTH),
+    }));
+};
+
 const buildProjectReply = (message: string) => {
   const lowerMessage = message.toLowerCase();
+  // Match on the project's name (without any "(domain)" suffix) or id. The
+  // old reverse check — message is a substring of the project text — made
+  // "hi" match whichever project mentioned "this" first.
   const matchingProject = projectsData.find((project) => {
-    const searchableText = [
-      project.name,
-      project.desc,
-      project.longDescription,
-      project.role,
-      ...project.tech,
-    ]
-      .join(" ")
-      .toLowerCase();
-
-    return searchableText.includes(lowerMessage) || lowerMessage.includes(project.name.toLowerCase());
+    const name = project.name.replace(/\s*\(.*\)$/, "").toLowerCase();
+    return lowerMessage.includes(name) || lowerMessage.includes(project.id.replace(/-/g, ""));
   });
 
   if (!matchingProject) {
@@ -171,7 +190,7 @@ const getOfflineReply = (message: string) => {
     lowerMessage.includes("tech stack") ||
     lowerMessage.includes("what does john know")
   ) {
-    return "CJ works across Python, JavaScript, TypeScript, Java, and PHP, with experience in FastAPI, Flask, TensorFlow, React, Laravel, RAG, REST APIs, PostgreSQL, Supabase, Firebase, Docker, Vercel, and Render. His strongest direction is full-stack AI and backend-focused product development.";
+    return `CJ's stack: ${stack.map((g) => `${g.group} — ${g.items.join(", ")}`).join("; ")}. His strongest direction is full-stack AI and backend-focused product development.`;
   }
 
   if (
@@ -180,7 +199,7 @@ const getOfflineReply = (message: string) => {
     lowerMessage.includes("who is john") ||
     lowerMessage.includes("who is cj")
   ) {
-    return "John Carl Santos, also called CJ, is a Computer Science student at Philippine Christian University and an aspiring software engineer focused on AI and full-stack development. He has worked on backend systems, RAG-oriented projects, and portfolio products aimed at solving real user problems.";
+    return "John Carl Santos, also called CJ, is a AI full-stack engineer and Computer Science student at Philippine Christian University. He has worked on backend systems, RAG-oriented projects, and portfolio products aimed at solving real user problems.";
   }
 
   const projectReply = buildProjectReply(message);
@@ -195,8 +214,9 @@ export async function POST(req: Request) {
   let userMessage = "";
 
   try {
-    const body = (await req.json()) as { message?: unknown };
+    const body = (await req.json()) as { message?: unknown; history?: unknown };
     const message = normalizeMessage(body.message);
+    const history = normalizeHistory(body.history);
     userMessage = message;
 
     if (!message) {
@@ -240,6 +260,7 @@ export async function POST(req: Request) {
       max_tokens: MAX_REPLY_TOKENS,
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
+        ...history,
         { role: "user", content: message },
       ],
     });

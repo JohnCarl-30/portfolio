@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "@/components/providers/RouteTransition";
 import { ArrowUpRight } from "lucide-react";
 

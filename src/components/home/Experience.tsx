@@ -1,5 +1,3 @@
-"use client";
-
 import { experience } from "@/app/data/Profile";
 import SectionHead from "./SectionHead";
 import Reveal from "./Reveal";

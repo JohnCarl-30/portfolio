@@ -59,7 +59,7 @@ export const metadata = {
     template: "%s | John Carl Santos",
   },
   description:
-    "Portfolio of John Carl Santos — aspiring AI engineer building RAG systems, full-stack web apps, and automation tools with Next.js, Python, and cloud infrastructure.",
+    "Portfolio of John Carl Santos — AI full-stack engineer building RAG systems, full-stack web apps, and automation tools with Next.js, Python, and cloud infrastructure.",
   keywords: [
     "John Carl Santos",
     "John Carl",
@@ -103,14 +103,14 @@ export const metadata = {
     siteName: "John Carl Santos",
     title: "John Carl Santos — AI Full Stack Engineer",
     description:
-      "Portfolio of John Carl Santos — aspiring AI engineer building RAG systems, full-stack web apps, and automation tools.",
+      "Portfolio of John Carl Santos — AI full-stack engineer building RAG systems, full-stack web apps, and automation tools.",
   },
   twitter: {
     card: "summary_large_image",
     site: "@dyeyyyccc",
     title: "John Carl Santos — AI Full Stack Engineer",
     description:
-      "Portfolio of John Carl Santos — aspiring AI engineer building RAG systems, full-stack web apps, and automation tools.",
+      "Portfolio of John Carl Santos — AI full-stack engineer building RAG systems, full-stack web apps, and automation tools.",
     creator: "@dyeyyyccc",
   },
 };
