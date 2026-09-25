@@ -7,7 +7,7 @@ export interface KeyFeature {
 export interface ProjectItem {
   id: string;
   name: string;
-  category: "Web" | "Mobile" | "UI/UX" | "None";
+  category: "Web" | "Mobile" | "Desktop" | "ML" | "UI/UX" | "None";
   desc: string;
   url: string;
   tech: string[];
@@ -222,12 +222,37 @@ export const projectsData: ProjectItem[] = [
       }
     ],
   },
-
+  {
+    id: "pos-system",
+    name: "POS System",
+    category: "Desktop",
+    desc: "A desktop point-of-sale system built with Java Swing, using Apache POI to read and write Excel files.",
+    longDescription: "A desktop point-of-sale application built in Java Swing. Apache POI handles the Excel integration, so sales and product data can be read from and written to spreadsheets.",
+    url: "",
+    tech: ["Java", "Java Swing", "Apache POI"],
+    role: "Developer",
+    timeline: "",
+    keyFeatures: [],
+  },
+  {
+    id: "mini-score-predictor",
+    name: "Mini Score Predictor",
+    category: "ML",
+    desc: "A predictive model that estimates a score from the number of hours studied, packaged with Docker.",
+    longDescription: "A small machine learning project: a model that predicts a score from study hours, written in Python and containerized with Docker so it runs the same anywhere.",
+    url: "",
+    tech: ["Python", "Machine Learning", "Docker"],
+    role: "Developer",
+    timeline: "",
+    keyFeatures: [],
+  },
 ];
 
 export const projectsButton: string[] = [
   "All",
   "Web",
   "Mobile",
+  "Desktop",
+  "ML",
   "UI/UX"
 ];

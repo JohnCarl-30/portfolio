@@ -14,7 +14,7 @@ function ProjectRow({ project, index }: { project: ProjectItem; index: number })
     title: project.name,
     body: project.desc,
     image: project.url || undefined,
-    meta: `${project.role} · ${project.timeline}`,
+    meta: [project.role, project.timeline].filter(Boolean).join(" · "),
   });
 
   return (
