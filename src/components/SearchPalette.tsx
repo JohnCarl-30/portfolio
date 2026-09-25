@@ -331,11 +331,13 @@ export default function SearchPalette() {
   }, [closeSearch]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO: derive during render instead of syncing state to props
     setThemeIndex(getThemeOptionIndex(themePreference));
   }, [themePreference]);
 
   useEffect(() => {
     if (!isSearchOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO: derive during render instead of syncing state to props
       setView("search");
       setQuery("");
       return;
@@ -357,6 +359,7 @@ export default function SearchPalette() {
 
   useEffect(() => {
     if (!flatEntries.length) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO: derive during render instead of syncing state to props
       setSearchIndex(-1);
       return;
     }

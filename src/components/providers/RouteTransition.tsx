@@ -103,13 +103,13 @@ function NavigationProgress({ active }: { active: boolean }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (!active) {
-      setVisible(false);
-      return;
-    }
+    if (!active) return;
 
     const timer = window.setTimeout(() => setVisible(true), PROGRESS_AFTER_MS);
-    return () => window.clearTimeout(timer);
+    return () => {
+      window.clearTimeout(timer);
+      setVisible(false);
+    };
   }, [active]);
 
   if (!visible) return null;

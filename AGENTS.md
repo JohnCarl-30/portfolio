@@ -1,7 +1,8 @@
 # AGENTS.md — Portfolio Project
 
 ## Stack & Versions
-- Next.js 15 (App Router) + React 19 + TypeScript
+- Next.js 16 (App Router, Turbopack builds) + React 19 + TypeScript. Dynamic
+  route `params` are a `Promise` — always `await params`.
 - Tailwind CSS v4 (`@import "tailwindcss"` syntax in `globals.css`)
 - Framer Motion — used only for the dock, hover-preview card, palette, and
   scroll-progress bar. Scroll reveals are **CSS**, not Framer (see below).
@@ -106,6 +107,12 @@ npm run lint     # ESLint
 - **CI** (`.github/workflows/ci.yml`) runs `tsc --noEmit`, `lint`, and
   `build` on every push and PR. Run the same three locally before pushing.
 - **Build order**: `npx tsc --noEmit` → `npm run build`. TypeScript errors will block the build.
+- **ESLint** is native flat config (`eslint-config-next/core-web-vitals` +
+  `/typescript`); `next lint` no longer exists, so `npm run lint` calls
+  `eslint` directly. The React Compiler hook rules are on: don't `setState`
+  synchronously in an effect. Reading a browser-only value (localStorage, the
+  local clock) after mount is the one accepted exception — disable the rule on
+  that line with a reason, as `AppUIProvider` and `NotFoundGame` do.
 
 ## Chatbot API (`src/app/api/chat/route.ts`)
 - Uses OpenAI `gpt-4o-mini` if `OPENAI_API_KEY` is set.

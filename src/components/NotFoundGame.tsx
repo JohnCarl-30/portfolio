@@ -56,6 +56,7 @@ export default function NotFoundGame() {
   const [best, setBest] = useState(0);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only value, read after mount so the prerendered HTML hydrates cleanly
     setBest(Number(window.localStorage.getItem(BEST_SCORE_KEY)) || 0);
   }, []);
 

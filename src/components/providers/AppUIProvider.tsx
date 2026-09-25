@@ -186,6 +186,7 @@ export function AppUIProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only value, read after mount so the prerendered HTML hydrates cleanly
     setThemePreference(getPreferredTheme());
   }, []);
 

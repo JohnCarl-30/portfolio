@@ -21,10 +21,7 @@ function useDecodedText(text: string, enabled: boolean) {
   const [output, setOutput] = useState(enabled ? "" : text);
 
   useEffect(() => {
-    if (!enabled) {
-      setOutput(text);
-      return;
-    }
+    if (!enabled) return;
 
     let settled = 0;
     const interval = window.setInterval(() => {
@@ -49,7 +46,7 @@ function useDecodedText(text: string, enabled: boolean) {
     return () => window.clearInterval(interval);
   }, [text, enabled]);
 
-  return output;
+  return enabled ? output : text;
 }
 
 function useGreeting() {
@@ -57,6 +54,7 @@ function useGreeting() {
 
   useEffect(() => {
     const hour = new Date().getHours();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- visitor's local hour, read after mount so the prerendered HTML hydrates cleanly
     setGreeting(
       hour < 5
         ? "up late?"
