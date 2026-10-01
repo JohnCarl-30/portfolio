@@ -58,7 +58,7 @@ export const experience: ExperienceItem[] = [
     org: "SOFI AI Tech Solutions",
     period: "Present",
     summary:
-      "Curating training datasets, defining annotation standards, and building evaluation sets for LLM and machine learning systems.",
+      "Curating training datasets, defining annotation standards, and building evaluation sets for LLM and machine learning systems. Built an email bot that turns free-text steel price inquiries into catalog-matched quotations.",
     kind: "work",
   },
   {

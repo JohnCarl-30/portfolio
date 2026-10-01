@@ -31,7 +31,7 @@ export const HERO_ICONS: HeroIcon[] = [
   },
 ]
 
-export const aboutText: string = "I'm John Carl Santos, an AI full-stack engineer and computer science student at Philippine Christian University (consistent Dean's Lister). I work at SOFI AI Tech Solutions on training data and LLM evaluation, and I interned as a backend engineer at FlyRank AI and a software engineer at Alphaexplora. I build full-stack products with AI inside: StudyAI turns documents into flashcards over a RAG pipeline, Resumae analyzes resumes against job posts, and CiviReport handles barangay complaints. My stack is Python, TypeScript, FastAPI, Laravel, React, Next.js, PostgreSQL, and LangChain. I care about systems that keep working after the demo.";
+export const aboutText: string = "I'm John Carl Santos, an AI full-stack engineer and computer science student at Philippine Christian University (consistent Dean's Lister). I work at SOFI AI Tech Solutions on training data and LLM evaluation, and I interned as a backend engineer at FlyRank AI and a software engineer at Alphaexplora. I build full-stack products with AI inside: StudyAI turns documents into flashcards over a RAG pipeline, Resumae analyzes resumes against job posts, Relaydesk answers support chats from a help center and hands the rest to a staff inbox, and CiviReport handles barangay complaints. My stack is Python, TypeScript, FastAPI, Laravel, React, Next.js, PostgreSQL, and LangChain. I care about systems that keep working after the demo.";
 
 interface Skill {
   name: string;

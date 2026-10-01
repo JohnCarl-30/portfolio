@@ -7,7 +7,7 @@ export interface KeyFeature {
 export interface ProjectItem {
   id: string;
   name: string;
-  category: "Web" | "Mobile" | "UI/UX" | "None";
+  category: "Web" | "Mobile" | "UI/UX" | "AI" | "None";
   desc: string;
   url: string;
   tech: string[];
@@ -22,6 +22,81 @@ export interface ProjectItem {
 }
 
 export const projectsData: ProjectItem[] = [
+  {
+    id: "rfq-bot",
+    name: "RFQ Email Bot",
+    category: "AI",
+    desc: "An email bot for a steel supplier that reads free-text price inquiries, matches each item to a 960-SKU catalog, and replies in the customer's thread with a priced quotation.",
+    longDescription: "Customers ask for prices the way they would ask a counter clerk: \"100 pcs 10mm rebar 6m and 20 sheets of 4x8 GI sheet 1.2mm\", often in Taglish. The bot polls a Gmail inbox, has an LLM turn the email into structured line items (product, grade, every size in millimetres, quantity), and checks each item against the line it came from before using it.\n\nEach item is matched to the catalog on product, stated variants, and sizes, with inch sizes snapped to the metric stock they are sold as. An item is only priced on a confident match; anything ambiguous or missing goes back to the customer as a question listing the closest SKUs. The reply is a quotation with SKUs, 12% VAT, a validity window, and terms, threaded under the customer's own email.",
+    url: "/projects/rfq-bot.png",
+    tech: ["Python", "OpenAI API", "Gmail API", "Google OAuth", "RapidFuzz", "pytest"],
+    role: "AI Engineer",
+    timeline: "2026",
+    highlights: [
+      "Extracts line items with a strict JSON schema; every item must cite a real line in the email and match the quantity written there, with a rules parser as fallback.",
+      "Matches on every size given (beams carry five), applies trade defaults like Grade 40 rebar and tells the customer, and asks instead of guessing; all 960 SKUs find themselves from their own description.",
+      "Handles each email exactly once across restarts using Gmail history and claim/processed labels, with per-sender rate limits and no automatic replies to forged or bulk mail.",
+    ],
+    keyFeatures: [
+      {
+        title: "Free Text to Line Items",
+        description: "An LLM reads Taglish, misspellings, and inch shorthand into structured items, each tied to the line it came from.",
+        image: "/projects/rfq-bot.png",
+      },
+      {
+        title: "Match or Ask",
+        description: "Confident catalog matches are priced; unknown or ambiguous items come back as a question with the closest SKUs.",
+        image: "/projects/rfq-bot.png",
+      },
+      {
+        title: "Threaded Quotation",
+        description: "SKU table, subtotal, 12% VAT, total, validity, and terms, replied in the customer's own thread in about 30 seconds.",
+        image: "/projects/rfq-bot.png",
+      }
+    ],
+  },
+  {
+    id: "directory-pipeline",
+    name: "directory-pipeline",
+    category: "AI",
+    desc: "A crawl \u2192 extract \u2192 enrich \u2192 resolve \u2192 search pipeline on Temporal, where an eval decides how much of the extraction the model is allowed to do \u2014 and the answer is two fields out of 234.",
+    longDescription: "A directory of companies is built by crawling listing pages, pulling a record out of each one, enriching it, deciding which records are the same company, and indexing the survivors behind an OpenSearch alias. Temporal owns the orchestration, so a crawl that dies halfway resumes rather than restarts: one batch of twenty-five exhausts its own retries and fails alone while the rest keep indexing.\n\nExtraction is three layers, cheapest first \u2014 CSS selectors, then regex over the page's prose, then a model call \u2014 and each layer fills only what the one above it missed. The split is measured rather than asserted. The fixtures are the ground truth, since the mock site renders its pages from the same records the extractor is trying to recover, so every company can be rendered under rich markup, prose-only, and near-empty templates and scored per field. Facts a page never prints are excluded from recall, because a stub listing genuinely has no phone number and no layer could recover one; counting those as misses had overstated the case for the model by nearly three times.\n\nThe result is that the deterministic layers recover 232 of 234 recoverable fields with zero incorrect values, and the model is needed for two \u2014 both headcounts written as bare numbers, where \"around 500\" could as easily be revenue. An agentic extractor was built first and rejected on its own numbers. The eval is also what caught a regression I introduced while closing an address gap: a single pattern accepting both \"TX\" and \"Texas\" matched the street as the city on \"1 Rockefeller Plaza, New York, NY\".",
+    url: "/projects/directory-pipeline.png",
+    tech: ["Python", "Temporal", "OpenSearch", "FastAPI", "Anthropic API", "MCP", "Prometheus", "Docker", "pandas", "pytest"],
+    role: "Backend & Data Engineer",
+    timeline: "2026",
+    repoUrl: "https://github.com/JohnCarl-30/directory-pipeline",
+    highlights: [
+      "Measured the extraction cascade instead of arguing it: 232 of 234 recoverable fields from selectors and regex, zero incorrect values across 36 pages, and the model needed for two.",
+      "Built the agentic extractor and rejected it on the numbers \u2014 $2.56 for one company, six tool calls including three 404s, and it read an unrelated company's page, which in a pipeline that then resolves duplicates is a correctness problem rather than waste.",
+      "Found the Dockerised worker had never once started: it crash-looped on a TypeError while 144 tests, an in-process smoke run and the image build all stayed green, because none of the three ever ran the container that ships. Added a CI job that boots the stack, and confirmed it against the bug by reverting the fix.",
+      "Fixed a retry policy that named an exception class nothing raises, so terminal 404s retried six times over ten minutes; the verdict now travels with the exception, and a test asserts every entry in that list resolves to a real class.",
+      "Stopped a reindex retry from starting a second concurrent copy of a multi-hour index build \u2014 the index name is unique by construction, so a retry minted a new target and left the first copy filling an index nothing would swap to.",
+      "Exported latency as histogram buckets rather than percentiles so worker replicas aggregate correctly, since averaging two workers' p95 is not the fleet's p95.",
+    ],
+    keyFeatures: [
+      {
+        title: "Why This Ranked",
+        description: "Expanding a result shows the stored document and the BM25 breakdown behind its score \u2014 boost, idf, tf and the parameters \u2014 so relevance is inspectable rather than argued about.",
+        image: "/projects/directory-pipeline-explain.png",
+      },
+      {
+        title: "Measured, Not Argued",
+        description: "An eval scores each extraction layer per field against the records the fixture pages are rendered from, and separates facts a page never printed from facts the parser missed.",
+        image: "/projects/directory-pipeline.png",
+      },
+      {
+        title: "The Agent That Did Not Pay",
+        description: "The agentic version of the extractor cost $2.56 per company, wandered onto 404s, and returned a state name where the index wanted a code. The write-up states what the single spike does and does not prove.",
+        image: "",
+      },
+      {
+        title: "Green Tests, Dead Worker",
+        description: "Unit tests drove workflows through a time-skipping environment and never started a worker; CI built the image and stopped. A job now boots the real containers and asserts the worker logged a start, holds no traceback, and has not restarted.",
+        image: "",
+      }
+    ],
+  },
   {
     id: "auto-learn",
     name: "auto-learn",
@@ -60,34 +135,69 @@ export const projectsData: ProjectItem[] = [
     ],
   },
   {
-    id: "resumae",
-    name: "Resumae",
-    category: "Web",
-    desc: "An AI-powered resume analyzer and builder that compares resumes with job postings and pinpoints missing keywords, weak bullets, and hard-to-scan layouts.",
-    longDescription: "Resumae helps job seekers tailor their resumes to the roles they want. It compares a resume with a target job posting and returns focused, line-by-line feedback on missing language, bullet impact, and readability so users know exactly what to improve.\n\nThe platform also includes a clean resume builder that works without signing in, keeping drafts in the browser until the user chooses to save them.",
-    url: "/projects/resumae.png",
-    tech: ["NextJS", "TypeScript", "TailwindCSS", "Clerk", "AI Integration", "Vercel"],
-    role: "Full-stack Developer",
+    id: "relaydesk",
+    name: "Relaydesk",
+    category: "AI",
+    desc: "A support chat widget that answers from a help center, links the article it quoted, and opens a ticket in a staff inbox when it can't help.",
+    longDescription: "Relaydesk is a support widget and staff inbox, demoed on Nimbus, a made-up analytics company. A visitor asks a question and a LangGraph loop retrieves help articles, answers by quoting the best match (or with an LLM when a key is set), and searches again with a rewritten query when the first pass is weak. Questions the help center can't answer, or a tap on \"This didn't help\", open a ticket with the full transcript.\n\nMost of the work went into the second message, not the first. Follow-ups like \"and Starter?\" or \"can I export them first?\" are resolved against the conversation, \"thanks\" gets a reply instead of a ticket, and a price question with no price in the articles goes to a person. A 43-conversation eval and Playwright tests in CI check that it stays that way.",
+    url: "/projects/relaydesk.png",
+    tech: ["LangGraph", "NextJS", "TypeScript", "OpenAI API", "Playwright", "LangChain", "SQLite", "TailwindCSS", "OpenTelemetry"],
+    role: "Full-stack AI Engineer",
     timeline: "2026 - Present",
+    repoUrl: "https://github.com/JohnCarl-30/relaydesk",
     highlights: [
-      "Built job-post-aligned resume analysis with actionable, line-level feedback.",
-      "Created focused checks for missing keywords, bullet strength, and six-second scan readability.",
-      "Added a no-sign-in resume builder with browser-based draft persistence.",
+      "Built the LangGraph loop: retrieve, answer by quoting or generating, and retry with a rewritten query when retrieval is weak.",
+      "Resolved follow-up questions against the conversation, checked by a 43-conversation multi-turn eval. Failures found in review went in as test cases before each fix.",
+      "Traced a failing CI quality gate to a metric that scored correct refusals near zero, and changed my eval harness to score refused answers separately.",
+      "Covered the widget with Playwright tests that run against a production build in CI.",
     ],
     keyFeatures: [
       {
-        title: "Job-Aligned Analysis",
-        description: "Compare a resume directly with a target job post to uncover missing keywords and gaps in positioning.",
+        title: "Answers With a Source",
+        description: "Each reply quotes the help article it came from and links it under \"Answer based on\".",
+        image: "/projects/relaydesk.png",
+      },
+      {
+        title: "Handoff to a Staff Inbox",
+        description: "Unanswerable questions and \"This didn't help\" open a ticket. Staff see the full transcript, with bot replies marked.",
+        image: "/projects/relaydesk-inbox.png",
+      },
+      {
+        title: "The Help Center It Searches",
+        description: "Articles are grouped by topic, and each ends with a \"Still stuck?\" box that opens the chat.",
+        image: "/projects/relaydesk-help.png",
+      }
+    ],
+  },
+  {
+    id: "resumae",
+    name: "Resumae",
+    category: "AI",
+    desc: "A resume checker that lines a resume up against one job post and marks what to fix: job words it never uses, bullets with no outcome, and layout that slows a scan.",
+    longDescription: "Most resume checkers score a resume against a generic template. Resumae scores it against the posting the person is actually applying to. They paste the job post and upload a PDF or DOCX; the API pulls the text out and an LLM returns the analysis as a typed object: matched and missing job words, a match score, bullet-level notes, and layout issues that would slow a six-second skim.\n\nSuggestions are edits the user reviews, not a rewrite. Each one sits next to the bullet it refers to and only changes the resume when accepted. If the model call fails or AI is switched off, rule-based analyzers for keywords, impact, writing, and parseability produce the same report shape, so the check still returns. Building a resume needs no account: four templates, an inline editor with undo and redo, and drafts kept in the browser until the user saves one.",
+    url: "/projects/resumae.png",
+    tech: ["NextJS", "NestJS", "TypeScript", "PostgreSQL", "Azure OpenAI", "Vercel AI SDK", "Clerk", "Docker"],
+    role: "Full-stack Developer",
+    timeline: "2026 - Present",
+    highlights: [
+      "Gets analysis back as a Zod-validated object through the AI SDK's generateObject, so the UI renders typed fields instead of parsing prose.",
+      "Falls back to rule-based analyzers with the same output shape whenever the model call fails, so a check never dead-ends on an AI error.",
+      "Covered by Jest on the NestJS API, Vitest with fast-check property tests on the web app, and Playwright browser tests in CI.",
+    ],
+    keyFeatures: [
+      {
+        title: "Checked against the posting",
+        description: "Paste the job post and upload a PDF or DOCX; the report lists the job words the resume uses, the ones it is missing, and a match score.",
         image: "/projects/resumae.png",
       },
       {
-        title: "Actionable Resume Feedback",
-        description: "Get focused notes on bullet strength, measurable outcomes, layout, and six-second scan readability.",
+        title: "Edits you approve",
+        description: "Each weak bullet gets a suggested rewrite with the outcome it was missing; nothing changes until the user accepts it.",
         image: "/projects/resumae.png",
       },
       {
-        title: "No-Sign-In Resume Builder",
-        description: "Create a clean resume immediately, with drafts kept in the browser until the user chooses to save one.",
+        title: "Builder with no sign-in",
+        description: "Four templates and an inline editor with undo and redo; drafts stay in the browser until the user saves one.",
         image: "/projects/resumae.png",
       }
     ],
@@ -268,5 +378,6 @@ export const projectsButton: string[] = [
   "All",
   "Web",
   "Mobile",
-  "UI/UX"
+  "UI/UX",
+  "AI"
 ];
