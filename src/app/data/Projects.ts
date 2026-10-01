@@ -17,9 +17,48 @@ export interface ProjectItem {
   highlights?: string[];
   keyFeatures: KeyFeature[];
   liveDemoUrl?: string;
+  /** Public source, for work whose evidence is the code rather than a deploy. */
+  repoUrl?: string;
 }
 
 export const projectsData: ProjectItem[] = [
+  {
+    id: "auto-learn",
+    name: "auto-learn",
+    category: "Web",
+    desc: "An ESL writing tool where the explanation is a gate, not a receipt: the better word is withheld until you open the card that teaches it.",
+    longDescription: "auto-learn fixes a sentence and teaches the word that fixed it. Typos, spacing, and punctuation are corrected inline and never discussed. Anything that is a real choice \u2014 grammar, word choice, register, wordiness \u2014 is marked but held back: the API drops the replacement from its response and keeps it server-side, so the only way to read the stronger word is to open the card that explains it.\n\nThe withholding is the product, so it is enforced where it cannot be walked around. The field is absent from the payload rather than flagged inside it, which means it is not sitting in the network tab either. Accepting a word banks it, and the next request tells the model which words the writer has already met so it reaches for one they have not.\n\nMost of the work went into knowing whether the model was any good. An eval harness scores both model calls against a committed baseline using deterministic checks and an LLM judge, and the judge was validated against hand-labelled cases before it was trusted \u2014 Cohen\u2019s kappa, not impressions. It paid for itself by catching a prompt change that raised one score while quietly lowering another.",
+    url: "/projects/auto-learn.png",
+    tech: ["NextJS", "TypeScript", "NestJS", "PostgreSQL", "Redis", "OpenAI API", "ElevenLabs", "Auth.js", "Zod", "WordNet", "Jest", "Vitest", "Playwright"],
+    role: "Full-stack Developer",
+    timeline: "2026 - Present",
+    repoUrl: "https://github.com/JohnCarl-30/auto-learn",
+    highlights: [
+      "Enforced the gate on the server: the replacement is dropped from the proposal and released only when a card is opened, so it never reaches the browser early.",
+      "Validated the LLM judge against hand-labelled cases before trusting it, then held every prompt change to a committed baseline at six runs per case.",
+      "Grounded word senses in a local WordNet database rather than a dictionary API, so the part the cards are built on needs no network and no key.",
+      "Measured the voice path instead of estimating it \u2014 setting the synthesis output format cut each spoken word from 15,090 bytes to 3,989.",
+      "Split tests across three runners by filename to keep an ESM-only AI SDK and a CommonJS API in one repository: 498 tests across the three packages.",
+      "Synced the word bank to an account without uploading the writing: the sentence a word was met in has no column on the server and never leaves the browser.",
+    ],
+    keyFeatures: [
+      {
+        title: "The Gate",
+        description: "Tier-two suggestions arrive as a mark and a teaser. The replacement stays on the server until the reader opens the card that teaches it.",
+        image: "",
+      },
+      {
+        title: "Evaluated, Not Assumed",
+        description: "Deterministic scorers and a validated LLM judge run both model calls against a committed baseline, so a prompt change has to prove it helped.",
+        image: "",
+      },
+      {
+        title: "A Bank That Earns Its Reward",
+        description: "Words are banked only when chosen, and the product congratulates reuse rather than attendance \u2014 it fires on evidence the writer used the word again unprompted.",
+        image: "",
+      }
+    ],
+  },
   {
     id: "resumae",
     name: "Resumae",

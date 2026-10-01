@@ -78,16 +78,37 @@ export default async function ProjectDetail({
             ))}
           </div>
 
-          {project.liveDemoUrl ? (
-            <a
-              href={project.liveDemoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="focus-ring mt-5 inline-flex items-center gap-1.5 rounded-full border border-[var(--line-strong)] px-3.5 py-1.5 text-[0.8rem] transition-colors hover:border-[var(--signal)] hover:text-[var(--signal)]"
-            >
-              live demo
-              <ExternalLink className="h-3.5 w-3.5" />
-            </a>
+          {project.liveDemoUrl || project.repoUrl ? (
+            <div className="mt-5 flex flex-wrap items-center gap-2">
+              {project.liveDemoUrl ? (
+                <a
+                  href={project.liveDemoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="focus-ring inline-flex items-center gap-1.5 rounded-full border border-[var(--line-strong)] px-3.5 py-1.5 text-[0.8rem] transition-colors hover:border-[var(--signal)] hover:text-[var(--signal)]"
+                >
+                  live demo
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              ) : null}
+
+              {/*
+                Labelled "source", never "live demo" — some of this work is worth
+                reading rather than clicking, and sending someone to a repository
+                under a demo link is a small lie about what they are getting.
+              */}
+              {project.repoUrl ? (
+                <a
+                  href={project.repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="focus-ring inline-flex items-center gap-1.5 rounded-full border border-[var(--line-strong)] px-3.5 py-1.5 text-[0.8rem] transition-colors hover:border-[var(--signal)] hover:text-[var(--signal)]"
+                >
+                  source
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              ) : null}
+            </div>
           ) : null}
         </header>
 
