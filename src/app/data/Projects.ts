@@ -21,6 +21,42 @@ export interface ProjectItem {
 
 export const projectsData: ProjectItem[] = [
   {
+    id: "ccdv-f-study-lab",
+    name: "CCDV-F Study Lab",
+    category: "Web",
+    desc: "A study site for Anthropic's Claude Certified Developer exam, with practice questions checked against the official docs and tests scored by exam objective.",
+    longDescription: "CCDV-F Study Lab is how I'm preparing for Anthropic's Claude Certified Developer – Foundations exam. Its bank holds 313 practice questions, each written from a page of Anthropic's docs and stored with the exact quote that backs the answer. A weekly GitHub Actions job fetches every source page and fails if a quote is gone, so questions don't go stale as the docs change.\n\nThe public site is a static Next.js export on GitHub Pages: knowledge checks, a 53-question mock exam weighted like the real one, custom tests scored by the exam's 25 objectives, a mistakes deck and a study plan, with progress kept in the browser. Run locally, the same codebase is a playground where Claude Code works on sample projects through the Claude Agent SDK, with 27 challenges checked automatically.",
+    url: "/projects/ccdv-f-study-lab.png",
+    tech: ["NextJS", "TypeScript", "Claude Agent SDK", "TailwindCSS", "Supabase", "GitHub Actions", "Jest"],
+    role: "Full-stack Developer",
+    timeline: "2026 - Present",
+    highlights: [
+      "Wrote a 313-question bank where every answer carries a quote from the official docs, re-checked weekly in CI.",
+      "Built mock exams and custom tests that spread questions across the exam's 25 objectives and score each one, like the real score report.",
+      "Published the study track as a static export with every API route left out of the build, redeployed to GitHub Pages on each push.",
+      "Added optional GitHub sign-in that syncs progress through Supabase, with row-level security limiting each user to their own row.",
+      "Covered the app with 720 Jest tests, including a local practice Claude API so the coding challenges run without an API key.",
+    ],
+    keyFeatures: [
+      {
+        title: "Objective-Scored Practice Tests",
+        description: "Pick a length and the objectives to cover; results show percent correct per objective, with weak ones flagged.",
+        image: "/projects/ccdv-f-study-lab.png",
+      },
+      {
+        title: "Doc-Checked Question Bank",
+        description: "Every question links to its source page and stores the quote behind its answer; a weekly job checks each quote is still there.",
+        image: "/projects/ccdv-f-study-lab.png",
+      },
+      {
+        title: "Agent Playground",
+        description: "Locally, Claude Code edits a sample project through the Agent SDK while each tool call, permission prompt and message shows up live.",
+        image: "/projects/ccdv-f-study-lab.png",
+      }
+    ],
+    liveDemoUrl: "https://johncarl-30.github.io/claude-code-playground/"
+  },
+  {
     id: "resumae",
     name: "Resumae",
     category: "Web",
