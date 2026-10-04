@@ -27,6 +27,15 @@ export default function Experience() {
               <span className="meta shrink-0">{item.period}</span>
             </div>
             <p className="row-desc mt-1 max-w-[44rem]">{item.summary}</p>
+            {item.metrics?.length ? (
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {item.metrics.map((metric) => (
+                  <span key={metric} className="chip">
+                    {metric}
+                  </span>
+                ))}
+              </div>
+            ) : null}
           </Reveal>
         ))}
       </ol>

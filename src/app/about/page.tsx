@@ -132,6 +132,15 @@ export default function AboutPage() {
                   <span className="meta shrink-0">{item.period}</span>
                 </div>
                 <p className="row-desc mt-1">{item.summary}</p>
+                {item.metrics?.length ? (
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {item.metrics.map((metric) => (
+                      <span key={metric} className="chip">
+                        {metric}
+                      </span>
+                    ))}
+                  </div>
+                ) : null}
               </li>
             ))}
           </ol>

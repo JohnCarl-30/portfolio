@@ -10,6 +10,8 @@ export type ExperienceItem = {
   org: string;
   period: string;
   summary: string;
+  /** Short, countable facts rendered as chips. Omit rather than pad. */
+  metrics?: string[];
   href?: string;
   kind: "work" | "education" | "note";
 };
@@ -58,7 +60,14 @@ export const experience: ExperienceItem[] = [
     org: "SOFI AI Tech Solutions",
     period: "Present",
     summary:
-      "Curating training datasets, defining annotation standards, and building evaluation sets for LLM and machine learning systems. Built an email bot that turns free-text steel price inquiries into catalog-matched quotations.",
+      "Curating training datasets, defining annotation standards, and building evaluation sets for LLM and machine learning systems. Built an email quoting bot for a steel supplier: an LLM turns free-text inquiries into line items, each matched against a 960-SKU catalog across 17 categories (all 960 resolve from their own descriptions), and a VAT quotation lands in the customer's thread in about 30 seconds, with 177 tests behind it. Also built a help desk for an accounting practice where I took the model out of intake \u2014 an unreviewed priority guess had been starting SLA clocks on tickets nobody had read. Its CI ran no tests at all when I picked it up.",
+    metrics: [
+      "0 \u2192 254 tests gated in ci",
+      "63 api endpoints",
+      "24 admin-only routes asserted",
+      "23 browser tests",
+      "16 migrations",
+    ],
     kind: "work",
   },
   {
@@ -110,10 +119,10 @@ export const stack: { group: string; items: string[] }[] = [
   },
   {
     group: "backend",
-    items: ["FastAPI", "Node.js", "PostgreSQL", "MongoDB", "Supabase", "Redis", "Celery"],
+    items: ["FastAPI", "Node.js", "PostgreSQL", "MongoDB", "Supabase", "Redis", "Celery", "SQLAlchemy", "Alembic"],
   },
   {
     group: "infra",
-    items: ["Docker", "AWS", "Vercel", "Digital Ocean", "Git", "Postman"],
+    items: ["Docker", "AWS", "Vercel", "Digital Ocean", "Git", "Postman", "GitHub Actions", "Playwright", "pytest"],
   },
 ];
