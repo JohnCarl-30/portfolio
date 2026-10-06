@@ -26,7 +26,7 @@ export default function Experience() {
               </h3>
               <span className="meta shrink-0">{item.period}</span>
             </div>
-            <p className="row-desc mt-1 max-w-[44rem]">{item.summary}</p>
+            <p className="row-desc mt-1">{item.summary}</p>
             {item.metrics?.length ? (
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {item.metrics.map((metric) => (

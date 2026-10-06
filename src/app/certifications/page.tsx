@@ -22,7 +22,7 @@ export default function CertificationsPage() {
           const body = (
             <>
               <div className="flex items-baseline justify-between gap-4">
-                <h2 className="row-title inline-flex items-center gap-1 transition-colors group-hover/row:text-[var(--signal)]">
+                <h2 className="row-title inline-flex items-center gap-1 transition-colors group-hover/row:text-[var(--signal-ink)]">
                   {cert.title}
                   {linked ? (
                     <ArrowUpRight className="h-3 w-3 opacity-0 transition-opacity group-hover/row:opacity-100" />

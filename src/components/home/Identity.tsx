@@ -16,9 +16,13 @@ const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ/\\<>*#";
 /**
  * Decodes the role text one character at a time on mount. Short enough to
  * finish before it reads as a gimmick, and skipped entirely for calm users.
+ *
+ * The resting text is the initial state, so it is what lands in the SSR HTML.
+ * `useReducedMotion` resolves to `null` on the first render, which previously
+ * meant "enabled" and shipped an empty role line to every no-JS reader.
  */
 function useDecodedText(text: string, enabled: boolean) {
-  const [output, setOutput] = useState(enabled ? "" : text);
+  const [output, setOutput] = useState(text);
 
   useEffect(() => {
     if (!enabled) {
@@ -27,6 +31,17 @@ function useDecodedText(text: string, enabled: boolean) {
     }
 
     let settled = 0;
+    const scrambleFrom = (index: number) =>
+      text
+        .slice(index)
+        .split("")
+        .map((char) =>
+          char === " " ? " " : GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
+        )
+        .join("");
+
+    setOutput(scrambleFrom(0));
+
     const interval = window.setInterval(() => {
       settled += 1;
       if (settled > text.length) {
@@ -35,15 +50,7 @@ function useDecodedText(text: string, enabled: boolean) {
         return;
       }
 
-      const scrambled = text
-        .slice(settled)
-        .split("")
-        .map((char) =>
-          char === " " ? " " : GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
-        )
-        .join("");
-
-      setOutput(text.slice(0, settled) + scrambled);
+      setOutput(text.slice(0, settled) + scrambleFrom(settled));
     }, 42);
 
     return () => window.clearInterval(interval);

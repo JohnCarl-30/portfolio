@@ -224,7 +224,7 @@ export default function TerminalView({
     <div className="font-mono text-[13px]">
       <div
         ref={scrollRef}
-        className="max-h-[46vh] min-h-[240px] overflow-y-auto px-4 py-4"
+        className="max-h-[46vh] min-h-[240px] overscroll-contain overflow-y-auto px-4 py-4"
         onClick={() => inputRef.current?.focus()}
       >
         {lines.map((line) =>

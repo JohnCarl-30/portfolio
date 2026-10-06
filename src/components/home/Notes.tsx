@@ -22,13 +22,13 @@ function NoteRow({ post, index }: { post: BlogPost; index: number }) {
         {...handlers}
       >
         <div className="flex items-baseline justify-between gap-4">
-          <h3 className="row-title transition-colors group-hover/row:text-[var(--signal)]">
+          <h3 className="row-title transition-colors group-hover/row:text-[var(--signal-ink)]">
             {post.title}
           </h3>
           <span className="meta shrink-0">{post.readingTime}</span>
         </div>
 
-        <p className="row-desc mt-1 max-w-[44rem]">{post.excerpt}</p>
+        <p className="row-desc mt-1">{post.excerpt}</p>
 
         <div className="mt-2 flex flex-wrap gap-1.5">
           {post.tags.map((tag) => (

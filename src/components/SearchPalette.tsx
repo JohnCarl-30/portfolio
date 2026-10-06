@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Dialog, VisuallyHidden } from "radix-ui";
 import {
   ChevronLeft,
   FolderKanban,
@@ -341,17 +342,16 @@ export default function SearchPalette() {
       return;
     }
 
+    // Radix Dialog owns the scroll lock and the initial focus; this only
+    // returns focus to the input when the view switches back to search.
     const frame = window.requestAnimationFrame(() => {
       if (view === "search") {
         inputRef.current?.focus();
       }
     });
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
 
     return () => {
       window.cancelAnimationFrame(frame);
-      document.body.style.overflow = previousOverflow;
     };
   }, [isSearchOpen, view]);
 
@@ -429,17 +429,6 @@ export default function SearchPalette() {
         return;
       }
 
-      if (event.key === "Escape") {
-        event.preventDefault();
-        if (view === "theme" || view === "terminal") {
-          setView("search");
-          return;
-        }
-
-        closePalette();
-        return;
-      }
-
       if (view === "terminal") {
         return;
       }
@@ -514,45 +503,84 @@ export default function SearchPalette() {
   ]);
 
   return (
-    <AnimatePresence>
-      {isSearchOpen && (
-        <motion.div
-          key="search-palette"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.15 }}
-          className="fixed inset-0 z-[100] bg-black/25 px-4 pt-[12vh] backdrop-blur-[3px]"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) {
-              closePalette();
-            }
-          }}
-        >
+    <Dialog.Root
+      open={isSearchOpen}
+      onOpenChange={(open) => {
+        if (!open) closePalette();
+      }}
+    >
+      <AnimatePresence>
+        {isSearchOpen && (
+          <Dialog.Portal forceMount>
+            <Dialog.Overlay asChild forceMount>
+              <motion.div
+                key="search-overlay"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15 }}
+                className="fixed inset-0 z-[100] bg-black/25 backdrop-blur-[3px]"
+              />
+            </Dialog.Overlay>
+
+            <Dialog.Content
+              asChild
+              forceMount
+              aria-describedby={undefined}
+              onOpenAutoFocus={(event) => {
+                // Land on the query field, not the first result button.
+                event.preventDefault();
+                inputRef.current?.focus();
+              }}
+              onEscapeKeyDown={(event) => {
+                // Escape steps back out of a sub-view before it closes.
+                if (view === "theme" || view === "terminal") {
+                  event.preventDefault();
+                  setView("search");
+                }
+              }}
+            >
           <motion.div
             initial={{ opacity: 0, y: 12, scale: 0.985 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.985 }}
             transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
-            className="mx-auto w-full max-w-xl overflow-hidden rounded-xl border border-[var(--line-strong)] bg-[var(--panel)] text-[var(--ink)] shadow-[var(--shadow-lift)]"
+            className="fixed inset-x-4 top-[12vh] z-[100] mx-auto w-[min(36rem,calc(100%-2rem))] overflow-hidden rounded-xl border border-[var(--line-strong)] bg-[var(--panel)] text-[var(--ink)] shadow-[var(--shadow-lift)]"
           >
+            <VisuallyHidden.Root>
+              <Dialog.Title>Search this site</Dialog.Title>
+            </VisuallyHidden.Root>
             {view === "search" ? (
               <>
                 <div className="flex items-center gap-2.5 border-b border-[var(--line)] px-3.5 py-2.5">
-                  <Search className="h-3.5 w-3.5 shrink-0 text-[var(--dim)]" />
+                  <Search
+                    aria-hidden="true"
+                    className="h-3.5 w-3.5 shrink-0 text-[var(--dim)]"
+                  />
+                  <VisuallyHidden.Root>
+                    <label htmlFor="palette-query">
+                      Search sections, projects and notes
+                    </label>
+                  </VisuallyHidden.Root>
+                  {/* text-base on mobile: iOS Safari zooms the page for any
+                      focused input under 16px, and does not zoom back out. */}
                   <input
                     ref={inputRef}
+                    id="palette-query"
+                    name="q"
+                    type="text"
+                    autoComplete="off"
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
                     placeholder="search sections, projects, notes…"
-                    className="h-7 flex-1 bg-transparent text-[0.85rem] outline-none placeholder:text-[var(--dim)]"
+                    className="h-7 flex-1 bg-transparent text-base outline-none placeholder:text-[var(--dim)] sm:text-[0.85rem]"
                   />
                   <Kbd className="hidden border-[var(--line)] bg-[var(--hover)] text-[var(--dim)] sm:inline-flex">
                     esc
                   </Kbd>
                 </div>
 
-                <div className="max-h-[52vh] overflow-y-auto p-1.5">
+                <div className="max-h-[52vh] overscroll-contain overflow-y-auto p-1.5">
                   {groupedEntries.length ? (
                     groupedEntries.map((section) => (
                       <div key={section.group} className="mb-1.5 last:mb-0">
@@ -613,10 +641,23 @@ export default function SearchPalette() {
                   ) : (
                     <div className="flex flex-col items-center justify-center px-6 py-14 text-center">
                       <Search className="mb-3 h-6 w-6 text-[var(--dim)]" />
-                      <p className="text-[0.9rem] font-semibold">No matches</p>
-                      <p className="row-desc mt-1 max-w-xs">
-                        Try projects, notes, stack, or theme.
+                      <p className="text-[0.9rem] font-semibold">
+                        No matches for &ldquo;{query.trim()}&rdquo;
                       </p>
+                      <p className="row-desc mt-1 max-w-xs">
+                        Search project names, note titles, tools, or a section
+                        of the page.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setQuery("");
+                          inputRef.current?.focus();
+                        }}
+                        className="focus-ring mt-4 rounded-full border border-[var(--line-strong)] px-3 py-1.5 text-[0.8rem] font-medium text-[var(--ink)] transition-colors hover:bg-[var(--hover)]"
+                      >
+                        Clear search
+                      </button>
                     </div>
                   )}
                 </div>
@@ -719,8 +760,10 @@ export default function SearchPalette() {
               </>
             )}
           </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+            </Dialog.Content>
+          </Dialog.Portal>
+        )}
+      </AnimatePresence>
+    </Dialog.Root>
   );
 }

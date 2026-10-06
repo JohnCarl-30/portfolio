@@ -25,14 +25,14 @@ function ProjectRow({ project, index }: { project: ProjectItem; index: number })
         {...handlers}
       >
         <div className="flex items-baseline justify-between gap-4">
-          <h3 className="row-title inline-flex items-center gap-1 transition-colors group-hover/row:text-[var(--signal)]">
+          <h3 className="row-title inline-flex items-center gap-1 transition-colors group-hover/row:text-[var(--signal-ink)]">
             {project.name}
             <ArrowUpRight className="h-3 w-3 opacity-0 transition-all duration-200 group-hover/row:translate-x-px group-hover/row:-translate-y-px group-hover/row:opacity-100" />
           </h3>
           <span className="meta shrink-0">{project.timeline}</span>
         </div>
 
-        <p className="row-desc mt-1 max-w-[44rem]">{project.desc}</p>
+        <p className="row-desc mt-1">{project.desc}</p>
 
         {project.url ? (
           <span className="row-thumb relative mt-3 aspect-[16/9] w-full overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--panel-soft)]">
