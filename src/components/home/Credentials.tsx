@@ -26,7 +26,7 @@ export default function Credentials() {
           const body = (
             <>
               <span className="min-w-0">
-                <span className="row-title block transition-colors group-hover/row:text-[var(--signal)]">
+                <span className="row-title block transition-colors group-hover/row:text-[var(--signal-ink)]">
                   {cert.title}
                 </span>
                 <span className="row-desc mt-0.5 block text-[0.8rem]">

@@ -47,6 +47,11 @@ export default function LifeGrid() {
     let paused = false;
     let signal = "#1d7d74";
     let generations = 0;
+    // Keyboard cursor. Drawn only while the canvas has focus, so a pointer
+    // user never sees it.
+    let curCol = 0;
+    let curRow = 0;
+    let focused = false;
 
     const readColor = () => {
       const value = getComputedStyle(document.documentElement)
@@ -140,6 +145,18 @@ export default function LifeGrid() {
         }
       }
 
+      if (focused) {
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = signal;
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(
+          curCol * CELL + 2,
+          curRow * CELL + 2,
+          CELL - 4,
+          CELL - 4,
+        );
+      }
+
       ctx.globalAlpha = 1;
     };
 
@@ -152,11 +169,7 @@ export default function LifeGrid() {
       render();
     };
 
-    const paint = (event: PointerEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      const col = Math.floor((event.clientX - rect.left) / CELL);
-      const row = Math.floor((event.clientY - rect.top) / CELL);
-
+    const seedAt = (col: number, row: number) => {
       for (let dx = -1; dx <= 1; dx += 1) {
         for (let dy = -1; dy <= 1; dy += 1) {
           const nc = col + dx;
@@ -167,6 +180,14 @@ export default function LifeGrid() {
         }
       }
       render();
+    };
+
+    const paint = (event: PointerEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      seedAt(
+        Math.floor((event.clientX - rect.left) / CELL),
+        Math.floor((event.clientY - rect.top) / CELL),
+      );
     };
 
     readColor();
@@ -211,8 +232,44 @@ export default function LifeGrid() {
       paint(event);
     };
 
+    const MOVES: Record<string, [number, number]> = {
+      ArrowLeft: [-1, 0],
+      ArrowRight: [1, 0],
+      ArrowUp: [0, -1],
+      ArrowDown: [0, 1],
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const move = MOVES[event.key];
+
+      if (move) {
+        event.preventDefault();
+        curCol = Math.min(Math.max(curCol + move[0], 0), cols - 1);
+        curRow = Math.min(Math.max(curRow + move[1], 0), rows - 1);
+        render();
+        return;
+      }
+
+      if (event.key === " " || event.key === "Enter") {
+        event.preventDefault();
+        seedAt(curCol, curRow);
+      }
+    };
+
+    const handleFocus = () => {
+      focused = true;
+      render();
+    };
+    const handleBlur = () => {
+      focused = false;
+      render();
+    };
+
     canvas.addEventListener("pointerdown", handleDown);
     canvas.addEventListener("pointermove", handleMove);
+    canvas.addEventListener("keydown", handleKeyDown);
+    canvas.addEventListener("focus", handleFocus);
+    canvas.addEventListener("blur", handleBlur);
 
     const handleToggle = (event: Event) => {
       paused = !(event as CustomEvent<boolean>).detail;
@@ -226,6 +283,9 @@ export default function LifeGrid() {
       themeObserver.disconnect();
       canvas.removeEventListener("pointerdown", handleDown);
       canvas.removeEventListener("pointermove", handleMove);
+      canvas.removeEventListener("keydown", handleKeyDown);
+      canvas.removeEventListener("focus", handleFocus);
+      canvas.removeEventListener("blur", handleBlur);
       wrap.removeEventListener("life:running", handleToggle);
       seedRef.current = null;
     };
@@ -240,7 +300,9 @@ export default function LifeGrid() {
   return (
     <div className="overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--panel)]">
       <div className="flex items-center justify-between gap-3 border-b border-[var(--line)] px-3.5 py-2">
-        <p className="meta">game of life · drag to seed</p>
+        <p id="life-hint" className="meta">
+          game of life · drag or arrow keys to seed
+        </p>
 
         <div className="flex items-center gap-3">
           <span className="meta tnum">gen {generation}</span>
@@ -264,9 +326,10 @@ export default function LifeGrid() {
       <div ref={wrapRef} className="relative">
         <canvas
           ref={canvasRef}
-          className="block w-full cursor-crosshair touch-none"
-          aria-label="Conway's Game of Life, interactive"
-          role="img"
+          tabIndex={0}
+          aria-label="Conway's Game of Life board. Move the cursor with the arrow keys and press Space to seed cells."
+          aria-describedby="life-hint"
+          className="focus-ring block w-full cursor-crosshair touch-pan-y"
         />
       </div>
     </div>

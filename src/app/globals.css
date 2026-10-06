@@ -45,6 +45,7 @@
     --color-line: var(--line);
     --color-line-strong: var(--line-strong);
     --color-signal: var(--signal);
+    --color-signal-ink: var(--signal-ink);
     --font-sans: var(--font-geist);
     --font-mono: var(--font-geist-mono);
 }
@@ -63,12 +64,16 @@
     --panel-soft: #efefeb;
     --ink: #111418;
     --muted-ink: #5f6266;
-    --dim: #74777b;
+    --dim: #686b6f;
     --line: rgb(17 20 24 / 0.075);
     --line-strong: rgb(17 20 24 / 0.15);
     --dot: rgb(17 20 24 / 0.11);
     --dot-lit: rgb(17 20 24 / 0.42);
     --signal: #1d7d74;
+    /* Text weight of the signal. On --signal-soft the plain --signal measures
+       3.99:1 at chip size; this measures 5.03:1. Dark and midnight already
+       clear 4.5:1, so there --signal-ink is just --signal. */
+    --signal-ink: #176c64;
     --signal-soft: rgb(29 125 116 / 0.12);
     --hover: rgb(17 20 24 / 0.045);
     --shadow-soft: 0 18px 52px rgb(17 20 24 / 0.09);
@@ -96,7 +101,7 @@
     --destructive: oklch(0.577 0.245 27.325);
     --border: var(--line);
     --input: var(--line-strong);
-    --ring: rgb(29 125 116 / 0.45);
+    --ring: var(--signal);
     --sidebar: var(--panel);
     --sidebar-foreground: var(--ink);
     --sidebar-primary: var(--signal);
@@ -124,6 +129,7 @@
     --dot: rgb(255 255 255 / 0.085);
     --dot-lit: rgb(255 255 255 / 0.38);
     --signal: #4ec4b4;
+    --signal-ink: var(--signal);
     --signal-soft: rgb(78 196 180 / 0.14);
     --hover: rgb(255 255 255 / 0.055);
     --shadow-soft: 0 18px 52px rgb(0 0 0 / 0.5);
@@ -131,7 +137,7 @@
 
     --primary-foreground: #0e1013;
     --destructive: oklch(0.704 0.191 22.216);
-    --ring: rgb(78 196 180 / 0.45);
+    --ring: var(--signal);
 }
 
 html[data-theme-selection="midnight"] {
@@ -146,10 +152,11 @@ html[data-theme-selection="midnight"] {
     --dot: rgb(190 205 255 / 0.1);
     --dot-lit: rgb(200 214 255 / 0.42);
     --signal: #e0b055;
+    --signal-ink: var(--signal);
     --signal-soft: rgb(224 176 85 / 0.14);
     --hover: rgb(190 205 255 / 0.06);
     --primary-foreground: #0a0c14;
-    --ring: rgb(224 176 85 / 0.45);
+    --ring: var(--signal);
 }
 
 @layer base {
@@ -230,6 +237,9 @@ html[data-theme-selection="midnight"] {
         font-size: 0.875rem;
         line-height: 1.6;
         color: var(--muted-ink);
+        /* Measure cap lives here, not on each row. 44rem ran to ~100
+           characters; 68ch keeps every description in the 60-75 range. */
+        max-width: 68ch;
     }
 
     .meta {
@@ -259,17 +269,19 @@ html[data-theme-selection="midnight"] {
             transform 160ms ease;
     }
 
-    .group\/row:hover .chip {
-        color: var(--signal);
-        border-color: color-mix(in srgb, var(--signal) 30%, transparent);
-        background: var(--signal-soft);
-    }
+    @media (hover: hover) and (pointer: fine) {
+        .group\/row:hover .chip {
+            color: var(--signal-ink);
+            border-color: color-mix(in srgb, var(--signal) 30%, transparent);
+            background: var(--signal-soft);
+        }
 
-    .chip:hover {
-        color: var(--signal);
-        border-color: color-mix(in srgb, var(--signal) 40%, transparent);
-        background: var(--signal-soft);
-        transform: translateY(-1px);
+        .chip:hover {
+            color: var(--signal-ink);
+            border-color: color-mix(in srgb, var(--signal) 40%, transparent);
+            background: var(--signal-soft);
+            transform: translateY(-1px);
+        }
     }
 
     /* Italic serif accent voice — one word at a time, never whole paragraphs. */
@@ -294,10 +306,16 @@ html[data-theme-selection="midnight"] {
         padding-bottom: 1px;
     }
 
-    .ink-link:hover,
     .ink-link:focus-visible {
         background-size: 100% 1px;
-        color: var(--signal);
+        color: var(--signal-ink);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        .ink-link:hover {
+            background-size: 100% 1px;
+            color: var(--signal-ink);
+        }
     }
 }
 
@@ -381,6 +399,32 @@ html.js .splash-mark {
         animation: none;
         fill-opacity: 1;
         stroke-dashoffset: 0;
+    }
+}
+
+/* Hero words rising into place.
+   Framer's `initial` offset is serialised into the SSR markup, which left the
+   h2 translated 112% inside a clipping box for anyone without JS. Same gate as
+   `.reveal`: the resting state ships in the HTML and the motion is additive. */
+html.js .word-rise {
+    animation: word-rise 0.65s cubic-bezier(0.23, 1, 0.32, 1) both;
+    animation-delay: var(--word-delay, 0ms);
+}
+
+@keyframes word-rise {
+    from {
+        transform: translateY(112%);
+    }
+    to {
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    /* The global duration clamp does not zero the delay, so without this the
+       word would hold its `from` state for the length of the stagger. */
+    html.js .word-rise {
+        animation: none;
     }
 }
 

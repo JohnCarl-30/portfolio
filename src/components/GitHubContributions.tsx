@@ -32,6 +32,33 @@ const levelClasses = [
 ];
 
 const monthFormatter = new Intl.DateTimeFormat("en-US", { month: "short" });
+const monthLongFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "long",
+  year: "numeric",
+});
+
+/** Month totals, so the grid's values exist as text and not only as colour. */
+function summarizeByMonth(days: ContributionDay[]) {
+  const totals = new Map<string, { label: string; count: number }>();
+
+  days.forEach((day) => {
+    if (!day.date) return;
+    const date = new Date(`${day.date}T00:00:00`);
+    const key = `${date.getFullYear()}-${date.getMonth()}`;
+    const entry = totals.get(key);
+
+    if (entry) {
+      entry.count += day.count;
+    } else {
+      totals.set(key, {
+        label: monthLongFormatter.format(date),
+        count: day.count,
+      });
+    }
+  });
+
+  return [...totals.values()];
+}
 const dayFormatter = new Intl.DateTimeFormat("en-US", {
   month: "long",
   day: "numeric",
@@ -94,6 +121,11 @@ const GitHubContributions = () => {
     [data],
   );
 
+  const monthTotals = useMemo(
+    () => (data ? summarizeByMonth(data.contributions) : []),
+    [data],
+  );
+
   const monthLabels = useMemo(() => {
     return weeks.map((week, index) => {
       const firstDay = week.find((day) => day.date);
@@ -132,17 +164,17 @@ const GitHubContributions = () => {
     });
   };
 
-  if (failed) return null;
-
   return (
     <section className="pb-16">
       <SectionHead id="github" label="github" num="05" />
 
       <div className="flex items-baseline justify-between gap-4 pb-4">
         <p className="row-desc">
-          {data
-            ? `${data.total.lastYear.toLocaleString()} contributions in the last year.`
-            : "Contribution activity over the last year."}
+          {failed
+            ? "Contribution activity is unavailable right now. The profile on GitHub has the current numbers."
+            : data
+              ? `${data.total.lastYear.toLocaleString()} contributions in the last year.`
+              : "Contribution activity over the last year."}
         </p>
         <a
           href="https://github.com/JohnCarl-30"
@@ -156,7 +188,11 @@ const GitHubContributions = () => {
       </div>
 
       <div className="rounded-lg border border-[var(--line)] bg-[var(--panel)] p-4 sm:p-5">
-        {!data ? (
+        {failed ? (
+          <p className="meta flex h-24 items-center justify-center text-center">
+            could not load the contribution graph
+          </p>
+        ) : !data ? (
           <div className="flex h-36 items-center justify-center">
             <div className="flex gap-[3px]">
               {Array.from({ length: 12 }).map((_, i) => (
@@ -174,7 +210,18 @@ const GitHubContributions = () => {
             className="relative"
             onMouseLeave={() => setTooltip(null)}
           >
-            <div className="overflow-x-auto pb-2">
+            {/* The squares encode level by colour and the per-day values were
+                reachable only by hover, so the grid is decorative and the
+                numbers are given as text below it. */}
+            <ul className="sr-only">
+              {monthTotals.map((month) => (
+                <li key={month.label}>
+                  {`${month.label}: ${month.count.toLocaleString()} contributions`}
+                </li>
+              ))}
+            </ul>
+
+            <div aria-hidden="true" className="overscroll-contain overflow-x-auto pb-2">
               <div className="min-w-max">
                 <div className="meta mb-2 flex gap-[3px]">
                   {weeks.map((_, index) => (
@@ -193,8 +240,7 @@ const GitHubContributions = () => {
                     <motion.div
                       key={weekIndex}
                       initial={shouldReduceMotion ? false : { opacity: 0, y: 8 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-40px" }}
+                      animate={{ opacity: 1, y: 0 }}
                       transition={{
                         duration: 0.3,
                         delay: shouldReduceMotion ? 0 : weekIndex * 0.012,

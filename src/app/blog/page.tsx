@@ -35,7 +35,7 @@ function NoteRow({ post, index }: { post: BlogPost; index: number }) {
         {...handlers}
       >
         <div className="flex items-baseline justify-between gap-4">
-          <h2 className="row-title transition-colors group-hover/row:text-[var(--signal)]">
+          <h2 className="row-title transition-colors group-hover/row:text-[var(--signal-ink)]">
             {post.title}
           </h2>
           <span className="meta shrink-0">
