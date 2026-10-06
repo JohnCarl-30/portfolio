@@ -36,6 +36,11 @@ no glass panels.
 - **Data sources**: `src/app/data/Profile.ts` (identity, socials, experience,
   stack, intro glossary), `Projects.ts`, `Blog.ts`, `Certifications.ts`, and
   `HeroIcons.tsx` (skill icons + `aboutText`, which the chat API prompt uses).
+- **`ExperienceItem.metrics`** is optional and renders as `.chip` row after the
+  summary. Two components render an experience row and both read it, so they
+  have to stay in step: `components/home/Experience.tsx` and
+  `app/about/page.tsx`. Keep entries countable and verifiable — omit the field
+  rather than pad it with adjectives.
 - **Blog**: `/blog` listing + `/blog/[slug]` detail. Static TypeScript posts (no MDX). Giscus comments are optional and not wired by default.
 - **Theme system**: Custom light/dark/midnight via `localStorage` key `portfolio-theme`. The theme script runs inline in `layout.tsx` before React hydrates.
 
