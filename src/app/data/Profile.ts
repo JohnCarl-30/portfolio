@@ -111,7 +111,7 @@ export const experience: ExperienceItem[] = [
 export const stack: { group: string; items: string[] }[] = [
   {
     group: "ai",
-    items: ["Python", "PyTorch", "TensorFlow", "LangChain", "LangGraph", "pgvector", "OpenAI API"],
+    items: ["Python", "PyTorch", "TensorFlow", "LangChain", "LangGraph", "pgvector", "OpenAI API", "Cursor", "Codex"],
   },
   {
     group: "web",
