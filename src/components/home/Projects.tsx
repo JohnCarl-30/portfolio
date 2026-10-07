@@ -17,44 +17,68 @@ function ProjectRow({ project, index }: { project: ProjectItem; index: number })
     meta: `${project.role} · ${project.timeline}`,
   });
 
+  // NDA work has no detail page, so its row is not a link. Same shape as
+  // Credentials: one body, two possible wrappers.
+  const linked = !project.nda;
+
+  const body = (
+    <>
+      <div className="flex items-baseline justify-between gap-4">
+        <h3 className="row-title inline-flex items-center gap-1 transition-colors group-hover/row:text-[var(--signal-ink)]">
+          {project.name}
+          {linked ? (
+            <ArrowUpRight className="h-3 w-3 opacity-0 transition-all duration-200 group-hover/row:translate-x-px group-hover/row:-translate-y-px group-hover/row:opacity-100" />
+          ) : null}
+        </h3>
+        <span className="meta shrink-0">{project.timeline}</span>
+      </div>
+
+      <p className="row-desc mt-1">{project.desc}</p>
+
+      {project.url ? (
+        <span className="row-thumb relative mt-3 aspect-[16/9] w-full overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--panel-soft)]">
+          <Image
+            src={project.url}
+            alt={`${project.name} screenshot`}
+            fill
+            loading="lazy"
+            sizes="(max-width: 640px) 100vw, 44rem"
+            className="object-cover object-top"
+          />
+        </span>
+      ) : null}
+
+      <div className="mt-2 flex flex-wrap gap-1.5">
+        {/* Without this the row just reads as broken rather than withheld. */}
+        {linked ? null : (
+          <span className="chip border-[var(--line-strong)] text-[var(--muted-ink)]">
+            under nda
+          </span>
+        )}
+        {project.tech.slice(0, 5).map((tech) => (
+          <span key={tech} className="chip">
+            {tech.toLowerCase()}
+          </span>
+        ))}
+      </div>
+    </>
+  );
+
   return (
     <Reveal as="li" delay={index * 0.055}>
-      <Link
-        href={`/projects/${project.id}`}
-        className="group/row focus-ring -mx-3 block rounded-lg px-3 py-3 transition-colors hover:bg-[var(--hover)]"
-        {...handlers}
-      >
-        <div className="flex items-baseline justify-between gap-4">
-          <h3 className="row-title inline-flex items-center gap-1 transition-colors group-hover/row:text-[var(--signal-ink)]">
-            {project.name}
-            <ArrowUpRight className="h-3 w-3 opacity-0 transition-all duration-200 group-hover/row:translate-x-px group-hover/row:-translate-y-px group-hover/row:opacity-100" />
-          </h3>
-          <span className="meta shrink-0">{project.timeline}</span>
+      {linked ? (
+        <Link
+          href={`/projects/${project.id}`}
+          className="group/row focus-ring -mx-3 block rounded-lg px-3 py-3 transition-colors hover:bg-[var(--hover)]"
+          {...handlers}
+        >
+          {body}
+        </Link>
+      ) : (
+        <div className="group/row -mx-3 block rounded-lg px-3 py-3" {...handlers}>
+          {body}
         </div>
-
-        <p className="row-desc mt-1">{project.desc}</p>
-
-        {project.url ? (
-          <span className="row-thumb relative mt-3 aspect-[16/9] w-full overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--panel-soft)]">
-            <Image
-              src={project.url}
-              alt={`${project.name} screenshot`}
-              fill
-              loading="lazy"
-              sizes="(max-width: 640px) 100vw, 44rem"
-              className="object-cover object-top"
-            />
-          </span>
-        ) : null}
-
-        <div className="mt-2 flex flex-wrap gap-1.5">
-          {project.tech.slice(0, 5).map((tech) => (
-            <span key={tech} className="chip">
-              {tech.toLowerCase()}
-            </span>
-          ))}
-        </div>
-      </Link>
+      )}
     </Reveal>
   );
 }

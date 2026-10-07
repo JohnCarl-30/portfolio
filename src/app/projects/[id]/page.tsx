@@ -6,10 +6,16 @@ import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 
 import { projectsData } from "@/app/data/Projects";
 
+// Anything not returned here 404s rather than rendering on demand, so an NDA
+// project has no detail page even if someone guesses the URL.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
-  return projectsData.map((project) => ({
-    id: project.id,
-  }));
+  return projectsData
+    .filter((project) => !project.nda)
+    .map((project) => ({
+      id: project.id,
+    }));
 }
 
 export async function generateMetadata({
@@ -20,7 +26,7 @@ export async function generateMetadata({
   const { id } = await params;
   const project = projectsData.find((p) => p.id === id);
 
-  if (!project) {
+  if (!project || project.nda) {
     return { title: "Project Not Found" };
   }
 
@@ -43,7 +49,7 @@ export default async function ProjectDetail({
   const { id } = await params;
   const project = projectsData.find((item) => item.id === id);
 
-  if (!project) {
+  if (!project || project.nda) {
     notFound();
   }
 

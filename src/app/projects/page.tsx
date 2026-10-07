@@ -60,6 +60,11 @@ function ProjectRow({ project, index }: { project: ProjectItem; index: number })
         ) : null}
 
         <div className="mt-2 flex flex-wrap items-center gap-1.5">
+          {project.nda ? (
+            <span className="chip border-[var(--line-strong)] text-[var(--muted-ink)]">
+              under nda
+            </span>
+          ) : null}
           {project.tech.map((tech) => (
             <span key={tech} className="chip">
               {tech.toLowerCase()}

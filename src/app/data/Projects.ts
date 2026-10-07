@@ -19,6 +19,12 @@ export interface ProjectItem {
   liveDemoUrl?: string;
   /** Public source, for work whose evidence is the code rather than a deploy. */
   repoUrl?: string;
+  /**
+   * Covered by an NDA. The row stays for credit, but nothing about the build
+   * is published: no detail page, no screenshot, no highlights, and the entry
+   * is kept out of generateStaticParams and the command palette.
+   */
+  nda?: boolean;
 }
 
 export const projectsData: ProjectItem[] = [
@@ -26,37 +32,14 @@ export const projectsData: ProjectItem[] = [
     id: "books-and-beyond",
     name: "Books & Beyond Help Desk",
     category: "Web",
-    desc: "A help desk for a Philippine accounting and BIR firm where a reviewer sets every ticket's priority by hand \u2014 because the AI that used to guess it started an SLA clock on tickets nobody had read.",
-    longDescription: "Clients of an accounting practice raise filings, permits, and open BIR cases. Each client gets a rotatable magic link rather than an account, so there is no client password to reset and no public submit form; opening the link is the only way in, and a rotated link dies instantly.\n\nThe first version had a model read each submission and assign a priority. That was removed. A priority nobody reviewed is still a priority: it set a due date, and the due date started a countdown, so a ticket could be hours from breaching before a human had read a word of it. Intake now writes no judgement at all \u2014 the ticket arrives with no due date, cannot be late, and waits in a reviewer's Set Priority queue. The reviewer sets the level and writes the one-line summary in the same action, and the SLA clock starts from that moment rather than from submission.\n\nStaff cannot close their own work. Handing a ticket up for sign-off requires a photo of what was done, and only a reviewer or an admin can move a ticket into a resolved status \u2014 both keyed off admin-editable flags on the status table rather than a hardcoded status code, so renaming a column in Settings does not quietly disable either rule. Statuses, priorities, SLA windows, concern types and departments are all edited by an admin at runtime with referential-integrity guards.",
-    url: "/projects/books-and-beyond.png",
+    desc: "Client work under an NDA. A help desk and ticketing platform built end to end; the specifics are not public.",
+    longDescription: "",
+    url: "",
     tech: ["Python", "FastAPI", "SQLAlchemy", "Alembic", "PostgreSQL", "TypeScript", "React", "TailwindCSS", "Playwright", "pytest", "Docker"],
     role: "Full-stack Developer",
     timeline: "2026 - Present",
-    highlights: [
-      "Took the AI out of intake rather than tuning it: an unreviewed guess set a due date, so a ticket could run most of its SLA before anyone read it. A backdated ticket proved the fix \u2014 ten days unjudged, still not overdue, and four hours to act on once judged, instead of 244 hours late the instant someone looked.",
-      "Found three browser tests that had never run. They skip themselves when the Set Priority queue is empty, and the seed stamped every sample ticket as already judged, so CI reported green over them for weeks. Fixing the seed took it from 2 passed / 3 skipped to 5 passed / 0 skipped.",
-      "Found a status flag the API could not write. The schema accepted it and the data layer applied it, but the router forwarded it zero times \u2014 it had never appeared in that file \u2014 so it was settable only by a migration. Deleting that status in Settings emptied the reviewer's queue and silently switched off the photo requirement, with no way back short of SQL.",
-      "Found that deactivating a staff account revoked nothing: the access token kept working for its full 12 hours and the refresh endpoint minted new ones indefinitely, while its own docstring claimed otherwise. The check belongs on the token path and not on the row lookup \u2014 putting it in the obvious place would have made reactivating someone impossible.",
-      "Relayed Drive uploads through an Apps Script web app instead of a service account. A service account has no Drive storage quota of its own, so it can only write to a Shared Drive, and Shared Drives need paid Workspace. Three of that transport's behaviours look like bugs and are load-bearing: every POST 302s to another host, application errors arrive as HTTP 200 with an error body, and an unreachable deployment answers HTML instead of JSON.",
-      "Phone photos are downscaled and re-encoded before upload, which drops EXIF \u2014 GPS included \u2014 after baking orientation into the pixels, and turns HEIC into JPEG, since an iPhone's default format uploaded fine and then rendered as a broken image.",
-    ],
-    keyFeatures: [
-      {
-        title: "Nothing Guesses A Priority",
-        description: "A new ticket carries no due date and reads \"Awaiting Priority\" wherever a level would show, so it cannot surface as overdue before a person has judged it. The daily digest flags anything that has waited too long, because an undated ticket is otherwise invisible.",
-        image: "/projects/books-and-beyond.png",
-      },
-      {
-        title: "Proof Of Work, Then Sign-Off",
-        description: "A staffer attaches a photo to hand a ticket up; the reviewer sees it in the queue where the decision is made and approves or sends it back. Both gates read admin-editable status flags, so renaming a column cannot disable them.",
-        image: "/projects/books-and-beyond.png",
-      },
-      {
-        title: "Links, Not Accounts",
-        description: "Clients hold a rotatable magic link instead of a password. Every bad, unknown, or rotated token returns the same generic 404, so a link can never be used to probe whether a client exists.",
-        image: "/projects/books-and-beyond.png",
-      }
-    ],
+    keyFeatures: [],
+    nda: true,
   },
   {
     id: "directory-pipeline",

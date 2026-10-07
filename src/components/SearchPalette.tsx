@@ -134,16 +134,19 @@ const PAGE_ITEMS: SearchEntry[] = [
   },
 ];
 
-const PROJECT_ITEMS: SearchEntry[] = projectsData.map((project) => ({
-  id: project.id,
-  title: project.name,
-  description: project.desc,
-  href: `/projects/${project.id}`,
-  group: "Projects",
-  icon: FolderKanban,
-  keywords: [project.category, project.role, ...project.tech],
-  kind: "route",
-}));
+// NDA projects have no detail page, so they are not offered as a destination.
+const PROJECT_ITEMS: SearchEntry[] = projectsData
+  .filter((project) => !project.nda)
+  .map((project) => ({
+    id: project.id,
+    title: project.name,
+    description: project.desc,
+    href: `/projects/${project.id}`,
+    group: "Projects",
+    icon: FolderKanban,
+    keywords: [project.category, project.role, ...project.tech],
+    kind: "route",
+  }));
 
 const BLOG_ITEMS: SearchEntry[] = getAllPosts().map((post) => ({
   id: post.slug,
