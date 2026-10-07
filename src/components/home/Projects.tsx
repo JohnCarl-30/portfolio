@@ -10,12 +10,19 @@ import Reveal from "./Reveal";
 import { usePreviewHandlers } from "./HoverPreview";
 
 function ProjectRow({ project, index }: { project: ProjectItem; index: number }) {
-  const handlers = usePreviewHandlers({
-    title: project.name,
-    body: project.desc,
-    image: project.url || undefined,
-    meta: `${project.role} · ${project.timeline}`,
-  });
+  // Null payload means the hook returns no handlers at all, so NDA work has
+  // no hover preview either — an unclickable row that still shows a card on
+  // hover is only half withheld.
+  const handlers = usePreviewHandlers(
+    project.nda
+      ? null
+      : {
+          title: project.name,
+          body: project.desc,
+          image: project.url || undefined,
+          meta: `${project.role} · ${project.timeline}`,
+        },
+  );
 
   // NDA work has no detail page, so its row is not a link. Same shape as
   // Credentials: one body, two possible wrappers.
@@ -52,7 +59,7 @@ function ProjectRow({ project, index }: { project: ProjectItem; index: number })
         {/* Without this the row just reads as broken rather than withheld. */}
         {linked ? null : (
           <span className="chip border-[var(--line-strong)] text-[var(--muted-ink)]">
-            under nda
+            client under nda
           </span>
         )}
         {project.tech.slice(0, 5).map((tech) => (
