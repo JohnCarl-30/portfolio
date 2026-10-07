@@ -60,7 +60,7 @@ export const experience: ExperienceItem[] = [
     org: "SOFI AI Tech Solutions",
     period: "Present",
     summary:
-      "Curating training datasets, defining annotation standards, and building evaluation sets for LLM and machine learning systems. Also build client systems end to end \u2014 LLM-backed document and email automation, and internal ticketing tooling \u2014 under NDA, so the specifics stay off this page.",
+      "An AI startup. Curating training datasets, defining annotation standards, and building evaluation sets for LLM and machine learning systems. Research the approach for upcoming client projects before a build starts, then build those systems end to end \u2014 LLM-backed document and email automation, and internal ticketing tooling \u2014 under NDA, so the specifics stay off this page.",
     metrics: [
       "0 \u2192 254 tests gated in ci",
       "63 api endpoints",
