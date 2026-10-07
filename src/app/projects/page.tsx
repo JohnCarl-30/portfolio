@@ -15,12 +15,17 @@ import {
 } from "@/components/home/HoverPreview";
 
 function ProjectRow({ project, index }: { project: ProjectItem; index: number }) {
-  const handlers = usePreviewHandlers({
-    title: project.name,
-    body: project.desc,
-    image: project.url || undefined,
-    meta: `${project.role} · ${project.timeline}`,
-  });
+  // NDA work gets no hover preview: a null payload yields no handlers.
+  const handlers = usePreviewHandlers(
+    project.nda
+      ? null
+      : {
+          title: project.name,
+          body: project.desc,
+          image: project.url || undefined,
+          meta: `${project.role} · ${project.timeline}`,
+        },
+  );
 
   return (
     <Reveal as="li" delay={Math.min(index, 6) * 0.05}>
@@ -62,7 +67,7 @@ function ProjectRow({ project, index }: { project: ProjectItem; index: number })
         <div className="mt-2 flex flex-wrap items-center gap-1.5">
           {project.nda ? (
             <span className="chip border-[var(--line-strong)] text-[var(--muted-ink)]">
-              under nda
+              client under nda
             </span>
           ) : null}
           {project.tech.map((tech) => (
