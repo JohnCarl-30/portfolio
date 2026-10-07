@@ -60,7 +60,7 @@ export const experience: ExperienceItem[] = [
     org: "SOFI AI Tech Solutions",
     period: "Present",
     summary:
-      "Curating training datasets, defining annotation standards, and building evaluation sets for LLM and machine learning systems. Built an email quoting bot for a steel supplier: an LLM turns free-text inquiries into line items, each matched against a 960-SKU catalog across 17 categories (all 960 resolve from their own descriptions), and a VAT quotation lands in the customer's thread in about 30 seconds, with 177 tests behind it. Also built a help desk for an accounting practice where I took the model out of intake \u2014 an unreviewed priority guess had been starting SLA clocks on tickets nobody had read. Its CI ran no tests at all when I picked it up.",
+      "Curating training datasets, defining annotation standards, and building evaluation sets for LLM and machine learning systems. Also build client systems end to end \u2014 LLM-backed document and email automation, and internal ticketing tooling \u2014 under NDA, so the specifics stay off this page.",
     metrics: [
       "0 \u2192 254 tests gated in ci",
       "63 api endpoints",
